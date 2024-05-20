@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{ category.name }}
+{% endblock %}
+{% block content %}
+<style>
+    .image-container {
+    /* margin-top: 100px; */
+    position: relative;
+    width: 100%;
+    height: 150px;
+    background-image: url('https://p3-ofp.static.pub/ShareResource/na/laptops-splitter/hero/lenovo-legion-5-and-yoga-slim-9-desktop.jpg'); /* Путь к вашему изображению */
+    background-size: cover;
+    background-position: center;
+}
+</style>
+<div class="image-container"></div>
+<div class="card mt-5" style="width: 18rem; margin: auto;">
+    <img src="https://p3-ofp.static.pub/fes/cms/2023/02/10/o4l7gt9tgdh9i8phbid2c1ehjo35z8376943.png" class="card-img-top" alt="...">
+    <div class="card-body">
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    </div>
+  </div>
+{% endblock %}

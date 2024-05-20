@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your Website{% endblock %}</title>
+    {% block styles %}
+        <!-- Здесь можно подключить внешние стили -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/eaec4917e4.js" crossorigin="anonymous"></script>
+    {% endblock %}
+</head>
+<body>
+
+{% include 'navbar.html' %}
+
+{% block content %}
+    <!-- Ваш контент будет заменять это место -->
+{% endblock %}
+
+{% include 'footer.html' %}
+
+{% block scripts %}
+    <!-- Здесь можно подключить внешние скрипты -->
+    <!-- <script src="{% static 'js/script.js' %}"></script> -->
+{% endblock %}
+
+</body>
+</html>

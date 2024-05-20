@@ -1,0 +1,42 @@
+{% load static %}
+<div class="container" style="max-width: 90%;">
+    <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+      <div class="col mb-3">
+        <a href="{% url 'home' %}" class="d-flex align-items-center mb-3 link-dark text-decoration-none">
+            <img src="{% static 'images/qt.png' %}" height="35" />
+        </a>
+        <p class="text-muted">© 2024</p>
+      </div>
+  
+      <div class="col mb-3">
+  
+      </div>
+  
+      <div class="col mb-3">
+        <h5>O Qazaq Technology</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="{% url 'aboutus' %}" class="nav-link p-0 text-muted">O Qazaq Technology</a></li>
+          <li class="nav-item mb-2"><a href="{% url 'news' %}" class="nav-link p-0 text-muted">Новости</a></li>
+          <li class="nav-item mb-2"><a href="{% url 'faq' %}" class="nav-link p-0 text-muted">FAQs</a></li>
+        </ul>
+      </div>
+  
+      <div class="col mb-3">
+        <h5>ПРОДУКТЫ И УСЛУГИ</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Ноутбуки</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Настольные ПК</a></li>
+          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Моноблоки</a></li>
+        </ul>
+      </div>
+  
+      <div class="col mb-3">
+        <h5>РЕСУРСЫ</h5>
+        <ul class="nav flex-column">
+          <li class="nav-item mb-2"><a href="{% url 'map' %}" class="nav-link p-0 text-muted">Где купить технику Qazaq Technology</a></li>
+          <li class="nav-item mb-2"><a href="{% url 'contactus' %}" class="nav-link p-0 text-muted">Свяжитесь с нами</a></li>
+          <li class="nav-item mb-2"><a href="{% url 'support' %}" class="nav-link p-0 text-muted">Поддержка</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>

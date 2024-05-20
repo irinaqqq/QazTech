@@ -1,0 +1,103 @@
+{% load static %}
+<!--Main Navigation-->
+
+<style>
+    .navbar {
+    font-family: "Lato", sans-serif;
+    }
+    .navbar-nav .nav-link {
+    color: #333; /* черный цвет текста */
+    }
+
+    div.borderXwidth a:before, div.borderXwidth a:after
+    {
+        position: absolute;
+        opacity: 0;
+        width: 0%;
+        height: 2px;
+        content: '';
+        background: #0100d7;
+        transition: all 0.3s;
+    }
+
+    div.borderXwidth a:before
+    {
+        left: 0px;
+        top: 0px;
+    }
+
+    div.borderXwidth a:after
+    {
+        right: 0px;
+        bottom: 0px;
+    }
+
+    div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
+    {
+        opacity: 1;
+        width: 100%;
+    }
+    div.container a
+    {
+        color: #FFF;
+        text-decoration: none;
+        font: 20px Raleway;
+        margin: 0px 10px;
+        padding: 10px 10px;
+        position: relative;
+        z-index: 0;
+        cursor: pointer;
+    }
+    h5{
+      margin-left: 10px;
+    }
+</style>
+<header>
+    <!-- Jumbotron -->
+    <div class="p-4 text-center bg-white border-bottom">
+      <div class="container" style="margin-left: 0;">
+        <div class="row">
+          <!-- Left elements -->
+          <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
+            <a href="{% url 'home' %}" class="ms-md-2">
+              <img src="{% static 'images/qt.png' %}" height="70" />
+            </a>
+          </div>
+          <!-- Left elements -->
+  
+          <!-- Center elements -->
+          <div class="" style="width: 700px; margin: auto;">
+            <form class="d-flex input-group w-auto my-auto md-4">
+                <input autocomplete="off" type="search" class="form-control rounded" placeholder="Что вы ищете сегодня?" />
+                <span class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></span>
+            </form>
+        </div>
+        
+          <!-- Center elements -->
+  
+          <!-- Right elements -->
+          <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
+        </div>
+      </div>
+    </div>
+    <!-- Jumbotron -->
+  
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar bg-white">
+      <!-- Container wrapper -->
+      <div class="container justify-content-center justify-content-md-between"  style="margin-left: 0;">
+        <!-- Left links -->
+        <div class="navbar-nav flex-row borderXwidth" >
+          {% for category in categories %}
+              <!-- <li class="nav-item me-2 me-lg-0 d-none d-md-inline-block {% if forloop.first %}font-weight-bold{% endif %}"> -->
+                  <a class="nav-link" href="{% url 'category_products' category.id %}">{{ category.name }}</a>
+              <!-- </li> -->
+          {% endfor %}
+      </ul>      
+        <!-- Left links -->
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+  </header>
+  <!--Main Navigation-->
