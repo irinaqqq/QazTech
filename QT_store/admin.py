@@ -5,8 +5,13 @@ class ProductDescriptionInline(admin.TabularInline):
     model = ProductDescription
     extra = 1
 
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 1
+
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductDescriptionInline]
+    inlines = [ProductDescriptionInline, ProductImageInline]
+
 
 admin.site.register(Category)
 admin.site.register(Product, ProductAdmin)

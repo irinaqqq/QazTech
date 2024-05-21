@@ -14,12 +14,57 @@
     background-size: cover;
     background-position: center;
 }
+    .card {
+      width: 100%; 
+      display: inline-block; 
+      /* vertical-align: top; */
+      margin-top: 20px; 
+    }
+    .row{
+      margin: auto;
+    }
+    a{
+      text-decoration: none;
+    }
+    .card{
+      height: 350px;
+    }
+    .card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    }
+
+    .product-item.collapsed .card-text {
+        -webkit-line-clamp: initial;
+    }
+
+    .product-item.collapsed .card-text {
+        display: none;
+    }
 </style>
 <div class="image-container"></div>
-<div class="card mt-5" style="width: 18rem; margin: auto;">
-    <img src="https://p3-ofp.static.pub/fes/cms/2023/02/10/o4l7gt9tgdh9i8phbid2c1ehjo35z8376943.png" class="card-img-top" alt="...">
-    <div class="card-body">
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+<div class="row row-cols-4 g-4">
+
+    {% for product in products %}
+    <div class="col">
+      <a href="{% url 'product_detail' product.id %}">
+      <div class="card">
+        <img src="{{ product.images.all.0.image.url }}" class="card-img-top" alt="Skyscrapers" style="object-fit: contain; width: 100%; height: 200px;">
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">
+            {{ product.features }}
+          </p>
+        </div>
+      </div>
+      </a>
     </div>
-  </div>
+    {% endfor %}
+</div>
+
+
+
+  
 {% endblock %}

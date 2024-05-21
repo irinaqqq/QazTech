@@ -30,4 +30,5 @@ urlpatterns = [
     path('map/', views.map, name='map'),
     path('news/', views.news, name='news'),
     path('support/', views.support, name='support'),
+    path('product/<int:product_id>/', views.product_detail, name='product_detail'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

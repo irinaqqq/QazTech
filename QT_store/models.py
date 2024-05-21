@@ -3,6 +3,8 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=100)
     # Другие поля, если нужно
+    def __str__(self):
+        return self.name
 
 class Processor(models.Model):
     name = models.CharField(max_length=255, verbose_name="Процессор")
@@ -58,7 +60,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")
     weight = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Вес", null=True)
-    features = models.TextField(verbose_name="Особенности", null=True)
+    features = models.CharField(max_length=60, verbose_name="Особенности(кратко)", null=True)
     processor = models.ForeignKey(Processor, on_delete=models.SET_NULL, null=True, verbose_name="Процессор")
     operating_system = models.ForeignKey(OperatingSystem, on_delete=models.SET_NULL, null=True, verbose_name="Операционная система")
     graphics = models.ForeignKey(Graphics, on_delete=models.SET_NULL, null=True, verbose_name="Видеокарта")
@@ -66,11 +68,21 @@ class Product(models.Model):
     storage = models.ForeignKey(Storage, on_delete=models.SET_NULL, null=True, verbose_name="Накопители")
     ports = models.ManyToManyField(Port, verbose_name="Порты и разъемы")
 
+    def __str__(self):
+        return self.name
+    
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name="Продукт")
+    image = models.ImageField(upload_to='static/product_images/', verbose_name="Изображение")
+
+    def __str__(self):
+        return f"Изображение для {self.product.name}"
+
 
 class ProductDescription(models.Model):
     product = models.ForeignKey(Product, related_name='descriptions', on_delete=models.CASCADE, verbose_name="Продукт")
     title = models.CharField(max_length=255, verbose_name="Заголовок")
-    image = models.ImageField(upload_to='product_descriptions/', verbose_name="Фото", blank=True, null=True)
+    image = models.ImageField(upload_to='static/product_descriptions/', verbose_name="Фото", blank=True, null=True)
     text = models.TextField(verbose_name="Описание")
 
     def __str__(self):

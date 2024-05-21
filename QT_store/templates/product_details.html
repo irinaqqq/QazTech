@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{ product.name }}
+{% endblock %}
+{% block content %}
+<style>
+    .features {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    }
+
+    .product-item.collapsed .features {
+        -webkit-line-clamp: initial;
+    }
+
+    .product-item.collapsed .toggle-button {
+        display: none;
+    }
+
+</style>
+<section class="py-5 border-bottom">
+    <div class="container">
+      <div class="row gx-5">
+        <aside class="col-lg-6">
+            <div class="border rounded-4 mb-3 d-flex justify-content-center">
+                {% if product.images.all %}
+                    <!-- Главное изображение продукта -->
+                    <img id="main-image" style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="{{ product.images.all.0.image.url }}" alt="{{ product.name }}" />
+                {% else %}
+                    <!-- Placeholder если нет изображений -->
+                    <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="placeholder-image-url.jpg" alt="Нет изображения" />
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-center mb-3">
+                {% for image in product.images.all %}
+                <div class="border mx-1 rounded-2">
+                    <img onclick="changeMainImage('{{ image.image.url }}')" width="60" height="60" class="rounded-2" src="{{ image.image.url }}" alt="{{ product.name }}" style="object-fit: contain; cursor: pointer;"/>
+                </div>
+            {% endfor %}
+            </div>
+            <a href="{% url 'map' %}" class="btn btn-primary shadow-0 w-100 d-block"></i>Где купить</a>
+        </aside>
+        <main class="col-lg-6">
+          <div class="ps-lg-3">
+            <h4 class="title text-dark">
+                {{ product.name }}
+            </h4>  
+            <div class="mb-3">
+              <span class="h5">{{ product.features }}</span>
+              <span class="text-muted">что то</span>
+            </div>
+  
+            <p>
+                {{ product.description }}
+            </p>
+            <hr/>
+            <div class="row">
+              <dt class="col-3">Процессор:</dt>
+              <dd class="col-9">{{ product.processor }}</dd>
+  
+              <dt class="col-3">Оперативная память:</dt>
+              <dd class="col-9">{{ product.ram.size }} гб</dd>
+  
+              <dt class="col-3">Накопители:</dt>
+              <dd class="col-9">{{ product.storage.size }} гб</dd>
+  
+              <dt class="col-3">Вес:</dt>
+              <dd class="col-9">{{ product.weight }} кг</dd>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+  
+  <!-- content -->
+
+  
+  <!-- Page Content -->
+  {% for description in descriptions %}
+  <section class="py-3">
+    
+    <div class="container">
+        <img src="{{ description.image.url }}" class="img-fluid" alt="...">
+      <h2 class="fw-light mt-2 mb-2">{{ description.title }}</h2>
+      <p>{{ description.text }}</p>
+    </div>
+  </section>
+  {% endfor %}
+
+  <section class="bg-light border-top py-4">
+    <div class="container">
+      <div class="row gx-4">
+        <div class="col-lg-8 mb-4">
+          <div class="border rounded-2 px-3 py-2 bg-white">
+            <!-- Pills navs -->
+            <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+              <li class="nav-item d-flex" role="presentation">
+                <a class="nav-link d-flex align-items-center justify-content-center w-100 active" id="ex1-tab-1" data-mdb-toggle="pill" href="#ex1-pills-1" role="tab" aria-controls="ex1-pills-1" aria-selected="true">ПРОИЗВОДИТЕЛЬНОСТЬ</a>
+              </li>
+              <li class="nav-item d-flex" role="presentation">
+                <a class="nav-link d-flex align-items-center justify-content-center w-100" id="ex1-tab-2" data-mdb-toggle="pill" href="#ex1-pills-2" role="tab" aria-controls="ex1-pills-2" aria-selected="false">СРЕДСТВА КОММУНИКАЦИИ</a>
+              </li>
+              <li class="nav-item d-flex" role="presentation">
+                <a class="nav-link d-flex align-items-center justify-content-center w-100" id="ex1-tab-3" data-mdb-toggle="pill" href="#ex1-pills-3" role="tab" aria-controls="ex1-pills-3" aria-selected="false">КОНСТРУКЦИЯ</a>
+              </li>
+              <li class="nav-item d-flex" role="presentation">
+                <a class="nav-link d-flex align-items-center justify-content-center w-100" id="ex1-tab-4" data-mdb-toggle="pill" href="#ex1-pills-4" role="tab" aria-controls="ex1-pills-4" aria-selected="false">ПРОЧАЯ ИНФОРМАЦИЯ</a>
+              </li>
+            </ul>
+            <!-- Pills navs -->
+  
+            <!-- Pills content -->
+            <div class="tab-content" id="ex1-content">
+              <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+                <!-- <p>
+                  With supporting text below as a natural lead-in to additional content. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                  enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+                  pariatur.
+                </p> -->
+                <!-- <div class="row mb-2">
+                  <div class="col-12 col-md-6">
+                    <ul class="list-unstyled mb-0">
+                      <li><i class="fas fa-check text-success me-2"></i>Some great feature name here</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Lorem ipsum dolor sit amet, consectetur</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Duis aute irure dolor in reprehenderit</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Optical heart sensor</li>
+                    </ul>
+                  </div>
+                  <div class="col-12 col-md-6 mb-0">
+                    <ul class="list-unstyled">
+                      <li><i class="fas fa-check text-success me-2"></i>Easy fast and ver good</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Some great feature name here</li>
+                      <li><i class="fas fa-check text-success me-2"></i>Modern style and design</li>
+                    </ul>
+                  </div>
+                </div> -->
+                <table class="table border mt-3 mb-2">
+                  <tr>
+                    <th class="py-2">Процессор:</th>
+                    <td class="py-2">{{ product.processor }}</td>
+                  </tr>
+                  <tr>
+                    <th class="py-2">Операционная система:</th>
+                    <td class="py-2">{{ product.operating_system }}</td>
+                  </tr>
+                  <tr>
+                    <th class="py-2">Видеокарта:</th>
+                    <td class="py-2">{{ product.graphics }}</td>
+                  </tr>
+                  <tr>
+                    <th class="py-2">Оперативная память:</th>
+                    <td class="py-2">{{ product.ram.size }} гб, типа {{ product.ram.type }}</td>
+                  </tr>
+                  <tr>
+                    <th class="py-2">Накопители:</th>
+                    <td class="py-2">{{ product.storage.size }} гб, типа {{ product.storage.type }}</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="tab-pane fade mb-2" id="ex1-pills-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+                <table class="table border mt-3 mb-2">
+                    <tr>
+                        <th class="py-2 align-middle">Порты и разъемы:</th>
+                        <td class="py-2">
+                            <ul style="margin: auto;">
+                                {% for port in product.ports.all %}
+                                    <li>{{ port.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>                    
+                    <tr>
+                      <th class="py-2 align-middle">Беспроводные технологии:</th>
+                      <td class="py-2">Инфа про блютузы вайфаи и тд</td>
+                    </tr>
+                  </table>
+              </div>
+              <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+                <table class="table border mt-3 mb-2">
+                    <tr>
+                        <th class="py-2 align-middle">Дисплей:</th>
+                        <td class="py-2">ИНФА ПРО ДИСПЛЕЙ</td>
+                    </tr>                    
+                    <tr>
+                      <th class="py-2 align-middle">Габариты (В × Ш × Г):</th>
+                      <td class="py-2">ИНФА ПРО Габариты</td>
+                    </tr>
+                    <tr>
+                        <th class="py-2 align-middle">Вес:</th>
+                        <td class="py-2">{{ product.weight }}</td>
+                      </tr>
+                      <tr>
+                        <th class="py-2 align-middle">Цвет:</th>
+                        <td class="py-2">ИНФА ПРО Цвет</td>
+                      </tr>
+                  </table>
+              </div>
+              <div class="tab-pane fade mb-2" id="ex1-pills-4" role="tabpanel" aria-labelledby="ex1-tab-4">
+                <table class="table border mt-3 mb-2">
+                    <tr>
+                        <th class="py-2 align-middle">Предустановленное ПО:</th>
+                        <td class="py-2">ИНФА ПРО ПО</td>
+                    </tr>                    
+                    <tr>
+                      <th class="py-2 align-middle">Комплектация:</th>
+                      <td class="py-2">ИНФА ПРО Комплектация</td>
+                    </tr>
+                  </table>
+              </div>
+            </div>
+            <!-- Pills content -->
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="px-0 border rounded-2 shadow-0">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Похожие товары</h5>
+
+                    
+                    {% for similar_product in similar_products %}
+                    <div class="d-flex mb-2 overflow-hidden">
+                      <a href="{% url 'product_detail' similar_product.id %}" class="me-3">
+                        <img src="{{ similar_product.images.all.0.image.url }}" style="object-fit: contain; min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
+                      </a>
+                      <div class="info">
+                        <a href="{% url 'product_detail' similar_product.id %}" class="nav-link mb-1 ">
+                        <strong class="text-dark"> {{ similar_product.name }} </strong>
+                        <span class="features">{{ similar_product.features }}</span>
+                        </a>
+                      </div>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
