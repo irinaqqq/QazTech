@@ -1,0 +1,17 @@
+{% if query %}
+    <h2>Результаты поиска для "{{ query }}"</h2>
+    <h3>Продукты:</h3>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Категории:</h3>
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Введите запрос в строку поиска</p>
+{% endif %}

@@ -2,6 +2,8 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    description = models.CharField(max_length=110, verbose_name="Описание(кратко)", null=True)
+    image = models.ImageField(upload_to='static/category_images/', verbose_name="Фото", null=True)
     # Другие поля, если нужно
     def __str__(self):
         return self.name

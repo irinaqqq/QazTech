@@ -23,7 +23,9 @@ from QT_store import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('categories/', views.categories, name='categories'),
     path('category/<int:category_id>/', views.category_products, name='category_products'),
+    path('search/', views.search, name='search'),
     path('about/', views.aboutus, name='aboutus'),
     path('contact/', views.contactus, name='contactus'),
     path('faq/', views.faq, name='faq'),

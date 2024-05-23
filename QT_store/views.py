@@ -4,6 +4,9 @@ from .models import *
 def home(request):
     return render(request, 'home.html')
 
+def categories(request):
+    return render(request, 'categories.html')
+
 def category_products(request, category_id):
     category = Category.objects.get(pk=category_id)
     products = Product.objects.filter(category=category)
@@ -32,3 +35,21 @@ def news(request):
 
 def support(request):
     return render(request, 'support.html')
+
+def search(request):
+    query = request.GET.get('q')
+    if query:
+        # Ищем продукты по названию или описанию
+        products = Product.objects.filter(name__icontains=query) | Product.objects.filter(description__icontains=query)
+        # Ищем категории по названию
+        categories = Category.objects.filter(name__icontains=query)
+    else:
+        products = []
+        categories = []
+    
+    context = {
+        'query': query,
+        'products': products,
+        'categories': categories,
+    }
+    return render(request, 'search_results.html', context)

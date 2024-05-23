@@ -22,7 +22,7 @@
       </div>
   
       <div class="col mb-3">
-        <h5>ПРОДУКТЫ И УСЛУГИ</h5>
+        <h5><a href="{% url 'categories' %}" class="nav-link p-0">ПРОДУКТЫ И УСЛУГИ</a></h5>
         <ul class="nav flex-column">
           {% for category in categories %}
             <li class="nav-item mb-2"><a href="{% url 'category_products' category.id %}" class="nav-link p-0 text-muted">{{ category.name }}</a></li>

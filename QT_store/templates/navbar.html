@@ -52,8 +52,8 @@
 <header>
     <!-- Jumbotron -->
     <div class="p-4 text-center bg-white border-bottom" style="padding-bottom: 0!important;">
-      <div class="container" style="margin-left: 0;">
-        <div class="row">
+      <div class="container-fluid" style="width: 100%; margin: 0;">
+        <div class="row" style="width: auto;">
           <!-- Left elements -->
           <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
             <a href="{% url 'home' %}" class="ms-md-2">
@@ -63,18 +63,19 @@
           <!-- Left elements -->
   
           <!-- Center elements -->
-          <div class="" style="width: 80vh; margin: auto;">
-            <form class="d-flex input-group w-auto my-auto md-4">
-                <input autocomplete="off" type="search" class="form-control rounded" placeholder="Что вы ищете сегодня?" />
-                <span class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></span>
-            </form>
+          <div class="col-md-4 justify-content-center align-items-center my-auto">
+            <form action="{% url 'search' %}" method="GET" class="d-flex input-group w-auto my-auto md-4">
+              <input autocomplete="off" type="search" name="q" class="form-control form-control-lg rounded" placeholder="Что вы ищете сегодня?"/>
+              <button type="submit" class="btn btn-primary d-none d-lg-flex py-auto"><i class="fas fa-search"></i></button>
+          </form>          
         </div>
+        
+        <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center"></div>
         
           <!-- Center elements -->
   
           <!-- Right elements -->
-          <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
-        </div>
+
       </div>
     </div>
     <!-- Jumbotron -->

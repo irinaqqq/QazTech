@@ -28,7 +28,7 @@
             <div class="border rounded-4 mb-3 d-flex justify-content-center">
                 {% if product.images.all %}
                     <!-- Главное изображение продукта -->
-                    <img id="main-image" style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="{{ product.images.all.0.image.url }}" alt="{{ product.name }}" />
+                    <img id="main-image" style="width: 100%; max-height: 500px; margin: auto; object-fit: contain;" class="rounded-4 fit" src="{{ product.images.all.0.image.url }}" alt="{{ product.name }}" />
                 {% else %}
                     <!-- Placeholder если нет изображений -->
                     <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="placeholder-image-url.jpg" alt="Нет изображения" />
