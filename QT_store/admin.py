@@ -21,3 +21,7 @@ admin.site.register(Graphics)
 admin.site.register(RAM)
 admin.site.register(Storage)
 admin.site.register(Port)
+admin.site.register(ProcLine)
+admin.site.register(ProcBrand)
+admin.site.register(Motherboard)
+
