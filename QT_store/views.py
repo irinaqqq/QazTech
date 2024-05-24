@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import *
+from django.db.models import Q
 
 def home(request):
     return render(request, 'home.html')
@@ -40,16 +41,12 @@ def search(request):
     query = request.GET.get('q')
     if query:
         # Ищем продукты по названию или описанию
-        products = Product.objects.filter(name__icontains=query) | Product.objects.filter(description__icontains=query)
-        # Ищем категории по названию
-        categories = Category.objects.filter(name__icontains=query)
+        result_products = Product.objects.filter(name__icontains=query) | Product.objects.filter(description__icontains=query)
     else:
-        products = []
-        categories = []
+        result_products = []
     
     context = {
         'query': query,
-        'products': products,
-        'categories': categories,
+        'result_products': result_products,
     }
     return render(request, 'search_results.html', context)

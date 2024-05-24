@@ -4,76 +4,32 @@
 {{ category.name }}
 {% endblock %}
 {% block content %}
-<style>
-    .image-container {
-    /* margin-top: 100px; */
-    position: relative;
-    width: 100%;
-    height: 150px;
-    background-image: url('https://p3-ofp.static.pub/ShareResource/na/laptops-splitter/hero/lenovo-legion-5-and-yoga-slim-9-desktop.jpg'); /* Путь к вашему изображению */
-    background-size: cover;
-    background-position: center;
-}
-    .card {
-      width: 100%; 
-      display: inline-block; 
-      /* vertical-align: top; */
-      /* margin-top: 20px;  */
-      background-color: #f2f3f7;
-      border: 1px solid #ccc;
-    }
-    .row{
-      /* margin: auto; */
-    }
-    a{
-      text-decoration: none;
-    }
-    .card{
-      height: 350px;
-    }
-    .card-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    }
+<div class="image-container" style="background-image: url({{ category.image.url }});">
+    <div class="text-container">
+        {{ category.description }}
+    </div>
+</div>
 
-    .product-item.collapsed .card-text {
-        -webkit-line-clamp: initial;
-    }
-
-    .product-item.collapsed .card-text {
-        display: none;
-    }
-</style>
-<div class="image-container"></div>
-    <section class="features7 cid-svMI8yuE9y" id="features08-i" style="padding-bottom: 0; padding-top: 2rem;">  
-      <div class="container">
-          <div class="mbr-section-head pb-5">
-              <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-1" style="color: #0196e3;">
-                  <strong>{{ category.name }}</strong>
-              </h4>
-          </div>
-          <div class="row justify-content-center">
+    <section class="features7 cid-svMI8yuE9y" id="features08-i" style="padding-bottom: 0; padding-top: 2rem; background-color: white;"> 
+          <div class="row mx-auto" style="display: flex; flex-wrap: wrap; width: 100%; padding-bottom: 2rem; padding-left: 0.5rem;">
               {% for product in products %}
                
-                  <div class="item features-image сol-12 col-md-6 col-lg-4">
+                  <div class="item features-image col-md-1" style="width: 250px; height: 260px; margin: 0.5rem 0.5rem;">
                       <a href="{% url 'product_detail' product.id %}">
-                      <div class="item-wrapper">
+                      <div class="item-wrapper" style="width: 250px; height: 260px;">
                           <div class="item-img">
                               <img src="{{ product.images.all.0.image.url }}" alt="Features Image">
                           </div>
-                          <div class="item-content">
-                              <h5 class="item-title mbr-fonts-style display-5" style="color: #0196e3;"><strong>{{ product.name }}</strong></h5>
-                              <p class="mbr-text mbr-fonts-style mt-3 display-4"><strong>{{ product.features }}</strong></p>
+                          <div class="item-content" style="padding: 0; margin-top: 1rem;">
+                              <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>{{ product.name }}</strong></h5>
                           </div>
                       </div>
                   </a>
                   </div>
               
               {% endfor %}
-          </div>
-      </div>
+
+        </div> 
   </section>
 
 

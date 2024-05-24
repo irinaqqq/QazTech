@@ -37,6 +37,36 @@
             display: none;
             }
         </style>
+        <style>
+            .image-container {
+            /* margin-top: 100px; */
+            position: relative;
+            width: 100%;
+            height: 150px;
+            background-image: url('{% static 'images/abstract.webp' %}'); /* Путь к вашему изображению */
+            background-size: cover;
+            background-position: center;
+            }
+            .text-container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 40px;
+                color: white;
+                text-align: center;
+                white-space: nowrap;
+            }
+            .image-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.3); /* Измените значение альфа-канала (последнее число) для достижения желаемого уровня затемнения */
+            }
+        </style>
     {% endblock %}
 </head>
 <body>

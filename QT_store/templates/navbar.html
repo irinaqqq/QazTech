@@ -55,7 +55,7 @@
       <div class="container-fluid" style="width: 100%; margin: 0;">
         <div class="row" style="width: auto;">
           <!-- Left elements -->
-          <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
+          <div class="col-md-3 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
             <a href="{% url 'home' %}" class="ms-md-2">
               <img src="{% static 'images/qt.png' %}" height="50" />
             </a>
@@ -63,14 +63,14 @@
           <!-- Left elements -->
   
           <!-- Center elements -->
-          <div class="col-md-4 justify-content-center align-items-center my-auto">
-            <form action="{% url 'search' %}" method="GET" class="d-flex input-group w-auto my-auto md-4">
-              <input autocomplete="off" type="search" name="q" class="form-control form-control-lg rounded" placeholder="Что вы ищете сегодня?"/>
-              <button type="submit" class="btn btn-primary d-none d-lg-flex py-auto"><i class="fas fa-search"></i></button>
+          <div class="col-md-5 justify-content-center align-items-center my-auto">
+            <form action="{% url 'search' %}" method="GET" class="d-flex input-group w-auto my-auto md-4 rounded">
+              <input autocomplete="off" type="search" name="q" class="form-control form-control-lg" placeholder="Что вы ищете сегодня?" style="padding: 24px;"/>
+              <button type="submit" class="btn btn-primary d-none d-lg-flex py-auto"><i class="fas fa-search" style="margin: auto;"></i></button>
           </form>          
         </div>
         
-        <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center"></div>
+        <div class="col-md-3 d-flex justify-content-center justify-content-md-end align-items-center"></div>
         
           <!-- Center elements -->
   
