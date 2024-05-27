@@ -48,6 +48,7 @@
         opacity: 1;
         width: 100%;
     }
+
 </style>
 <header>
     <!-- Jumbotron -->
@@ -56,9 +57,15 @@
         <div class="row" style="width: auto;">
           <!-- Left elements -->
           <div class="col-md-3 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
-            <a href="{% url 'home' %}" class="ms-md-2">
-              <img src="{% static 'images/qt.png' %}" height="50" />
-            </a>
+            <a href="{% url 'home' %}" class="ms-md-2 d-flex">
+              <img src="{% static 'images/qt-logo.png' %}" height="50" />
+            
+            <div style="color: #00a2e8; line-height: 0.75rem; padding-top: 1rem;" class="my-auto font-inter">
+              <strong style="font-size: 35px;" class="font-inter">QAZAQ</strong> 
+              <br>
+              <p style="font-size: 10px; color: black;"><strong> TECHNOLOGY</strong></p>
+            </div>
+          </a>
           </div>
           <!-- Left elements -->
   

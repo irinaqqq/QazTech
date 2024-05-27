@@ -22,6 +22,9 @@ def product_detail(request, product_id):
 def aboutus(request):
     return render(request, 'aboutus.html')
 
+def whowe(request):
+    return render(request, 'whowe.html')
+
 def contactus(request):
     return render(request, 'contactus.html')
 

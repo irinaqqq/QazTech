@@ -27,6 +27,7 @@ urlpatterns = [
     path('category/<int:category_id>/', views.category_products, name='category_products'),
     path('search/', views.search, name='search'),
     path('about/', views.aboutus, name='aboutus'),
+    path('whowe/', views.whowe, name='whowe'),
     path('contact/', views.contactus, name='contactus'),
     path('faq/', views.faq, name='faq'),
     path('map/', views.map, name='map'),

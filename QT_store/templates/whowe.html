@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Домашняя страница
+{% endblock %}
+{% block content %}
+<style>
+    .title-whowe{
+    font-size: 1.375em;
+    font-weight: bold;
+    line-height: 1.81;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    color: #0196e3;
+
+    }
+    .iframe-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 соотношение сторон */
+    height: 0;
+    }
+    .iframe-wrapper iframe {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+</style>
+<div class="image-container" style="height: 500px; background-image: url(//p1-ofp.static.pub/ShareResource/indirect/static-content/about/whoweare/images/lenovo-about-who-we-are-hero.jpg;)">
+    <div class="text-container">
+        Кто мы
+    </div>
+</div>
+<section class="video1 cid-svGLmnD9Wg" id="video01-6" style="padding-top: 4rem; padding-bottom: 3rem;">
+      
+      
+    <div class="align-left container" style="width: 50%;">
+        <div class="iframe-wrapper">
+            <iframe src="https://www.youtube.com/embed/QsY8fnvMn6c?si=4KDZm3tCO7sFDN5d" frameborder="0" allowfullscreen></iframe> 
+        </div>
+        <h4 class="title-whowe">История Lenovo — это история разработки умных вычислительных технологий для создания лучшего мира. Обладая самым широким в мире портфелем технологических продуктов, мы воплощаем наше видение «технологий будущего для всех» с помощью продуктов, решений, программного обеспечения и услуг, которые необходимы отдельным пользователям, группам, предприятиям и целым сообществам для реализации своего потенциала.</h4>
+        <p>Сегодня отрасли видоизменяют и заново создают то, что и как они производят. Виртуальное здравоохранение. Дистанционное обучение. Умные покупки. Умные технологии должны быть доступны для всех. Как технологическая компания из списка Fortune Global 500 и одна из самых уважаемых компаний в рейтинге журнала Fortune Magazine, мы мыслим и действуем на глобальном уровне. Прорывные технологии — это всегда результат сотрудничества, нужны самые разные люди и разные точки зрения, чтобы сделать технологии умными. Мы гордимся тем, что эффективно используем разнообразие более чем 63 000 наших сотрудников для успешного обслуживания заказчиков на 180 рынках, переопределяя и расширяя границы возможностей технологий.</p>
+        <div class="col d-flex flex-column align-items-start gap-2">
+            <h2 class="fw-bold text-body-emphasis align-center" style="font-size: 3rem; color: #0196e3;">Чем Qazaq Technology отличается от других компаний:</h2>
+            
+            <p class="text-body-secondary" style="font-size: 1.5rem;">Qazaq Technology LTD - это не сборка, а первая в Казахстане автоматизированная конвейерная система производства компьютеров, моноблоков, планшетов, корпусов и комплектующих.</p>
+          </div>
+        <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 mt-1">
+
+      
+            
+             
+                <div class="col d-flex flex-column gap-2 mt-0">
+                  <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4"  style="width: 3rem; height: 3rem;">
+                      <i class="fa-solid fa-earth-asia"></i>
+                  </div>
+                  <p class="text-body-secondary" style="font-size: 1.375em;">Первый и единственный производитель товаров Lenovo на территории Республики Казахстан, Центральной Азии и стран снг.</p>
+                </div>
+      
+                <div class="col d-flex flex-column gap-2 mt-0">
+                  <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4" style="width: 3rem; height: 3rem;">
+                      <i class="fa-solid fa-handshake"></i>
+                  </div>
+                  <p class="text-body-secondary" style="font-size: 1.375em;">Привлекает зарубежных партнеров в Республику Казахстан для <br>трансфера инновационных  <br>технологий.</p>
+                </div>
+      
+                <div class="col d-flex flex-column gap-2 mt-0">
+                  <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4"  style="width: 3rem; height: 3rem;">
+                      <i class="fa-solid fa-user-graduate"></i>
+                  </div>
+                  <p class="text-body-secondary" style="font-size: 1.375em;">Содействует в реализации государственных программ по "Дуальному" образованию.</p>
+                </div>
+      
+                <div class="col d-flex flex-column gap-2 mt-0">
+                  <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4"  style="width: 3rem; height: 3rem;">
+                      <i class="fa-solid fa-shield"></i>
+                  </div>
+                  <p class="text-body-secondary" style="font-size: 1.375em;">Является производителем доверенного программного обеспечения информационной безопасности.</p>
+                </div>
+              
+            
+          </div>
+    </div>
+    
+</section>
+{% endblock %}

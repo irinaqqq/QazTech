@@ -9,31 +9,130 @@
     .btn-success:hover{
         background-color: #241052 !important;
     }
+    .image-container::before {
+    background-color: transparent;
+    }
+    .image-part {
+    position: absolute;
+    display: block;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5); /* Начальный цвет затемнения */
+    transition: background-color 0.3s ease; /* Плавное изменение цвета */
+    overflow: hidden;
+}
+    #part1 {
+    width: 600px;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.text-container2 {
+        position: relative;
+        word-wrap: break-word;
+        display: flex; /* Размещаем контент в центре блока */
+        /* justify-content: center;
+        align-items: center; */
+        flex-wrap: wrap;
+        color: white;
+        font-size: 40px;
+        /* width: 80%; */
+        padding: 70px;
+    }
+    .title{
+    font-size: 30px;
+    margin-top: 20px;
+    padding-bottom: 6px;
+    word-break: break-word;
+    line-height: 30px;
+    }
+    .cid-svMI8yuE9y .item-wrapper{
+    border: none;
+    text-align: center;
+    }
 
 </style>
   
-  
-  <section class="header2 cid-svGKGwmqjv" id="header02-0" style="">
-      
-    <div class="container">
-        <div class="row justify-content-center align-items-center">
-            <div class="col-12 col-md-12 col-lg-5 title-col d-flex justify-content-center">
-                <img src="{% static 'images/qt5.png' %}" height="130" />
+<div class="image-container" style="height: 500px; background-image: url('https://p3-ofp.static.pub/ShareResource/indirect/homepage/about-hp/images/lenovo-about-us-hp-banner-638.jpg');">
+    <div class="image-part" id="part1">
+    <div class="text-container2 text-wrap" style="">
+        <p class="text-start"> <strong style="color: #46c9df;">We are</strong><strong> Qazaq Technology</strong></p>
+        <h4 class="title">Передовые технологии  и инновации</h4>
+        <p class="text" style="font-size: 18px;">В основе наших технологий — умные и интуитивно понятные функции, призванные сделать работу пользователей проще и удобнее.</p>
+    </div>
+</div>
+</div>
+
+<section class="features7 cid-svMI8yuE9y" id="features08-i" style="padding-bottom: 0; padding-top: 0rem; background-color: white;">
+    <div class="container px-4" style="padding-top: 20px !important;">
+    <div class="row justify-content-center" style="display: flex; flex-wrap: wrap; width: 100%;">
+               
+            <div class="item features-image col-md-1" style="width: 250px; height: 280px; margin: 0.5rem 0.5rem;">
+                <a href="{% url 'whowe'%}">
+                    <div class="item-wrapper" style="width: 250px; height: 280px;">
+                    <div class="item-img">
+                        <img src="//p1-ofp.static.pub/fes/cms/2021/07/13/zuv0mfg8va7kx2j9l7u9xwk9pd8t64895531.png" alt="Features Image">
+                    </div>
+                    <div class="item-content" style="padding: 0; margin-top: 1rem;">
+                        <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>Наша компания</strong></h5>
+                        <p class="mbr-text mbr-fonts-style display-4"><strong>Мы думаем и действуем иначе   </strong></p>
+
+                    </div>
+                </div>
+            </a>
             </div>
-            <div class="col-12 col-md-12 text-col col-lg-6" style="width: 37%;">
-                <p class="mbr-text mbr-fonts-style mb-0 display-5">
-                    <strong>Это в первую очередь <br>ПРОИЗВОДСТВО,<br> а не простая сборка.</strong>
-                </p>
+
+            <div class="item features-image col-md-1" style="width: 250px; height: 280px; margin: 0.5rem 0.5rem;">
+                <a href="{% url 'faq'%}">
+                    <div class="item-wrapper" style="width: 250px; height: 280px;">
+                    <div class="item-img">
+                        <img src="//p1-ofp.static.pub/ShareResource/indirect/homepage/about-hp/images/about-tab-innovation.jpg" alt="Features Image">
+                    </div>
+                    <div class="item-content" style="padding: 0; margin-top: 1rem;">
+                        <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>FAQs</strong></h5>
+                        <p class="mbr-text mbr-fonts-style display-4"><strong>Часто задаваемые вопросы</strong></p>
+
+                    </div>
+                </div>
+            </a>
             </div>
-        </div>
+
+            <div class="item features-image col-md-1" style="width: 250px; height: 280px; margin: 0.5rem 0.5rem;">
+                <a href="{% url 'map'%}">
+                    <div class="item-wrapper" style="width: 250px; height: 280px;">
+                    <div class="item-img">
+                        <img src="//p3-ofp.static.pub/fes/cms/2021/07/13/vktze8os6u5ons2ladvj60vc92wckr679891.jpg" alt="Features Image">
+                    </div>
+                    <div class="item-content" style="padding: 0; margin-top: 1rem;">
+                        <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>Адреса</strong></h5>
+                        <p class="mbr-text mbr-fonts-style display-4"><strong>Где купить технику Qazaq Technology</strong></p>
+
+                    </div>
+                </div>
+            </a>
+            </div>
+
+            <div class="item features-image col-md-1" style="width: 250px; height: 280px; margin: 0.5rem 0.5rem;">
+                <a href="{% url 'contactus'%}">
+                    <div class="item-wrapper" style="width: 250px; height: 280px;">
+                    <div class="item-img">
+                        <img src="//p2-ofp.static.pub/fes/cms/2021/07/13/ly439vcz4yvfoc2j5utktlgo9a2a8g385850.jpg" alt="Features Image">
+                    </div>
+                    <div class="item-content" style="padding: 0; margin-top: 1rem;">
+                        <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>Свяжитесь с нами</strong></h5>
+                        <p class="mbr-text mbr-fonts-style display-4"><strong>Ваше мнение важно для нас</strong></p>
+
+                    </div>
+                </div>
+            </a>
+            </div>
+        
+              
     </div>
     
-  </section>
-  
-  <section class="article5 cid-svGLkEVmLN" id="article06-5" style="padding-top: 0; padding-bottom: 0;">
+</div>
+</section>
+  <!-- <section class="article5 cid-svGLkEVmLN" id="article06-5" style="padding-top: 0; padding-bottom: 0;">
     <div class="container px-4 py-5">
-        <!-- <h2 class="pb-2 border-bottom">Features with title</h2> -->
-    
         <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
           <div class="col d-flex flex-column align-items-start gap-2">
             <h2 class="fw-bold text-body-emphasis" style="font-size: 4rem; color: #0196e3;">Чем Qazaq Technology отличается от других компаний:</h2>
@@ -230,7 +329,6 @@
             </div>
             <div class="card col-12 col-md-10 col-lg-6">
                 <div class="card-wrapper py-2" style="flex-direction: column; align-items: center; height: 300px;">
-                            <!--Formbuilder Form-->
                             <form action="" method="POST" class="mbr-form form-with-styler" data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true" value="">
                                 <div class="form-row">
                                     <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Спасибо, что заполнили форму!</div>
@@ -267,7 +365,7 @@
 
         </div>
     </div>
-</section>
+</section> -->
 
 {% endblock %}
 
