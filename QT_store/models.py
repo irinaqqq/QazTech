@@ -133,7 +133,84 @@ class Port(models.Model):
     def __str__(self):
         return self.name
 
+class ScreenSize(models.Model):
+    size = models.CharField(max_length=50, verbose_name="Размер экрана")
+
+    def __str__(self):
+        return self.size
+
+class PowerSupply(models.Model):
+    power = models.CharField(max_length=100, verbose_name="Мощность")
+
+
+    def __str__(self):
+        return self.power
+
+class Controller(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Название")
+
+    def __str__(self):
+        return self.name
+
+class Size(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Название")
+
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
+    DISCRETE_GRAPHICS_CHOICES = [
+        (None, 'Нет'),
+        (2, '2GB'),
+        (4, '4GB'),
+        (8, '8GB'),
+        (16, '16GB'),
+        (24, '24GB'),
+    ]
+    SCREEN_TYPE_CHOICES = [
+        (None, 'Нет'),
+        ('IPS', 'IPS'),
+        ('VA', 'VA'),
+        ('TN', 'TN'),
+        ('PLS', 'PLS'),
+        ('LED', 'LED'),
+    ]
+    
+    WEBCAM_CHOICES = [
+        (None, 'Нет'),
+        (False, 'Без встроенной вебкамеры'),
+        (True, 'Со встроенной веб камерой'),
+    ]
+    KEYBOARD_TYPE_CHOICES = [
+        (None, 'Нет'),
+        ('Wired', 'Проводная'),
+        ('Wireless', 'Беспроводная'),
+    ]
+    KEYBOARD_BACKLIGHT_CHOICES = [
+        (None, 'Нет'),
+        (False, 'Без подсветки'),
+        (True, 'С подсветкой'),
+    ]
+    TOUCH_SCREEN_CHOICES = [
+        (True, 'Да'),
+        (False, 'Нет'),
+    ]
+    SCREEN_RESOLUTION_CHOICES = [
+        (None, 'Нет'),
+        ('HD', 'HD'),
+        ('Full HD', 'Full HD'),
+        ('Quad HD', 'Quad HD'),
+        ('4K', '4K'),
+        ('Ultra HD+', 'Ultra HD+'),
+    ]
+
+    FORM_FACTOR_CHOICES = [
+        (None, 'Нет'),
+        ('Horizontal', 'Горизонтальный'),
+        ('Vertical', 'Вертикальный'),
+    ]
+    
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Категория")
     name = models.CharField(max_length=100, verbose_name="Название", unique=True)
     description = models.TextField(verbose_name="Описание", blank=True)
@@ -141,7 +218,7 @@ class Product(models.Model):
     features = models.CharField(max_length=60, verbose_name="Особенности(кратко)", null=True)
     processor = models.ForeignKey(Processor, on_delete=models.SET_NULL, null=True, verbose_name="Процессор", blank=True)
     operating_system = models.ForeignKey(OperatingSystem, on_delete=models.SET_NULL, null=True, verbose_name="Операционная система", blank=True)
-    graphics = models.ForeignKey(Graphics, on_delete=models.SET_NULL, null=True, verbose_name="Видеокарта", blank=True)
+    # graphics = models.ForeignKey(Graphics, on_delete=models.SET_NULL, null=True, verbose_name="Видеокарта", blank=True)
     ram = models.ForeignKey(RAM, on_delete=models.SET_NULL, null=True, verbose_name="Оперативная память", blank=True)
     storage = models.ForeignKey(Storage, on_delete=models.SET_NULL, null=True, verbose_name="Накопители", blank=True)
     ports = models.ManyToManyField(Port, verbose_name="Порты и разъемы", blank=True)
@@ -149,6 +226,21 @@ class Product(models.Model):
     storage_temperature = models.CharField(max_length=20, verbose_name="Температура хранения", null=True, blank=True)
     operating_humidity = models.CharField(max_length=20, verbose_name="Рабочая влажность", null=True, blank=True)
     storage_humidity = models.CharField(max_length=20, verbose_name="Влажность хранения", null=True, blank=True)
+
+    screen_type = models.CharField(max_length=50, verbose_name="Тип экрана", choices=SCREEN_TYPE_CHOICES, blank=True, null=True)
+    webcam = models.CharField(max_length=20, verbose_name="Веб камера", choices=WEBCAM_CHOICES, default=None, blank=True,)
+    discrete_graphics = models.IntegerField(verbose_name="Видеокарта дискретная", choices=DISCRETE_GRAPHICS_CHOICES, blank=True, null=True)
+    keyboard_type = models.CharField(max_length=50, verbose_name="Комплект клавиатура и мышь", choices=KEYBOARD_TYPE_CHOICES, blank=True, null=True)
+    keyboard_backlight = models.CharField(max_length=20, verbose_name="Подсветка клавиатуры", choices=KEYBOARD_BACKLIGHT_CHOICES, default=None, blank=True, null=True)
+    touch_screen = models.CharField(max_length=20, verbose_name="Сенсорный экран", choices=TOUCH_SCREEN_CHOICES, blank=True, default=False)
+    touch_screen_touches = models.IntegerField(verbose_name="Количество касаний одновременно", blank=True, null=True)
+    screen_sizes = models.ManyToManyField(ScreenSize, verbose_name="Размер экрана", blank=True)
+    screen_resolution = models.CharField(max_length=20, verbose_name="Разрешение экрана", choices=SCREEN_RESOLUTION_CHOICES, blank=True, null=True)
+    power_supplies = models.ManyToManyField(PowerSupply, verbose_name="Блоки питания", blank=True)
+    controllers  = models.ManyToManyField(Controller, verbose_name="Контроллеры", blank=True)
+    sizes = models.ManyToManyField('Size', verbose_name="Размеры", blank=True)
+    form_factor = models.CharField(max_length=20, verbose_name="Форм-фактор", choices=FORM_FACTOR_CHOICES, blank=True, null=True)
+
 
     def __str__(self):
         return self.name

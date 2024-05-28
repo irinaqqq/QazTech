@@ -4,71 +4,23 @@
 О нас
 {% endblock %}
 {% block content %}
-    
-<style>
-    .btn-success:hover{
-        background-color: #241052 !important;
-    }
-    .image-container::before {
-    background-color: transparent;
-    }
-    .image-part {
-    position: absolute;
-    display: block;
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.5); /* Начальный цвет затемнения */
-    transition: background-color 0.3s ease; /* Плавное изменение цвета */
-    overflow: hidden;
-}
-    #part1 {
-    width: 600px;
-    height: 100%;
-    top: 0;
-    left: 0;
-}
-.text-container2 {
-        position: relative;
-        word-wrap: break-word;
-        display: flex; /* Размещаем контент в центре блока */
-        /* justify-content: center;
-        align-items: center; */
-        flex-wrap: wrap;
-        color: white;
-        font-size: 40px;
-        /* width: 80%; */
-        padding: 70px;
-    }
-    .title{
-    font-size: 30px;
-    margin-top: 20px;
-    padding-bottom: 6px;
-    word-break: break-word;
-    line-height: 30px;
-    }
-    .cid-svMI8yuE9y .item-wrapper{
-    border: none;
-    text-align: center;
-    }
-
-</style>
-  
-<div class="image-container" style="height: 500px; background-image: url('https://p3-ofp.static.pub/ShareResource/indirect/homepage/about-hp/images/lenovo-about-us-hp-banner-638.jpg');">
-    <div class="image-part" id="part1">
+<div class="image-container3" style="background-color: transparent; height: 500px; background-image: url('https://p3-ofp.static.pub/ShareResource/indirect/homepage/about-hp/images/lenovo-about-us-hp-banner-638.jpg');">
+    <div class="image-part2" id="part1" style="width: 600px; height: 100%; top: 0; left: 0; background-color: rgba(0, 0, 0, 0.5);">
     <div class="text-container2 text-wrap" style="">
         <p class="text-start"> <strong style="color: #46c9df;">We are</strong><strong> Qazaq Technology</strong></p>
-        <h4 class="title">Передовые технологии  и инновации</h4>
+        <h4 class="title" style="font-size: 30px; margin-top: 20px; padding-bottom: 6px; word-break: break-word; line-height: 30px;">Передовые технологии  и инновации</h4>
         <p class="text" style="font-size: 18px;">В основе наших технологий — умные и интуитивно понятные функции, призванные сделать работу пользователей проще и удобнее.</p>
     </div>
 </div>
 </div>
 
-<section class="features7 cid-svMI8yuE9y" id="features08-i" style="padding-bottom: 0; padding-top: 0rem; background-color: white;">
+<section class="features7 cid-svMI8yuE9y" id="features08-i" style="padding-bottom: 0; padding-top: 0rem; background-color: white; border: none; text-align: center;">
     <div class="container px-4" style="padding-top: 20px !important;">
     <div class="row justify-content-center" style="display: flex; flex-wrap: wrap; width: 100%;">
                
             <div class="item features-image col-md-1" style="width: 250px; height: 280px; margin: 0.5rem 0.5rem;">
                 <a href="{% url 'whowe'%}">
-                    <div class="item-wrapper" style="width: 250px; height: 280px;">
+                    <div class="item-wrapper" style="width: 250px; height: 280px; border: none;">
                     <div class="item-img">
                         <img src="//p1-ofp.static.pub/fes/cms/2021/07/13/zuv0mfg8va7kx2j9l7u9xwk9pd8t64895531.png" alt="Features Image">
                     </div>
@@ -83,7 +35,7 @@
 
             <div class="item features-image col-md-1" style="width: 250px; height: 280px; margin: 0.5rem 0.5rem;">
                 <a href="{% url 'faq'%}">
-                    <div class="item-wrapper" style="width: 250px; height: 280px;">
+                    <div class="item-wrapper" style="width: 250px; height: 280px; border: none;">
                     <div class="item-img">
                         <img src="//p1-ofp.static.pub/ShareResource/indirect/homepage/about-hp/images/about-tab-innovation.jpg" alt="Features Image">
                     </div>
@@ -98,7 +50,7 @@
 
             <div class="item features-image col-md-1" style="width: 250px; height: 280px; margin: 0.5rem 0.5rem;">
                 <a href="{% url 'map'%}">
-                    <div class="item-wrapper" style="width: 250px; height: 280px;">
+                    <div class="item-wrapper" style="width: 250px; height: 280px; border: none;">
                     <div class="item-img">
                         <img src="//p3-ofp.static.pub/fes/cms/2021/07/13/vktze8os6u5ons2ladvj60vc92wckr679891.jpg" alt="Features Image">
                     </div>
@@ -113,7 +65,7 @@
 
             <div class="item features-image col-md-1" style="width: 250px; height: 280px; margin: 0.5rem 0.5rem;">
                 <a href="{% url 'contactus'%}">
-                    <div class="item-wrapper" style="width: 250px; height: 280px;">
+                    <div class="item-wrapper" style="width: 250px; height: 280px; border: none;">
                     <div class="item-img">
                         <img src="//p2-ofp.static.pub/fes/cms/2021/07/13/ly439vcz4yvfoc2j5utktlgo9a2a8g385850.jpg" alt="Features Image">
                     </div>
@@ -131,241 +83,5 @@
     
 </div>
 </section>
-  <!-- <section class="article5 cid-svGLkEVmLN" id="article06-5" style="padding-top: 0; padding-bottom: 0;">
-    <div class="container px-4 py-5">
-        <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
-          <div class="col d-flex flex-column align-items-start gap-2">
-            <h2 class="fw-bold text-body-emphasis" style="font-size: 4rem; color: #0196e3;">Чем Qazaq Technology отличается от других компаний:</h2>
-            
-            <p class="text-body-secondary" style="font-size: 1.5rem;">Qazaq Technology LTD - это не сборка, а первая в Казахстане автоматизированная конвейерная система производства компьютеров, моноблоков, планшетов, корпусов и комплектующих.</p>
-          </div>
-    
-          <div class="col">
-            <div class="row row-cols-1 row-cols-sm-2 g-4" style="align-items: baseline;">
-              <div class="col d-flex flex-column gap-2">
-                <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4"  style="width: 3rem; height: 3rem;">
-                    <i class="fa-solid fa-earth-asia"></i>
-                </div>
-                <p class="text-body-secondary" style="font-size: 1.5rem;">Первый и единственный производитель товаров Lenovo на территории Республики Казахстан, Центральной Азии и стран снг.</p>
-              </div>
-    
-              <div class="col d-flex flex-column gap-2">
-                <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4" style="width: 3rem; height: 3rem;">
-                    <i class="fa-solid fa-handshake"></i>
-                </div>
-                <p class="text-body-secondary" style="font-size: 1.5rem;">Привлекает зарубежных партнеров в Республику Казахстан для <br>трансфера инновационных  <br>технологий.</p>
-              </div>
-    
-              <div class="col d-flex flex-column gap-2">
-                <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4"  style="width: 3rem; height: 3rem;">
-                    <i class="fa-solid fa-user-graduate"></i>
-                </div>
-                <p class="text-body-secondary" style="font-size: 1.5rem;">Содействует в реализации государственных программ по "Дуальному" образованию.</p>
-              </div>
-    
-              <div class="col d-flex flex-column gap-2">
-                <div class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4"  style="width: 3rem; height: 3rem;">
-                    <i class="fa-solid fa-shield"></i>
-                </div>
-                <p class="text-body-secondary" style="font-size: 1.5rem;">Является производителем доверенного программного обеспечения информационной безопасности.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-  </section>  
-
-  <section class="numbers1 cid-svGLsaq8Yu" id="numbers01-b" style="padding-top: 1rem;">
-    
-    
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12 col-lg-12">
-                <div class="card-wrapper pb-4">
-                    <div class="card-box align-left">
-                        <h4 class="main-title mbr-fonts-style mb-4 display-2 align-center" style="color: #0196e3;"><strong>История компаний</strong></h4>
-                        
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-12">
-                <div class="item mbr-flex">
-                    <div class="icon-box">
-                        <span class="step-number mbr-fonts-style display-5">1</span>
-                    </div>
-                    <div class="text-box">
-                        <h4 class="icon-subtitle card-title mbr-black mbr-fonts-style display-2"><strong>2019</strong></h4>
-
-                        <h4 class="icon-title card-title mbr-black mbr-fonts-style display-5"><strong>Smart Home Security</strong></h4>
-                        <h5 class="icon-text mbr-black mbr-fonts-style display-7"><strong>Lorem ipsum dolor sit amet,
-                                consectetur adipiscing elit. Phasellus cursus, lacus at fringilla lacinia, leo leo
-                                eleifend tortor, quis sollicitudin mauris ipsum a elit. Duis eget tincidunt dui, non
-                                auctor mauris.</strong><strong><br></strong></h5>
-                    </div>
-                </div>
-                <div class="item mbr-flex">
-                    <div class="icon-box">
-                        <span class="step-number mbr-fonts-style display-5">2</span>
-                    </div>
-                    <div class="text-box">
-                        <h4 class="icon-subtitle card-title mbr-black mbr-fonts-style display-2"><strong>2020</strong></h4>
-
-                        <h4 class="icon-title card-title mbr-black mbr-fonts-style display-5"><strong>Cyber Security</strong></h4>
-                        <h5 class="icon-text mbr-black mbr-fonts-style display-7"><strong>Lorem ipsum dolor sit amet,
-                                consectetur adipiscing elit. Phasellus cursus, lacus at fringilla lacinia, leo leo
-                                eleifend tortor, quis sollicitudin mauris ipsum a elit. Duis eget tincidunt dui, non
-                                auctor mauris.</strong></h5>
-                    </div>
-                </div>
-                <div class="item mbr-flex last">
-                    <div class="icon-box">
-                        <span class="step-number mbr-fonts-style display-5">3</span>
-                    </div>
-                    <div class="text-box">
-                        <h4 class="icon-subtitle card-title mbr-black mbr-fonts-style display-2"><strong>2021</strong></h4>
-
-                        <h4 class="icon-title card-title mbr-black mbr-fonts-style display-5"><strong>CCTV Cameras</strong></h4>
-                        <h5 class="icon-text mbr-black mbr-fonts-style display-7"><strong>Lorem ipsum dolor sit amet,
-                                consectetur adipiscing elit. Phasellus cursus, lacus at fringilla lacinia, leo leo
-                                eleifend tortor, quis sollicitudin mauris ipsum a elit. Duis eget tincidunt dui, non
-                                auctor mauris.</strong></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-  <section class="video1 cid-svGLmnD9Wg" id="video01-6" style="padding-top: 1rem; padding-bottom: 3rem;">
-      
-      
-      <div class="align-center container">
-          <div class="mbr-section-head pb-5">
-              <h4 class="mbr-section-title mbr-fonts-style mb-0 display-2" style="color: #0196e3;">
-                  <strong>Посмотрите видео</strong></h4>
-              
-          </div>
-          <div class="row justify-content-center">
-              <div class="col-12 col-lg-12">
-                  <div class="box">
-                      <div class="mbr-media show-modal align-center" data-modal=".modalWindow">
-                        <img src="{% static 'Cyber Security Demo_files/background1.jpg' %}" alt="" style="border-radius: 0;">
-                          <div class="icon-wrap">
-                              <a class="text-primary" href=""><i class="fa-brands fa-youtube fa-10x"></i></a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="modalWindow" style="display: none;">
-              <div class="modalWindow-container">
-                  <div class="modalWindow-video-container">
-                      <div class="modalWindow-video">
-                          <iframe width="100%" height="100%" frameborder="0" allowfullscreen="1" src="./Cyber Security Demo_files/VA8PzkQa8d8.html"></iframe>
-                      </div>
-                      <a class="close" role="button" data-dismiss="modal">
-                          <span aria-hidden="true" class="mbr-iconfont mobi-mbri-close mobi-mbri closeModal"></span>
-                          <span class="sr-only">Close</span>
-                      </a>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
-  
-  <section class="contacts2 cid-svGLok6CI0" id="contacts02-8" style="padding-top: 0;">
-      
-      
-      <div class="container">
-          <div class="row justify-content-center">
-              <div class="card col-12 col-md-10 col-lg-6">
-                  <div class="card-wrapper py-2" style="flex-direction: column; align-items: center; height: 300px; box-shadow: none; border: none;">
-  
-                      <div class="card-box">
-                          <h3 class="card-title mbr-fonts-style mb-2 display-5 align-center" style="font-size: 2rem;"><strong>Наши адреса</strong></h3>
-                          
-                          <h4 class="card-text mbr-fonts-style display-4 align-center"><strong>Республика Казахстан, г. Алматы, ул. Мамыр, 4 строение 83А</strong></h4>
-                          <h4 class="card-text mbr-fonts-style display-4 align-center"><strong>Не стесняйтесь звонить или писать нам для любых вопросов или предложений. Мы готовы помочь!</strong><br></h4>
-                          <h4 class="card-phone mbr-fonts-style display-5 align-center mb-0"><strong>+7 747 700 90 49</strong></h4>
-                          <h4 class="card-phone mbr-fonts-style display-5 align-center mt-0 mb-0"><strong>+7 727 221 10 34</strong></h4>
-  
-                      </div>
-                  </div>
-              </div>
-              <div class="card col-12 col-md-10 col-lg-6">
-                  <div class="card-wrapper py-2" style="flex-direction: column; align-items: center; height: 300px; box-shadow: none; border: none;">
-                      <div class="card-box align-center">
-                          <h4 class="card-title mbr-fonts-style mb-2 display-5 align-center" style="font-size: 2rem;"><strong>Свяжитесь с нами</strong></h4>
-                          <h5 class="card-text mbr-fonts-style display-4 mb-0"><strong>Напишите нам на электронную почту, чтобы получить дополнительную информацию или оставить отзыв. Мы всегда рады услышать от вас! Или воспользуйтесь формой обратной связи прямо на сайте.<br><br></strong>
-                          </h5>
-                          <h4 class="card-phone mbr-fonts-style display-5 mt-0"><strong>info@qazaqtechnology.kz</strong></h4>
-                      </div>
-                  </div>
-              </div>
-  
-  
-          </div>
-      </div>
-  </section>
-  <section class="contacts2 cid-svGLok6CI0" id="contacts02-8" style="padding-top: 0; padding-bottom: 3rem;">
-      
-      
-    <div class="container" style="padding-top: 2rem; margin-bottom: 0;">
-        <div class="row justify-content-center">
-          <div class="col-12">
-          </div>
-            <div class="card col-12 col-md-10 col-lg-6">
-                <div class="card-wrapper py-2" style="flex-direction: column; height: 300px;">
-                    <div class="card-box" style="max-width: none; height: 80%;">
-                        <h4 class="mbr-fonts-style display-2 align-center" style="color: #0196e3; font-size: 2rem;"><strong>Мы на карте</strong></h4>
-                        <div class="google-map align-center" style="width: 100%; height: 100%;">
-                            <iframe frameborder="0" style="border:0; width: 100%; height: 100%;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11625.454141864364!2d76.82793551938185!3d43.24380226361066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38836917c87e86cb%3A0x1338bbbe8f9a772f!2sQazaQ%20Technology!5e0!3m2!1sru!2skz" allowfullscreen=""></iframe>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            <div class="card col-12 col-md-10 col-lg-6">
-                <div class="card-wrapper py-2" style="flex-direction: column; align-items: center; height: 300px;">
-                            <form action="" method="POST" class="mbr-form form-with-styler" data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true" value="">
-                                <div class="form-row">
-                                    <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Спасибо, что заполнили форму!</div>
-                                    <div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">Ой...! какая-то проблема!</div>
-                                </div>
-                                <div class="dragArea form-row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <h4 class="mbr-fonts-style display-2 align-center pb-0" style="color: #0196e3; font-size: 2rem;" ><strong>Оставьте отзыв</strong></h4>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                    </div>
-                                    
-                                    <div data-for="name" class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" >
-                                        <input type="text" name="name" placeholder="Имя" data-form-field="name" class="form-control display-7" value="" id="name-contacts08-a">
-                                    </div>
-          
-                                    <div class="col-12 col-md-12 d-flex justify-content-center mb-3">
-                                    <div data-for="email" class="col-lg-6 col-md-12 col-sm-12 form-group" style="padding-left: 0; padding-right: 1rem;">
-                                        <input type="email" name="email" placeholder="Электронная почта" data-form-field="email" class="form-control display-7" value="" id="email-contacts08-a">
-                                    </div>
-                                    <div data-for="phone" class="col-lg-6 col-md-12 col-sm-12 form-group" style="padding-left: 1rem; padding-right: 0;">
-                                        <input type="tel" name="phone" placeholder="Телефон" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" data-form-field="phone" class="form-control display-7" value="" id="phone-contacts08-a">
-                                    </div>
-                                  </div>
-                                    <div data-for="message" class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
-                                        <textarea name="message" placeholder="Сообщение" data-form-field="message" class="form-control display-7" id="message-contacts08-a"></textarea>
-                                    </div>
-                                    <div class="col-auto"><button type="submit" class="btn btn-lg btn-success display-7 p-2">Отправить</button></div>
-                                </div>
-                            </form>
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-</section> -->
-
 {% endblock %}
 

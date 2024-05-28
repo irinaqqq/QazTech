@@ -14,7 +14,6 @@
         <div class="row mx-auto" style="display: flex; flex-wrap: wrap; width: 100%; padding-left: 0.5rem;">
             <h5 class="item-title mbr-fonts-style display-5" style="color: black; font-size: 1.5rem; padding: 0; line-height: normal; margin-left: 1.2rem;"><strong>Поиск по продуктам</strong></h5>
             {% for product in result_products %}
-             
                 <div class="item features-image col-md-1" style="width: 250px; height: 260px; margin: 0.5rem 0.5rem;">
                     <a href="{% url 'product_detail' product.id %}">
                     <div class="item-wrapper" style="width: 250px; height: 260px;">
@@ -27,7 +26,6 @@
                     </div>
                 </a>
                 </div>
-            
             {% endfor %}
       </div> 
 </section>
@@ -46,14 +44,12 @@
                     <div class="item-content" style="padding: 0; margin-top: 1rem;">
                         <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>{{ category.name }}</strong></h5>
                         <p class="mbr-text mbr-fonts-style display-4"><strong>{{ category.description }}</strong></p>
-
                     </div>
                 </div>
             </a>
             </div>
         {% endif %}
         {% endfor %}
-              
     </div>
 </section>
 {% endblock %}

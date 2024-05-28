@@ -9,11 +9,9 @@
         {{ category.description }}
     </div>
 </div>
-
     <section class="features7 cid-svMI8yuE9y" id="features08-i" style="padding-bottom: 0; padding-top: 2rem; background-color: white;"> 
           <div class="row mx-auto" style="display: flex; flex-wrap: wrap; width: 100%; padding-bottom: 2rem; padding-left: 0.5rem;">
               {% for product in products %}
-               
                   <div class="item features-image col-md-1" style="width: 250px; height: 260px; margin: 0.5rem 0.5rem;">
                       <a href="{% url 'product_detail' product.id %}">
                       <div class="item-wrapper" style="width: 250px; height: 260px;">
@@ -26,13 +24,7 @@
                       </div>
                   </a>
                   </div>
-              
               {% endfor %}
-
         </div> 
   </section>
-
-
-
-  
 {% endblock %}

@@ -24,4 +24,8 @@ admin.site.register(Port)
 admin.site.register(ProcLine)
 admin.site.register(ProcBrand)
 admin.site.register(Motherboard)
+admin.site.register(ScreenSize)
+admin.site.register(PowerSupply)
+admin.site.register(Controller)
+admin.site.register(Size)
 
