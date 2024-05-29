@@ -119,7 +119,10 @@ body {
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary.focus,
-.btn-primary.active {
+.btn-primary.active,
+.btn-success:hover,
+.btn:hover,
+.btn-lg:hover{
   color: #ffffff !important;
   background-color: #241052 !important;
   border-color: #241052 !important;
@@ -175,14 +178,6 @@ body {
   background-color: #35b8fc !important;
   border-color: #35b8fc !important;
   color: #ffffff !important;
-}
-.btn-success:hover,
-.btn-success:focus,
-.btn-success.focus,
-.btn-success.active {
-  color: #ffffff !important;
-  background-color: #04a6fa !important;
-  border-color: #04a6fa !important;
 }
 .btn-success.disabled,
 .btn-success:disabled {
@@ -2073,7 +2068,7 @@ background-position: center;
 }
 .image-container2 {
   height: 708px;
-  background-image: url('/static/images/bg.avif');
+  background-image: url('/static/images/ai_city.jpg');
 }
 .text-container {
   position: absolute;
@@ -2151,13 +2146,14 @@ div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
   font-size: 40px;
   padding: 70px;
 }
-.image-part {
+.image-part{
   position: absolute;
   display: block;
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.5);
-  transition: background-color 0.3s ease;
+  transition: background-color 1s ease;
   overflow: hidden;
+  border-top: 2px solid white;
 }
 .image-part:hover {
   background-color: rgba(0, 0, 0, 0);
@@ -2201,30 +2197,29 @@ div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
   left: 0;
   background-size: cover;
   background-position: center;
-  transition: opacity 0.3s ease;
+  transition: opacity 1s ease;
   opacity: 0; 
+  background-position: center top;
 }
 #part1:hover::before {
   content: url('');
   opacity: 1;
 }
 #part2:hover::before {
-  content: url('https://p2-ofp.static.pub/fes/cms/2021/04/28/odtbtgltop8fb3ytjpdy4orxz9a3l7232523.jpg');
+  background-image: url('/static/images/pc.jpg');
   opacity: 1;
 }
 #part3:hover::before {
-  content: url('https://p2-ofp.static.pub/fes/cms/2021/04/28/2uqldtrfniikctq754b5fnj1pv88ko587160.jpg');
+  background-image: url('/static/images/laptop.jpg');
   opacity: 1;
 }
 #part4:hover::before {
-  content: url('https://p2-ofp.static.pub/fes/cms/2022/10/18/ckn8fp5a9adh87iphs4zv4j3pq2pgw968693.jpg');
+  background-image: url('/static/images/mono.webp');
   opacity: 1;
-  border-top: 2px solid white;
 }
 #part5:hover::before {
-  content: url('https://p2-ofp.static.pub//fes/cms/2024/01/23/1xpzdb7fyrm6mosqz5mpdgyi9y9apg009360.jpg');
+  background-image: url('/static/images/about.jpg');
   opacity: 1;
-  border-top: 2px solid white;
 }
 .image-part::after {
   content: "";
@@ -2233,16 +2228,6 @@ div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
   top: 0;
   width: 2px;
   height: 100%;
-  background-color: white;
-  opacity: 1;
-}
-.image-part2::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
   background-color: white;
   opacity: 1;
 }

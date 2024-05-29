@@ -1,62 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Контакты
+Свяжитесь с нами
 {% endblock %}
 {% block content %}
-<style>
-.container-inner{
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
-    width: 100%;
-}
-
-
-.contact-info {
-    position: relative;
-    display: flex;
-    flex: 1;
-    padding: 150px;
-    background-image: url('https://cdn.pixabay.com/photo/2022/05/30/02/01/mountains-7230203_1280.jpg');
-    background-size: cover;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    width: 50%; 
-    flex-direction: column;
-    justify-content: center;
-}
-.contact-info::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-}
-
-.form {
-    justify-content: center;
-    display: flex;
-    width: 50%;
-    flex: 1;
-    padding: 150px;
-}</style>
-<section class="contacts2 cid-svGLok6CI0" id="contacts02-8" style="padding-top: 0rem; padding-bottom: 0rem;">
-    <div class="container-inner" style="">
-        <div class="contact-info">
-        <h4 class="">Свяжитесь с нами</h4>
+<div class="image-container" style="height: 500px; background-image: url('https://www.o2.co.uk/documents/456036/4246828/Contact-Us-headersuper-xxl-574x2--260324.jpg/9c615993-6446-0d26-5c0b-4e09537d7a0f?t=1711531475780');">
+    <div class="text-container">
+        Свяжитесь с нами
+    </div>
+</div>
+<section class="contacts2 cid-svGLok6CI0" id="contacts02-8" style="padding-top: 3rem; padding-bottom: 3rem;">
+    <div class="container-inner d-flex container align-center" style="width: 80%;">
+    <div class="container" style="width: 50%;">
+        <h4 class="" style="padding-top: 8px;">Наши контакты</h4>
         <p>У нас есть несколько удобных способов связи! Вы можете написать нам на электронную почту для получения дополнительной информации или оставить отзыв. Если у вас возникли срочные вопросы или вам нужна быстрая помощь, не стесняйтесь позвонить нам по указанному на сайте номеру телефона. А также вы можете воспользоваться формой обратной связи прямо на нашем сайте. Мы всегда готовы помочь вам!</p>
-        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1"><strong>+7 747 700 90 49</strong></h4>
-        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1"><strong>+7 727 221 10 34</strong></h4>
-        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1"><strong>info@qazaqtechnology.kz</strong></h4>
+        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>+7 747 700 90 49</strong></h4>
+        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>+7 727 221 10 34</strong></h4>
+        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>info@qazaqtechnology.kz</strong></h4>
         <h4 class="py-2">Наш адрес</h4>
-        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1"><strong>Проспект Райымбека, 519/3</strong></h4>
-        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1"><strong>Алатауский район, Алматы, 050024</strong></h4>
-        </div>
-        <div class="form">
+        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>Проспект Райымбека, 519/3</strong></h4>
+        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>Алатауский район, Алматы, 050024</strong></h4>
+    </div>
+            <div class="card-wrapper py-2 container" style="flex-direction: column; width: 50%; box-shadow: none; margin-left: 10%; padding-top: 0;">
                         <form action="" method="POST" class="mbr-form form-with-styler" data-form-title="Form Name"><input type="hidden" name="email" data-form-email="true" value="">
                             <div class="form-row">
                                 <div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Спасибо, что заполнили форму!</div>
@@ -64,7 +29,7 @@
                             </div>
                             <div class="dragArea form-row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <h4 class="mbr-fonts-style display-2 align-center pb-0" style="color: #0196e3; font-size: 2rem;" ><strong>Оставьте отзыв</strong></h4>
+                                    <h4 class="mbr-fonts-style display-2 align-center pb-0" style="font-size: 1.5rem; font-weight: 500;">Оставьте отзыв</h4>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                 </div>
@@ -84,10 +49,10 @@
                                 <div data-for="message" class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
                                     <textarea name="message" placeholder="Сообщение" data-form-field="message" class="form-control display-7" id="message-contacts08-a" style="min-height: 150px;"></textarea>
                                 </div>
-                                <div class="col-auto"><button type="submit" class="btn btn-lg btn-success display-7 p-2 mb-2">Отправить</button></div>
+                                <div class="col-auto"><button type="submit" class="btn btn-lg btn-success">Отправить</button></div>
                             </div>
                         </form>
-                    </div>
+            </div>
         </div>
 </section>
 {% endblock %}
