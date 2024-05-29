@@ -2212,13 +2212,14 @@ div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
 #part3:hover::before {
   background-image: url('/static/images/laptop.jpg');
   opacity: 1;
+  background-position: center;
 }
 #part4:hover::before {
   background-image: url('/static/images/mono.webp');
   opacity: 1;
 }
 #part5:hover::before {
-  background-image: url('/static/images/about.jpg');
+  background-image: url('/static/images/about1.jpg');
   opacity: 1;
 }
 .image-part::after {
