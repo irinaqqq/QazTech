@@ -4,6 +4,91 @@
 Кто мы?
 {% endblock %}
 {% block content %}
+<style>
+  .main-timeline{ font-family: 'Poppins', sans-serif; }
+.main-timeline:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.main-timeline .timeline{
+    width: calc(50% + 58px);
+    border-top: 2px solid #404247;
+    float: left;
+    position: relative;
+    z-index: 1;
+}
+.main-timeline .timeline:before{
+    content: "";
+    background: #404247;
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    position: absolute;
+    top: -5px;
+    right: 0;
+}
+.main-timeline .timeline-content{
+    color: #404247;
+    text-align: center;
+    padding: 15px 80px 15px 10px;
+    display: block;
+    position: relative;
+    min-height: 100px;
+}
+.main-timeline .timeline-content:hover{ text-decoration: none; }
+.main-timeline .timeline-content:before{
+    content: "";
+    background: #00a6f9;
+    width: 15px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 50px;
+}
+.main-timeline .timeline-year{
+    font-size: 35px;
+    line-height: 35px;
+    font-weight: 700;
+    transform: translateY(-50%) rotate(90deg);
+    position: absolute;
+    top: 50%;
+    right: -15px;
+}
+.main-timeline .title{
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+}
+.main-timeline .description{
+    font-size: 16px;
+    margin: 0;
+}
+.main-timeline .timeline:nth-child(even){ float: right; }
+.main-timeline .timeline:nth-child(even):before{
+    right: auto;
+    left: 0;
+}
+.main-timeline .timeline:nth-child(even) .timeline-content{
+    padding: 15px 10px 15px 80px;
+}
+.main-timeline .timeline:nth-child(even) .timeline-content:before{
+    right: auto;
+    left: 51px;
+}
+.main-timeline .timeline:nth-child(even) .timeline-year{
+    right: auto;
+    left: -15px;
+}
+.main-timeline .timeline:nth-child(4n+2) .timeline-content:before{ background: #241052; }
+.main-timeline .timeline:nth-child(4n+3) .timeline-content:before{ background: #  ; }
+.main-timeline .timeline:nth-child(4n+4) .timeline-content:before{ background: #241052; }
+@media screen and (max-width:767px){
+    .main-timeline .timeline{ width: 100%; }
+}
+</style>
 <div class="image-container" style="height: 500px; background-image: url(/static/images/city.jpg)">
     <div class="text-container">
         Кто мы
@@ -23,8 +108,81 @@
         <h4 class="title-whowe">Миссия:</h4>
         <p>Полагаясь на веру в значимость развития местного производства и внедрения передовых технологий для достижения технологической независимости, Qazaq Technology стремится создать инновационную экосистему. Эта экосистема будет способствовать развитию экономики и раскрытию талантов в области информационных технологий. В свою очередь, осуществление этой миссии приведет к тому, что Казахстан станет независимым и суверенным технологическим центром.
         </p>
-        <h4 class="title-whowe">Международное сотрудничество и партнерство</h4>
-        <p>Мы гордимся тем, что являемся OEM-партнером Lenovo, что позволяет нам локализовать и представлять их передовые решения на казахстанском рынке. Сотрудничество с Lenovo открывает нам доступ к передовым технологиям и решениям мирового уровня. Qazaq Technology активно привлекает международных партнеров для обмена опытом и внедрения инноваций, что позволяет нам не только следовать мировым тенденциям, но и задавать их. Мы стремимся к созданию глобальной сети сотрудничества, способствующей технологическому прогрессу Казахстана.</p>
+        <h4 class="title-whowe">История компании:</h4>
+        <div class="container" style="padding-top: 2rem;">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="main-timeline">
+                      <div class="timeline">
+                          <a href="#" class="timeline-content">
+                              <div class="timeline-year">2014</div>
+                              <!-- <h3 class="title">Web Designing</h3> -->
+                              <p class="description">
+                                Начало коммерческой деятельности компании TОО «QazaQ Technology LTD»                              </p>
+                          </a>
+                      </div>
+                      <div class="timeline">
+                          <a href="#" class="timeline-content">
+                              <div class="timeline-year">2019</div>
+                              <!-- <h3 class="title">Web Development</h3> -->
+                              <p class="description">
+                                Начало производства компьютеров                              </p>
+                          </a>
+                      </div>
+                      <div class="timeline">
+                        <a href="#" class="timeline-content">
+                            <div class="timeline-year">2020</div>
+                            <!-- <h3 class="title">Web Development</h3> -->
+                            <p class="description">
+                              Начало серийного производства компьютеров, получение первого сертификата
+                              "Сделано в Казахстане" СT KZ; производство первой опытной модели - системы биометрической аутентификации
+                              для запуска ПК. 
+                              Регистрация авторских прав и интеллектуальной собственности.                               </p>
+                        </a>
+                    </div>
+                    <div class="timeline">
+                      <a href="#" class="timeline-content">
+                          <div class="timeline-year">2021</div>
+                          <h3 class="title">Web Development</h3>
+                          <p class="description">
+                            Разработка собственного программного обеспечения системы ввода и вывода
+                            данных QT BIOS V 1.01. в полном соответствии с требованиями информационной
+                            безопасности, согласно стандарту ISO CT PK ISO/IEC 15408-3-2017; 
+                            Получение всех сертификатов соответствия Евразийского Экономического Союза; 
+                            вступление в состав участников реестра доверенного программного обеспечения
+                            и продукции электронной промышленности при Министерстве цифрового развития,
+                            инноваций и аэрокосмической промышленности Республики Казахстана.      
+                       </p>
+                      </a>
+                  </div>
+                  <div class="timeline">
+                    <a href="#" class="timeline-content">
+                        <div class="timeline-year">2022</div>
+                        <!-- <h3 class="title">Web Development</h3> -->
+                        <p class="description">
+                        Получение эксклюзивного права производства товаров Lenovo в Казахстане;
+                        Разработка ТРМ модуля для шифрования данных при изъятии;
+                        Разработка корпуса компьютера с датчиком защиты от вскрытия.
+               </p>
+                    </a>
+                </div>
+                <div class="timeline">
+                  <a href="#" class="timeline-content">
+                      <div class="timeline-year">2023</div>
+                      <!-- <h3 class="title">Web Development</h3> -->
+                      <p class="description">
+                        Усовершенствование технологических процессов для углубления технологического
+                        уклада с 8 до 23 этапов;
+                        Переход на автоматизированный конвейерный цикл производства продукции;
+                        Открытие Казахстанской Ассоциации Электронной Промышленности для создания
+                        наиболее благоприятных условий интеграции государства, бизнес сообщества
+                        и науки с целью развития электронной промышленности.                      </p>
+                  </a>
+              </div>
+                  </div>
+              </div>
+          </div>
+      </div>
         <h4 class="title-whowe">Безопасность и доверие</h4>
         <p>В современном цифровом мире информационная безопасность играет ключевую роль. Qazaq Technology гордится тем, что является производителем доверенного программного обеспечения для информационной безопасности пятого уровня. Наши решения обеспечивают надежную защиту данных, что особенно важно для государственных и корпоративных клиентов.</p>
         <h4 class="title-whowe">Превосходство через инновации</h4>

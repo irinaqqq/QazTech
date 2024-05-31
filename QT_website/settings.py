@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '91.147.107.244', 'node52038-env-2926384.jcloud.kz', 'qazaqtechnology.kz']
+ALLOWED_HOSTS = ['localhost', '192.168.0.114', 'node52038-env-2926384.jcloud.kz', 'qazaqtechnology.kz']
 
 
 # Application definition
@@ -130,7 +130,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    BASE_DIR / "staticfiles",
 ]
 
 STATIC_ROOT = 'staticfiles'

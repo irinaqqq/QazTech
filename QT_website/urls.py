@@ -28,10 +28,12 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('about/', views.aboutus, name='aboutus'),
     path('whowe/', views.whowe, name='whowe'),
+    path('partners/', views.partners_view, name='partners'),
     path('contact/', views.contactus, name='contactus'),
     path('faq/', views.faq, name='faq'),
     path('map/', views.map, name='map'),
     path('news/', views.news, name='news'),
     path('support/', views.support, name='support'),
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
+    
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

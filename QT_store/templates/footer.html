@@ -16,6 +16,7 @@
         <h5>O Qazaq Technology</h5>
         <ul class="nav flex-column">
           <li class="nav-item mb-2"><a href="{% url 'aboutus' %}" class="nav-link p-0 text-muted">O нас</a></li>
+          <li class="nav-item mb-2"><a href="{% url 'partners' %}" class="nav-link p-0 text-muted">Наши партнеры</a></li>
           <li class="nav-item mb-2"><a href="{% url 'news' %}" class="nav-link p-0 text-muted">Новости</a></li>
           <li class="nav-item mb-2"><a href="{% url 'faq' %}" class="nav-link p-0 text-muted">FAQs</a></li>
         </ul>
@@ -24,7 +25,7 @@
       <div class="col mb-3">
         <h5><a href="{% url 'categories' %}" class="nav-link p-0">ПРОДУКТЫ И УСЛУГИ</a></h5>
         <ul class="nav flex-column">
-          {% for category in categories|slice:":3" %}
+          {% for category in categories|slice:":4" %}
             <li class="nav-item mb-2"><a href="{% url 'category_products' category.id %}" class="nav-link p-0 text-muted">{{ category.name }}</a></li>
           {% endfor %}
         </ul>

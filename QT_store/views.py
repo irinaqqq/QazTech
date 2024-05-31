@@ -25,6 +25,9 @@ def aboutus(request):
 def whowe(request):
     return render(request, 'whowe.html')
 
+def partners_view(request):
+    return render(request, 'partners.html')
+
 def contactus(request):
     return render(request, 'contactus.html')
 

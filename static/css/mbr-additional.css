@@ -2045,7 +2045,7 @@ a {
 .font-inter{
   font-family: "Inter", sans-serif !important;
 }
-.fa-solid, .fas{
+.fa-solid, .fas, .fa{
   font-family: "Font Awesome 6 Free" !important;
 }
 .fa-brands{
