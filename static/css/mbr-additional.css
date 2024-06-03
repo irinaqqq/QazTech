@@ -2103,7 +2103,7 @@ body {
 .navbar-nav .nav-link {
   color: #4f4f4f;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin: 0px 10px;
   padding: 10px 10px;
   position: relative;
@@ -2335,7 +2335,7 @@ a{
     opacity: 0;
   }
   .image-part{
-    border-top: 1px solid white;
+    border-top: 1.5px solid white;
   }
   .image-part::after{
     width: 1px;
