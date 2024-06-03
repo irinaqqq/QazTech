@@ -4,30 +4,32 @@
 Домашняя страница
 {% endblock %}
 {% block content %}
+<style>
+</style>
     <body>
         <div class="image-container2">
             <a href="{% url 'categories' %}" class="image-part" id="part1">
-                <div class="text-container" style="" >
+                <div class="text-container size2" style="" >
                     Наши продукты
                 </div>
             </a>
             <a href="{% url 'category_products' 2 %}" class="image-part" id="part2">
-                <div class="text-container" style="font-size: 30px; top: 80%;">
+                <div class="text-container" style="top: 80%;">
                     Настольные ПК
                 </div>
             </a>
             <a href="{% url 'category_products' 1 %}" class="image-part" id="part3">
-                <div class="text-container" style="font-size: 30px; top: 80%;">
+                <div class="text-container" style="top: 80%;">
                     Ноутбуки
                 </div>
             </a>
             <a href="{% url 'category_products' 8 %}" class="image-part" id="part4">
-                <div class="text-container" style="font-size: 30px; top: 20%;">
+                <div class="text-container" style="top: 20%;">
                     Моноблоки 
                 </div>
             </a>
             <a href="{% url 'aboutus' %}" class="image-part" id="part5">
-                <div class="text-container" style="font-size: 30px; top: 20%;">
+                <div class="text-container" style="top: 20%;">
                     О нас
                 </div>
             </a>
