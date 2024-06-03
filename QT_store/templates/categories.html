@@ -10,16 +10,16 @@
     </div>
 </div>
 <section class="features7 cid-svMI8yuE9y" id="features08-i" style="padding-bottom: 0; padding-top: 2rem; background-color: white;"> 
-    <div class="row mx-auto" style="display: flex; flex-wrap: wrap; width: 100%; padding-bottom: 2rem; padding-left: 0.5rem;">
+    <div class="row mx-auto justify-content-center" style="display: flex; flex-wrap: wrap; width: 100%; padding-left: 0.5rem;">
             {% for category in categories %}
                
-            <div class="item features-image col-md-1" style="width: 250px; height: 350px; margin: 0.5rem 0.5rem;">
+            <div class="item features-image col-md-1" style="width: 250px; margin: 0.5rem 0.5rem;">
                 <a href="{% url 'category_products' category.id %}">
-                    <div class="item-wrapper" style="width: 250px; height: 350px;">
+                    <div class="item-wrapper" style="height: 23rem;">
                     <div class="item-img">
                         <img src="{{ category.image.url }}" alt="Features Image">
                     </div>
-                    <div class="item-content" style="padding: 0; margin-top: 1.5rem;">
+                    <div class="item-content" style="padding: 0; margin-top: 0.5rem;">
                         <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>{{ category.name }}</strong></h5>
                         <p class="mbr-text mbr-fonts-style display-4"><strong>{{ category.description }}</strong></p>
 
