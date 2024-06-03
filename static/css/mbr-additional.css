@@ -2060,14 +2060,16 @@ a {
 .image-container, .image-container2 {
 position: relative;
 width: 100%;
-height: 150px;
+height: 500px;
 background-image: url('/static/images/abstract.webp'); /* Путь к вашему изображению */
 background-size: cover;
 background-position: center;
 }
 .image-container2 {
-  height: 708px;
-  background-image: url('/static/images/ai_city.jpg');
+display: flex;
+align-items: center;
+justify-content: center; 
+height: 200px;
 }
 .text-container {
   position: absolute;
@@ -2079,7 +2081,7 @@ background-position: center;
   text-align: center;
   white-space: nowrap;
 }
-.image-container::before {
+.image-container::before, .image-container2::before {
   content: "";
   position: absolute;
   top: 0;
@@ -2144,6 +2146,13 @@ div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
   color: white;
   font-size: 40px;
   padding: 70px;
+}
+.text-container3{
+  position: relative;
+  color: white;
+  font-size: 2rem;
+  padding: 70px;
+  text-align: center;
 }
 .image-part{
   position: absolute;
@@ -2282,17 +2291,19 @@ div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
 .container-inner{
   display: flex;
 }
-
+a{
+  display: flex;
+}
+.image-container4{
+  height: 708px;
+  background-image: url(/static/images/ai_city.jpg);
+}
 
 @media screen and (max-width: 600px) {
 
 }
 
 @media screen and (max-width: 600px) {
-  .image-container2, .text-container{
-    max-height: 300px;
-    font-size: 0.7rem;
-  }
   .row{
     padding-top: 0 !important;
     margin: auto;
@@ -2300,8 +2311,14 @@ div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
   .size2{
     font-size: 1.5rem;
   }
+  .size3{
+    font-size: 0.7rem;
+  }
   .image-container3{
-    height: 550px;
+    height: 560px;
+  }
+  .text-container2{
+    padding: 50px;
   }
   .image-part2{
     width: auto;
@@ -2317,7 +2334,26 @@ div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
   {
     opacity: 0;
   }
+  .image-part{
+    border-top: 1px solid white;
   }
-  a{
-    display: flex;
+  .image-part::after{
+    width: 1px;
+  }
+  .image-container{
+    height: 150px;
+  }
+  .cid-svGLmnD9Wg{
+    padding-top: 3rem;
+  }
+  .image-container2{
+    height: 70px;
+  }
+  .text-container3{
+    padding: 10px;
+    font-size: 1rem;
+  }
+  .image-container4{
+    height: 270px;
+  }
   }
