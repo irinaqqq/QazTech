@@ -13,92 +13,73 @@
     </div>
 </div>
 </div>
-
-<section class="features7 cid-svMI8yuE9y" id="features08-i" style="padding-bottom: 0; padding-top: 3rem; background-color: white; border: none; text-align: center;">
-    <!-- <div class="container" style="padding-top: 20px !important;"> -->
-    <div class="row justify-content-center" style="display: flex; flex-wrap: wrap; width: 100%;">
-               
-            <div class="item features-image col-md-1" style="width: 250px; margin: 0.5rem 0.5rem;">
-                <a href="{% url 'whowe'%}">
-                    <div class="item-wrapper" style="height: 330px; border: none;">
-                    <div class="item-img">
-                        <img src="/static/images/company.jpg" alt="Features Image">
-                    </div>
-                    <div class="item-content" style="padding: 0; margin-top: 1rem;">
-                        <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>Наша компания</strong></h5>
-                        <p class="mbr-text mbr-fonts-style display-4 mb-0"><strong>Наша философия — мыслим и действуем вне стандартных рамок</strong></p>
-
-                    </div>
-                </div>
-            </a>
-            </div>
-
-            <div class="item features-image col-md-1" style="width: 250px;margin: 0.5rem 0.5rem;">
-                <a href="{% url 'partners'%}">
-                    <div class="item-wrapper" style="height: 330px; border: none;">
-                    <div class="item-img">
-                        <img src="/static/images/handshake.jpg" alt="Features Image">
-                    </div>
-                    <div class="item-content" style="padding: 0; margin-top: 1rem;">
-                        <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>Наши партнеры</strong></h5>
-                        <p class="mbr-text mbr-fonts-style display-4 mb-0"><strong>Наша сила – в надежных партнерах</strong></p>
-
-                    </div>
-                </div>
-            </a>
-            </div>
-
-            <div class="item features-image col-md-1" style="width: 250px; margin: 0.5rem 0.5rem;">
-                <a href="{% url 'faq'%}">
-                    <div class="item-wrapper" style="height: 330px; border: none;">
-                    <div class="item-img">
-                        <img src="/static/images/faq.png" alt="Features Image">
-                    </div>
-                    <div class="item-content" style="padding: 0; margin-top: 1rem;">
-                        <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>FAQs</strong></h5>
-                        <p class="mbr-text mbr-fonts-style display-4 mb-0"><strong>Часто задаваемые вопросы</strong></p>
-
-                    </div>
-                </div>
-            </a>
-            </div>
-
-            <div class="item features-image col-md-1" style="width: 250px; margin: 0.5rem 0.5rem;">
-                <a href="{% url 'map'%}">
-                    <div class="item-wrapper" style="height: 330px; border: none;">
-                    <div class="item-img">
-                        <img src="/static/images/map.png" alt="Features Image">
-                    </div>
-                    <div class="item-content" style="padding: 0; margin-top: 1rem;">
-                        <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>Адрес</strong></h5>
-                        <p class="mbr-text mbr-fonts-style display-4 mb-0"><strong>Свяжитесь с нами по этому адресу</strong></p>
-
-                    </div>
-                </div>
-            </a>
-            </div>
-
-            <div class="item features-image col-md-1" style="width: 250px; margin: 0.5rem 0.5rem;">
-                <a href="{% url 'contactus'%}">
-                    <div class="item-wrapper" style="height: 330px; border: none;">
-                    <div class="item-img">
-                        <img src="/static/images/contactus.png" alt="Features Image">
-                    </div>
-                    <div class="item-content" style="padding: 0; margin-top: 1rem;">
-                        <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>Свяжитесь с нами</strong></h5>
-                        <p class="mbr-text mbr-fonts-style display-4 mb-0"><strong>Ваше мнение имеет для нас высокое значение</strong></p>
-
-                    </div>
-                </div>
-            </a>
-            </div>
-
-
-        
-              
+<div class="container" style="width: 80%; padding-top: 3rem;">
+<div class="row row-cols-1 row-cols-md-5 g-4">
+    <div class="col">
+        <a href="{% url 'whowe'%}" class="h-100">
+      <div class="card h-100">
+        <img src="/static/images/company.jpg" class="card-img-top"
+          alt="Hollywood Sign on The Hill" />
+        <div class="card-body">
+          <h5 class="card-title">Наша компания</h5>
+          <p class="card-text">
+            Наша философия — мыслим и действуем вне стандартных рамок
+          </p>
+        </div>
+      </div>
+    </a>
     </div>
-    
-<!-- </div>  -->
-</section>
+    <div class="col">
+        <a href="{% url 'partners'%}" class="h-100">
+      <div class="card h-100">
+        <img src="/static/images/handshake.jpg" class="card-img-top"
+          alt="Palm Springs Road" />
+        <div class="card-body">
+          <h5 class="card-title">Наши партнеры</h5>
+          <p class="card-text">Наша сила – в надежных партнерах</p>
+        </div>
+      </div>
+    </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'faq'%}" class="h-100">
+      <div class="card h-100">
+        <img src="/static/images/faq.png" class="card-img-top"
+          alt="Los Angeles Skyscrapers" />
+        <div class="card-body">
+          <h5 class="card-title">FAQs</h5>
+          <p class="card-text">Часто задаваемые вопросы</p>
+        </div>
+      </div>
+    </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'map'%}" class="h-100">
+      <div class="card h-100">
+        <img src="/static/images/map.png" class="card-img-top"
+          alt="Skyscrapers" />
+        <div class="card-body">
+          <h5 class="card-title">Адрес</h5>
+          <p class="card-text">
+            Найдите нас по этому адресу
+          </p>
+        </div>
+      </div>
+    </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'contactus'%}" class="h-100">
+        <div class="card h-100">
+          <img src="/static/images/contactus.png" class="card-img-top"
+            alt="Los Angeles Skyscrapers" />
+          <div class="card-body">
+            <h5 class="card-title">Свяжитесь с нами</h5>
+            <p class="card-text">Ваше мнение имеет для нас высокое значение</p>
+          </div>
+        </div>
+    </a>
+      </div>
+  </div>
+</div>
 {% endblock %}
 

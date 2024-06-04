@@ -4,34 +4,85 @@
 Наши продукты
 {% endblock %}
 {% block content %}
-<div class="image-container" style="">
-    <div class="text-container">
-        Семейство продуктов
-    </div>
-</div>
-<section class="features7 cid-svMI8yuE9y" id="features08-i" style="padding-bottom: 0; padding-top: 2rem; background-color: white;"> 
-    <div class="row mx-auto justify-content-center" style="display: flex; flex-wrap: wrap; width: 100%; padding-left: 0.5rem;">
-            {% for category in categories %}
-               
-            <div class="item features-image col-md-1" style="width: 250px; margin: 0.5rem 0.5rem;">
-                <a href="{% url 'category_products' category.id %}">
-                    <div class="item-wrapper" style="height: 23rem;">
-                    <div class="item-img">
-                        <img src="{{ category.image.url }}" alt="Features Image">
-                    </div>
-                    <div class="item-content" style="padding: 0; margin-top: 0.5rem;">
-                        <h5 class="item-title mbr-fonts-style display-5 mb-0" style="color: #0196e3; font-size: 1.5rem; padding: 0; line-height: normal;"><strong>{{ category.name }}</strong></h5>
-                        <p class="mbr-text mbr-fonts-style display-4"><strong>{{ category.description }}</strong></p>
 
-                    </div>
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+
+
+    <div class="carousel-inner" style="">
+
+      <div class="image-part2" id="" style="height: 100%; top: 0; left: 0; position: absolute; z-index: 5;">
+        <div class="text-container2 text-wrap" style="">
+            <div class="carousel-indicators d-flex justify-content-between w-100 m-0" style="position: relative; z-index: 5;">
+                <div class="d-flex flex-column align-items-start">
+                  <span class="button-label">Надпись 1</span>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 </div>
-            </a>
-            </div>
-        
-        {% endfor %}
+                <div class="d-flex flex-column align-items-center">
+                  <span class="button-label">Надпись 2</span>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                </div>
+                <div class="d-flex flex-column align-items-end">
+                  <span class="button-label">Надпись 3</span>
+                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+              </div>
               
+        </div>
     </div>
-</section>
+
+      <div class="carousel-item active">
+        <div class="image-part2" id="" style="height: 100%; top: 0; left: 0; position: absolute; z-index: 2;  background-color: rgba(0, 0, 0, 0.5);">
+          <div class="text-container2 text-wrap" style="">
+              <p class="text-start"> <strong style="color: #00a2e8;">QazTech</strong><strong> Lab</strong></p>
+              <h4 class="title" style="font-size: 30px; margin-top: 20px; padding-bottom: 6px; word-break: break-word; line-height: 30px;">Современные технологии и новаторские разработки.</h4>
+              <p class="text" style="font-size: 18px;">Наши технологии основаны на умных и интуитивно понятных функциях, которые призваны упростить и улучшить опыт работы пользователей.</p>
+          </div>
+      </div>
+        <img src="/static/images/city.jpg" class="d-block w-100" alt="..."  style="object-position: bottom; height: 500px; object-fit: cover;">
+      </div>
+      <div class="carousel-item">
+        <div class="image-part2" id="" style="height: 100%; top: 0; left: 0; position: absolute; z-index: 2;  background-color: rgba(0, 0, 0, 0.5);">
+          <div class="text-container2 text-wrap" style="">
+              <p class="text-start"> <strong style="color: #00a2e8;">QazTech</strong><strong> Lab</strong></p>
+              <h4 class="title" style="font-size: 30px; margin-top: 20px; padding-bottom: 6px; word-break: break-word; line-height: 30px;">Современные технологии и новаторские разработки.</h4>
+              <p class="text" style="font-size: 18px;">Наши технологии основаны на умных и интуитивно понятных функциях, которые призваны упростить и улучшить опыт работы пользователей.</p>
+          </div>
+      </div>
+        <img src="/static/images/city.jpg" class="d-block w-100" alt="..." style="object-position: center; height: 500px; object-fit: cover;">
+      </div>
+      <div class="carousel-item">
+        <div class="image-part2" id="" style="height: 100%; top: 0; left: 0; position: absolute; z-index: 2;  background-color: rgba(0, 0, 0, 0.5);">
+          <div class="text-container2 text-wrap" style="">
+              <p class="text-start"> <strong style="color: #00a2e8;">QazTech</strong><strong> Lab</strong></p>
+              <h4 class="title" style="font-size: 30px; margin-top: 20px; padding-bottom: 6px; word-break: break-word; line-height: 30px;">Современные технологии и новаторские разработки.</h4>
+              <p class="text" style="font-size: 18px;">Наши технологии основаны на умных и интуитивно понятных функциях, которые призваны упростить и улучшить опыт работы пользователей.</p>
+          </div>
+      </div>
+        <img src="/static/images/city.jpg" class="d-block w-100" alt="..." style="object-position: top; height: 500px; object-fit: cover;">
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="width: 100%; padding-top: 3rem;">
+    <div class="row g-4">
+      {% for category in categories %}
+        <div class="col-md-3">
+            <a href="{% url 'category_products' category.id %}" class="h-100">
+          <div class="card h-100">
+            <img src="{{ category.image.url }}" class="card-img-top"
+              alt="Hollywood Sign on The Hill" />
+            <div class="card-body">
+              <h5 class="card-title">{{ category.name }}</h5>
+              <p class="card-text">
+                {{ category.description }}
+              </p>
+            </div>
+          </div>
+            </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
 
 

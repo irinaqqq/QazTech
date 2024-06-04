@@ -1,39 +1,4 @@
 {% load static %}
-<style>
-  .navbar-nav .icon {
-  margin-left: auto;
-  display: none;
-}
-@media screen and (max-width: 600px) {
-  .navbar-nav a:not(:first-child) {display: none;}
-  .navbar-nav a.icon {
-    float: right;
-    display: block;
-    padding-left: 0;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .navbar-nav .nav-link{
-    padding-left: 0;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .navbar-nav.responsive {position: relative;}
-  .navbar-nav.responsive .icon {
-    position: absolute;
-    right: 0;
-    padding-right: 0.75rem;
-  }
-  .navbar-nav.responsive a {
-    float: none;
-    display: block;
-    text-align: left;
-    padding-left: 0;
-  }
-}
-</style>
 <header>
     <div class="p-4 text-center bg-white border-bottom" style="padding-bottom: 0!important;">
       <div class="container-fluid" style="width: 100%; margin: 0;">
@@ -51,10 +16,18 @@
           <div class="col-md-5 justify-content-center align-items-center my-auto">
             <form action="{% url 'search' %}" method="GET" class="d-flex input-group w-auto my-auto md-4 rounded">
               <input autocomplete="off" type="search" name="q" class="form-control form-control-lg" placeholder="Что вы ищете сегодня?" style="padding: 24px;"/>
-              <button type="submit" class="btn btn-primary d-none d-lg-flex py-auto"><i class="fas fa-search" style="margin: auto;"></i></button>
-          </form>          
+              <button type="submit" class="btn btn-primary d-none d-lg-flex py-auto" style="box-shadow: none;"><i class="fas fa-search" style="margin: auto;"></i></button>
+              <div class="navs" style="margin-left: 1rem;">
+              <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars fa-3x"></i>
+              </a> 
+              </div>    
+          </form>      
+
         </div>
-        <div class="col-md-3 d-flex justify-content-center justify-content-md-end align-items-center"></div>
+        <div class="col-md-3 d-flex justify-content-center justify-content-md-end align-items-center"> 
+ 
+        </div>
       </div>
     </div>
 
@@ -62,18 +35,6 @@
           {% for category in categories %}
                   <a class="nav-link" href="{% url 'category_products' category.id %}">{{ category.name }}</a>
           {% endfor %} 
-          <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars fa-3x"></i>
-          </a>  
       </div>
-    <script>
-      function myFunction() {
-        var x = document.getElementById("myTopnav");
-        if (x.className === "navbar-nav flex-row borderXwidth d-flex") {
-          x.className = "navbar-nav responsive";
-        } else {
-          x.className = "navbar-nav flex-row borderXwidth d-flex";
-        }
-      }
-      </script>
+
   </header>
