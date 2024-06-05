@@ -2527,7 +2527,7 @@ a{
 .main-timeline .timeline-content:hover{ text-decoration: none; }
 .main-timeline .timeline-content:before{
     content: "";
-    background: black;
+    background: #00a2e8;
     width: 10px;
     height: 100%;
     position: absolute;
@@ -2580,7 +2580,7 @@ a{
 .main-timeline .timeline:nth-child(4n+3) .timeline-content:before{ background: #00a6f9 ; }
 .main-timeline .timeline:nth-child(4n+4) .timeline-content:before{ background: #00a6f9; } */
 .timeline-content:hover::before {
-  background-color: #00a2e8; 
+  background-color: black; 
 }
 .timeline-content:hover .timeline-year,
 .timeline-content:hover .description {

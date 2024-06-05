@@ -39,3 +39,4 @@ media/
 myvenv/
 # local env files
 .env
+settings.py
