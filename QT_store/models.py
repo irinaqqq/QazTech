@@ -28,7 +28,10 @@ class Processor(models.Model):
     name = models.CharField(max_length=255, verbose_name="Процессор", editable=False)
 
     def save(self, *args, **kwargs):
-        self.name = f"{self.brand} {self.line} {self.series}" if self.series else f"{self.brand} {self.line}"
+        if self.series:
+            self.name = f"{self.brand.name} {self.line.name} {self.series}"
+        else:
+            self.name = f"{self.brand.name} {self.line.name}"
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -216,11 +219,11 @@ class Product(models.Model):
     description = models.TextField(verbose_name="Описание", blank=True)
     weight = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Вес", null=True, blank=True)
     features = models.CharField(max_length=60, verbose_name="Особенности(кратко)", null=True)
-    processor = models.ForeignKey(Processor, on_delete=models.SET_NULL, null=True, verbose_name="Процессор", blank=True)
-    operating_system = models.ForeignKey(OperatingSystem, on_delete=models.SET_NULL, null=True, verbose_name="Операционная система", blank=True)
+    processor = models.ManyToManyField(Processor, verbose_name="Процессор", blank=True)
+    operating_system = models.ManyToManyField(OperatingSystem, verbose_name="Операционная система", blank=True)
     # graphics = models.ForeignKey(Graphics, on_delete=models.SET_NULL, null=True, verbose_name="Видеокарта", blank=True)
-    ram = models.ForeignKey(RAM, on_delete=models.SET_NULL, null=True, verbose_name="Оперативная память", blank=True)
-    storage = models.ForeignKey(Storage, on_delete=models.SET_NULL, null=True, verbose_name="Накопители", blank=True)
+    ram = models.ManyToManyField(RAM, verbose_name="Оперативная память", blank=True)
+    storage = models.ManyToManyField(Storage, verbose_name="Накопители", blank=True)
     ports = models.ManyToManyField(Port, verbose_name="Порты и разъемы", blank=True)
     operating_temperature = models.CharField(max_length=20, verbose_name="Температура эксплуатации", null=True, blank=True)
     storage_temperature = models.CharField(max_length=20, verbose_name="Температура хранения", null=True, blank=True)
