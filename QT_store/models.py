@@ -50,26 +50,13 @@ class Graphics(models.Model):
         return self.name
     
 class RAM(models.Model):
-    SIZE_CHOICES = [
-        ('4GB', '4 ГБ'),
-        ('8GB', '8 ГБ'),
-        ('16GB', '16 ГБ'),
-        ('32GB', '32 ГБ'),
-        ('64GB', '64 ГБ'),
-        ('128GB', '128 ГБ'),
-        ('256GB', '256 ГБ'),
-        ('512GB', '512 ГБ'),
-        ('1024GB', '1 ТБ'),
-        ('1536GB', '1,5 ТБ'),
-    ]
-
     TYPE_CHOICES = [
         ('DDR3', 'DDR3'),
         ('DDR4', 'DDR4'),
         ('DDR5', 'DDR5'),
     ]
 
-    size = models.CharField(max_length=10, choices=SIZE_CHOICES, verbose_name="Объем оперативной памяти", null=True)
+    size = models.CharField(max_length=10, verbose_name="Объем оперативной памяти(ГБ)", null=True)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES, verbose_name="Тип оперативной памяти", null=True)
 
     def __str__(self):
@@ -86,25 +73,7 @@ class Storage(models.Model):
         (NVME, 'Non-Volatile Memory Express (NVMe)'),
     ]
 
-    SIZE_CHOICES = [
-        ('120GB', '120 ГБ'),
-        ('240GB', '240 ГБ'),
-        ('480GB', '480 ГБ'),
-        ('500GB', '500 ГБ'),
-        ('1TB', '1 ТБ'),
-        ('2TB', '2 ТБ'),
-        ('4TB', '4 ТБ'),
-        ('8TB', '8 ТБ'),
-        ('16TB', '16 ТБ'),
-        ('32TB', '32 ТБ'),
-        ('64TB', '64 ТБ'),
-        ('128TB', '128 ТБ'),
-        ('256TB', '256 ТБ'),
-        ('512TB', '512 ТБ'),
-        ('1024TB', '1024 ТБ'),
-    ]
-
-    size = models.CharField(max_length=6, choices=SIZE_CHOICES, verbose_name="Объем накопителя", null=True)
+    size = models.CharField(max_length=10, verbose_name="Объем накопителя(ГБ)", null=True)
     type = models.CharField(max_length=4, choices=STORAGE_TYPE_CHOICES, default=SSD, verbose_name="Тип накопителя", null=True)
     
     class Meta:
