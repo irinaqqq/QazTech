@@ -1,0 +1,40 @@
+{% load static %}
+<header>
+    <div class="p-4 text-center bg-white border-bottom" style="padding-bottom: 0!important;">
+      <div class="container-fluid" style="width: 100%; margin: 0;">
+        <div class="row" style="width: auto;">
+          <div class="col-md-3 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
+            <a href="{% url 'home' %}" class="ms-md-2 d-flex">
+              <img src="{% static 'images/qt3.png' %}" height="50" />
+            <div style="color: #00a2e8; line-height: 1.2rem; padding-top: 0.5rem;" class="my-auto font-inter">
+              <strong style="font-size: 35px;" class="font-inter">QAZAQ</strong> 
+              <br>
+              <p style="font-size: 16px; color: black;"><strong> TECHNOLOGY</strong></p>
+            </div>
+          </a>
+          </div>
+          <div class="col-md-5 justify-content-center align-items-center my-auto">
+            <form action="{% url 'search' %}" method="GET" class="d-flex input-group w-auto my-auto md-4 rounded">
+              <input autocomplete="off" type="search" name="q" class="form-control form-control-lg" placeholder="Что вы ищете сегодня?" style="padding: 24px;"/>
+              <button type="submit" class="btn btn-primary d-none d-lg-flex py-auto" style="box-shadow: none; border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;"><i class="fas fa-search" style="margin: auto;"></i></button>
+              <div class="navs" style="margin-left: 1rem;">
+              <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars fa-3x"></i>
+              </a> 
+              </div>    
+          </form>      
+
+        </div>
+        <div class="col-md-3 d-flex justify-content-center justify-content-md-end align-items-center"> 
+ 
+        </div>
+      </div>
+    </div>
+
+        <div class="navbar-nav flex-row borderXwidth d-flex" id="myTopnav" style="width: 100%; padding: 0.75rem;">
+          {% for category in categories %}
+                  <a class="nav-link" href="{% url 'category_products' category.id %}">{{ category.name }}</a>
+          {% endfor %} 
+      </div>
+
+  </header>

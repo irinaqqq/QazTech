@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+О нас
+{% endblock %}
+{% block content %}
+<div class="image-container3" style="background-color: transparent; background-image: url('/static/images/aboutus.png'); background-size: cover; background-position: center;">
+    <div class="image-part2" id="" style="height: 100%; top: 0; left: 0; background-color: rgba(0, 0, 0, 0.5);">
+    <div class="text-container2 text-wrap" style="">
+        <p class="text-start"> <strong style="color: #46c9df;">We are</strong><strong> QazaQ Technology</strong></p>
+        <h4 class="title" style="font-size: 30px; margin-top: 20px; padding-bottom: 6px; word-break: break-word; line-height: 30px;">Современные технологии и новаторские разработки.</h4>
+        <p class="text" style="font-size: 18px;">Наши технологии основаны на умных и интуитивно понятных функциях, которые призваны упростить и улучшить опыт работы пользователей.</p>
+    </div>
+</div>
+</div>
+<div class="container" style="width: 80%; padding-top: 3rem;">
+<div class="row row-cols-1 row-cols-md-5 g-4">
+    <div class="col">
+        <a href="{% url 'whowe'%}" class="h-100">
+      <div class="card h-100">
+        <img src="/static/images/company.jpg" class="card-img-top"
+          alt="Hollywood Sign on The Hill" />
+        <div class="card-body">
+          <h5 class="card-title">Наша компания</h5>
+          <p class="card-text">
+            Наша философия — мыслим и действуем вне стандартных рамок
+          </p>
+        </div>
+      </div>
+    </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'partners'%}" class="h-100">
+      <div class="card h-100">
+        <img src="/static/images/handshake.jpg" class="card-img-top"
+          alt="Palm Springs Road" />
+        <div class="card-body">
+          <h5 class="card-title">Наши партнеры</h5>
+          <p class="card-text">Наша сила – в надежных партнерах</p>
+        </div>
+      </div>
+    </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'faq'%}" class="h-100">
+      <div class="card h-100">
+        <img src="/static/images/faq.png" class="card-img-top"
+          alt="Los Angeles Skyscrapers" />
+        <div class="card-body">
+          <h5 class="card-title">FAQs</h5>
+          <p class="card-text">Часто задаваемые вопросы</p>
+        </div>
+      </div>
+    </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'map'%}" class="h-100">
+      <div class="card h-100">
+        <img src="/static/images/map.png" class="card-img-top"
+          alt="Skyscrapers" />
+        <div class="card-body">
+          <h5 class="card-title">Адрес</h5>
+          <p class="card-text">
+            Найдите нас по этому адресу
+          </p>
+        </div>
+      </div>
+    </a>
+    </div>
+    <div class="col">
+        <a href="{% url 'contactus'%}" class="h-100">
+        <div class="card h-100">
+          <img src="/static/images/contactus.png" class="card-img-top"
+            alt="Los Angeles Skyscrapers" />
+          <div class="card-body">
+            <h5 class="card-title">Свяжитесь с нами</h5>
+            <p class="card-text">Ваше мнение имеет для нас высокое значение</p>
+          </div>
+        </div>
+    </a>
+      </div>
+  </div>
+</div>
+{% endblock %}
+
