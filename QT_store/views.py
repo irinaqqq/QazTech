@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from .models import *
 from django.db.models import Q
 from collections import defaultdict
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+from django.core import serializers
 
 def home(request):
     return render(request, 'home.html')
@@ -116,3 +119,24 @@ def search(request):
         'result_products': result_products,
     }
     return render(request, 'search_results.html', context)
+
+def get_category_products(request):
+    category_id = request.GET.get('category_id')
+    try:
+        category_products = Product.objects.filter(category_id=category_id)
+        products_data = []
+        for product in category_products:
+            product_data = {
+                'name': product.name,
+                'features': product.features,  # Замените это на атрибуты продукта, которые вам нужны
+                'url': product.get_absolute_url(),  # Предполагается, что у вас есть метод get_absolute_url в модели Product
+            }
+            # Если у вас есть модель ProductImage, получаем URL первого изображения продукта
+            if product.images.exists():
+                product_data['image_url'] = product.images.first().image.url
+            else:
+                product_data['image_url'] = ''  # По умолчанию, если изображения отсутствуют
+            products_data.append(product_data)
+        return JsonResponse({'products': products_data})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

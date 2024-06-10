@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=110, verbose_name="Описание(кратко)", null=True)
@@ -171,6 +171,7 @@ class Product(models.Model):
         ('Wireless', 'Беспроводная'),
     ]
     TOUCH_SCREEN_CHOICES = [
+        (None, 'Нет'),
         (True, 'Да'),
         (False, 'Нет'),
     ]
@@ -204,7 +205,8 @@ class Product(models.Model):
 
     keyboard_backlight = models.ManyToManyField(KeyboardLight, verbose_name="Подсветка клавиатуры", blank=True)
 
-    touch_screen = models.CharField(max_length=20, verbose_name="Сенсорный экран", choices=TOUCH_SCREEN_CHOICES, blank=True, default=False)
+    touch_screen = models.CharField(max_length=20, verbose_name="Сенсорный экран", choices=TOUCH_SCREEN_CHOICES, blank=True, default=None, null=True)
+
     touch_screen_touches = models.IntegerField(verbose_name="Количество касаний одновременно", blank=True, null=True)
     screen_sizes = models.ManyToManyField(ScreenSize, verbose_name="Размер экрана", blank=True)
 
@@ -215,7 +217,8 @@ class Product(models.Model):
     sizes = models.ManyToManyField('Size', verbose_name="Размеры", blank=True)
     form_factor = models.CharField(max_length=20, verbose_name="Форм-фактор", choices=FORM_FACTOR_CHOICES, blank=True, null=True)
 
-
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[str(self.pk)])
     def __str__(self):
         return self.name
     

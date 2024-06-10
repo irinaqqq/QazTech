@@ -17,11 +17,11 @@
           <div class="card h-100">
             <img src="{{ product.images.all.0.image.url }}" class="card-img-top"
               alt="Hollywood Sign on The Hill" style="object-fit: contain;"/>
-            <div class="card-body">
-              <h5 class="card-title">{{ product.name }}</h5>
-              <p class="card-text">
-                {{ product.features }}
-              </p>
+            <div class="card-body d-flex">
+              <div class="mt-auto">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.features }}</p>
+              </div>
             </div>
           </div>
             </a>
