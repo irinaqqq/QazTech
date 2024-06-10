@@ -129,6 +129,18 @@ class Size(models.Model):
 
     def __str__(self):
         return self.name
+    
+class KeyboardLight(models.Model):
+    light = models.CharField(max_length=50, verbose_name="Название")
+
+    def __str__(self):
+        return self.light
+    
+class ScreenResolution(models.Model):
+    resolution = models.CharField(max_length=50, verbose_name="Название")
+
+    def __str__(self):
+        return self.resolution
 
 class Product(models.Model):
     DISCRETE_GRAPHICS_CHOICES = [
@@ -158,24 +170,10 @@ class Product(models.Model):
         ('Wired', 'Проводная'),
         ('Wireless', 'Беспроводная'),
     ]
-    KEYBOARD_BACKLIGHT_CHOICES = [
-        (None, 'Нет'),
-        (False, 'Без подсветки'),
-        (True, 'С подсветкой'),
-    ]
     TOUCH_SCREEN_CHOICES = [
         (True, 'Да'),
         (False, 'Нет'),
     ]
-    SCREEN_RESOLUTION_CHOICES = [
-        (None, 'Нет'),
-        ('HD', 'HD'),
-        ('Full HD', 'Full HD'),
-        ('Quad HD', 'Quad HD'),
-        ('4K', '4K'),
-        ('Ultra HD+', 'Ultra HD+'),
-    ]
-
     FORM_FACTOR_CHOICES = [
         (None, 'Нет'),
         ('Horizontal', 'Горизонтальный'),
@@ -187,7 +185,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название", unique=True)
     description = models.TextField(verbose_name="Описание", blank=True)
     weight = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Вес", null=True, blank=True)
-    features = models.CharField(max_length=60, verbose_name="Особенности(кратко)", null=True)
+    features = models.CharField(max_length=60, verbose_name="Особенности(кратко)", null=True, blank=True)
     processor = models.ManyToManyField(Processor, verbose_name="Процессор", blank=True)
     operating_system = models.ManyToManyField(OperatingSystem, verbose_name="Операционная система", blank=True)
     # graphics = models.ForeignKey(Graphics, on_delete=models.SET_NULL, null=True, verbose_name="Видеокарта", blank=True)
@@ -203,11 +201,15 @@ class Product(models.Model):
     webcam = models.CharField(max_length=20, verbose_name="Веб камера", choices=WEBCAM_CHOICES, default=None, blank=True,)
     discrete_graphics = models.IntegerField(verbose_name="Видеокарта дискретная", choices=DISCRETE_GRAPHICS_CHOICES, blank=True, null=True)
     keyboard_type = models.CharField(max_length=50, verbose_name="Комплект клавиатура и мышь", choices=KEYBOARD_TYPE_CHOICES, blank=True, null=True)
-    keyboard_backlight = models.CharField(max_length=20, verbose_name="Подсветка клавиатуры", choices=KEYBOARD_BACKLIGHT_CHOICES, default=None, blank=True, null=True)
+
+    keyboard_backlight = models.ManyToManyField(KeyboardLight, verbose_name="Подсветка клавиатуры", blank=True)
+
     touch_screen = models.CharField(max_length=20, verbose_name="Сенсорный экран", choices=TOUCH_SCREEN_CHOICES, blank=True, default=False)
     touch_screen_touches = models.IntegerField(verbose_name="Количество касаний одновременно", blank=True, null=True)
     screen_sizes = models.ManyToManyField(ScreenSize, verbose_name="Размер экрана", blank=True)
-    screen_resolution = models.CharField(max_length=20, verbose_name="Разрешение экрана", choices=SCREEN_RESOLUTION_CHOICES, blank=True, null=True)
+
+    screen_resolution = models.ManyToManyField(ScreenResolution, verbose_name="Разрешение экрана", blank=True)
+
     power_supplies = models.ManyToManyField(PowerSupply, verbose_name="Блоки питания", blank=True)
     controllers  = models.ManyToManyField(Controller, verbose_name="Контроллеры", blank=True)
     sizes = models.ManyToManyField('Size', verbose_name="Размеры", blank=True)

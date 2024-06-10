@@ -2442,6 +2442,9 @@ a{
   .navs{
     display: block;
   }
+  .title{
+    padding-top: 1rem;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -2588,4 +2591,16 @@ a{
 }
 @media screen and (max-width:767px){
     .main-timeline .timeline{ width: 100%; }
+}
+
+.no-hover-zoom:hover img {
+  transform: none;
+}
+
+.hover-zoom-container img {
+  transition: transform 0.3s ease;
+}
+
+.hover-zoom-container:hover img {
+  transform: scale(1.05);
 }

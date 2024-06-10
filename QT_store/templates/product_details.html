@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 <section class="py-5 border-bottom">
-    <div class="container">
+    <div class="container w-100">
       <div class="row gx-5">
         <aside class="col-lg-6">
             <div class="border rounded-4 mb-3 d-flex justify-content-center">
@@ -32,8 +32,12 @@
                 {{ product.name }}
             </h4>  
             <div class="mb-3">
-              <span class="h5">{{ product.features }}</span>
-              <span class="text-muted">что то</span>
+              <span class="h5">
+                {% if product.features %}
+                {{ product.features }}
+                {% endif %}
+              </span>
+              <!-- <span class="text-muted">что то</span> -->
             </div>
   
             <p>
@@ -41,22 +45,32 @@
             </p>
             <hr/>
             <div class="row">
-              <dt class="col-3">Процессор:</dt>
-              <dd class="col-9">{{ product.processor }}</dd>
-  
-              <dt class="col-3">Оперативная память:</dt>
-              <dd class="col-9">
-                от {{ min_ram_size }} ГБ до {{ max_ram_size }} ГБ
+              <dt class="col-4">Процессор:</dt>
+              <dd class="col-8">
+                {% for brand, processors in processors_by_brand.items %}
+                {% if not forloop.first %}<br>{% endif %}{{ brand }} {% for processor_type, processor_list in processors.items %}{% if processor_type %}{{ processor_type }} {% endif %}{% for processor in processor_list %}{{ processor }}{% if not forloop.last %}/{% endif %}{% endfor %}{% if not forloop.last %}/{% endif %}
+                {% endfor %}
+            {% endfor %}
               </dd>
   
-              <dt class="col-3">Накопители:</dt>
-              <dd class="col-9">
-                от {{ min_storage_size }} {% if min_storage_unit == "GB" %} ГБ {% else %} ТБ {% endif %}
-                до {{ max_storage_size }} {% if max_storage_unit == "GB" %} ГБ {% else %} ТБ {% endif %}
+              <dt class="col-4">Оперативная память:</dt>
+              <dd class="col-8">
+                {% if min_ram_size is not none and max_ram_size is not none %}
+                  от {{ min_ram_size }} ГБ до {{ max_ram_size }} ГБ
+                {% endif %}
               </dd>
+              
+              <dt class="col-4">Накопители:</dt>
+              <dd class="col-8">
+                {% if min_storage_size is not none and max_storage_size is not none %}
+                  от {{ min_storage_size }} {% if min_storage_unit == "GB" %} ГБ {% else %} ТБ {% endif %}
+                  до {{ max_storage_size }} {% if max_storage_unit == "GB" %} ГБ {% else %} ТБ {% endif %}
+                {% endif %}
+              </dd>
+              
   
-              <dt class="col-3">Вес:</dt>
-              <dd class="col-9">                          
+              <dt class="col-4">Вес:</dt>
+              <dd class="col-8">                          
                 {% if product.weight %}
                 {{ product.weight }} кг
                 {% endif %}</dd>
@@ -72,19 +86,21 @@
   
   <!-- Page Content -->
   {% for description in descriptions %}
-  <section class="py-3">
-    
-    <div class="container">
-        <img src="{{ description.image.url }}" class="img-fluid" alt="...">
+  <section class="py-4 bg-light">
+    <div class="image-container" style="background-image: url('{{ description.image.url }}');">
+  </div>
+    <div class="container w-100">
+      <div class="row gx-5">
       <h2 class="fw-light mt-2 mb-2">{{ description.title }}</h2>
       <p>{{ description.text }}</p>
+      </div>
     </div>
   </section>
   {% endfor %}
 
-  <section class="bg-light border-top py-4">
-    <div class="container">
-      <div class="row gx-4">
+  <section class="border-top py-4">
+    <div class="container w-100">
+      <div class="row">
         <div class="col-lg-8 mb-4">
           <div class="border rounded-2 px-3 py-2 bg-white">
             <!-- Pills navs -->
@@ -107,32 +123,10 @@
             <!-- Pills content -->
             <div class="tab-content" id="ex1-content">
               <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
-                <!-- <p>
-                  With supporting text below as a natural lead-in to additional content. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                  enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                  pariatur.
-                </p> -->
-                <!-- <div class="row mb-2">
-                  <div class="col-12 col-md-6">
-                    <ul class="list-unstyled mb-0">
-                      <li><i class="fas fa-check text-success me-2"></i>Some great feature name here</li>
-                      <li><i class="fas fa-check text-success me-2"></i>Lorem ipsum dolor sit amet, consectetur</li>
-                      <li><i class="fas fa-check text-success me-2"></i>Duis aute irure dolor in reprehenderit</li>
-                      <li><i class="fas fa-check text-success me-2"></i>Optical heart sensor</li>
-                    </ul>
-                  </div>
-                  <div class="col-12 col-md-6 mb-0">
-                    <ul class="list-unstyled">
-                      <li><i class="fas fa-check text-success me-2"></i>Easy fast and ver good</li>
-                      <li><i class="fas fa-check text-success me-2"></i>Some great feature name here</li>
-                      <li><i class="fas fa-check text-success me-2"></i>Modern style and design</li>
-                    </ul>
-                  </div>
-                </div> -->
                 <table class="table border mt-3 mb-2">
                   <tr>
                     <th class="py-2">Процессор:</th>
-                    <td class="py-2">
+                    <td class="py-2 text-break">
                       {% for brand, processors in processors_by_brand.items %}
                       {% for processor_type, processor_list in processors.items %}
                           <li>{{ brand }}: 
@@ -147,7 +141,7 @@
                   </tr>
                   <tr>
                     <th class="py-2">Операционная система:</th>
-                    <td class="py-2">
+                    <td class="py-2 text-break">
                       {% if product.operating_system.all %}
                       {{ product.operating_system }}
                       {% endif %}
@@ -159,7 +153,7 @@
                   </tr> -->
                   <tr>
                     <th class="py-2">Оперативная память:</th>
-                    <td class="py-2">
+                    <td class="py-2 text-break">
                       {% for ram_type, sizes in ram_by_type.items %}
                       <li>{{ ram_type }}:
                       {% for size in sizes %}{{ size }}{% if not forloop.last %}/{% endif %}{% endfor %} ГБ
@@ -169,7 +163,7 @@
                   </tr>
                   <tr>
                     <th class="py-2">Накопители:</th>
-                    <td class="py-2">
+                    <td class="py-2 text-break">
                         {% for storage_type, sizes in formatted_storage_by_type.items %}
                             <li>{{ storage_type }}: {% for size, unit in sizes %}{{ size }}{{ unit }}{% if not forloop.last %}/{% endif %}{% endfor %}</li>
                         {% endfor %}
@@ -181,7 +175,7 @@
                 <table class="table border mt-3 mb-2">
                     <tr>
                         <th class="py-2 align-middle">Порты и разъемы:</th>
-                        <td class="py-2">
+                        <td class="py-2 text-break">
                             <ul style="margin: auto;">
                                 {% for port in product.ports.all %}
                                     <li>{{ port.name }}</li>
@@ -191,7 +185,7 @@
                     </tr>                    
                     <tr>
                       <th class="py-2 align-middle">Беспроводные технологии:</th>
-                      <td class="py-2"></td>
+                      <td class="py-2 text-break"></td>
                     </tr>
                   </table>
               </div>
@@ -199,17 +193,17 @@
                 <table class="table border mt-3 mb-2">
                     <tr>
                         <th class="py-2 align-middle">Дисплей:</th>
-                        <td class="py-2">
-                          {% for screen_size in product.screen_sizes.all %}{{ screen_size.size }}{% if not forloop.last %}/{% endif %}{% endfor %} дюймов
+                        <td class="py-2 text-break">
+                          {% if product.screen_sizes.all %}{% for screen_size in product.screen_sizes.all %}{{ screen_size.size }}{% if not forloop.last %}/{% endif %}{% endfor %} дюймов{% endif %}
                         </td>
                     </tr>                    
                     <tr>
                       <th class="py-2 align-middle">Габариты (В × Ш × Г):</th>
-                      <td class="py-2"></td>
+                      <td class="py-2 text-break"></td>
                     </tr>
                     <tr>
                         <th class="py-2 align-middle">Вес:</th>
-                        <td class="py-2">
+                        <td class="py-2 text-break">
                           {% if product.weight %}
                           {{ product.weight }} кг
                           {% endif %}
@@ -217,27 +211,72 @@
                       </tr>
                       <tr>
                         <th class="py-2 align-middle">Цвет:</th>
-                        <td class="py-2"></td>
+                        <td class="py-2 text-break"></td>
                       </tr>
+                      <tr>
+                        <th class="py-2 align-middle">Подсветка клавиатуры:</th>
+                        <td class="py-2 text-break">
+                            {% for light in product.keyboard_backlight.all %}{{ light.light }}{% if not forloop.last %}/{% endif %}{% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="py-2 align-middle">Разрешение экрана:</th>
+                        <td class="py-2 text-break">
+                            {% for resolution in product.screen_resolution.all %}{{ resolution.resolution }}{% if not forloop.last %}/{% endif %}{% endfor %}
+                        </td>
+                    </tr>
                   </table>
               </div>
               <div class="tab-pane fade mb-2" id="ex1-pills-4" role="tabpanel" aria-labelledby="ex1-tab-4">
                 <table class="table border mt-3 mb-2">
-                    <tr>
-                        <th class="py-2 align-middle">Предустановленное ПО:</th>
-                        <td class="py-2"></td>
-                    </tr>                    
-                    <tr>
+                  <tr>
+                      <th class="py-2 align-middle">Предустановленное ПО:</th>
+                      <td class="py-2 text-break"></td>
+                  </tr>                    
+                  <tr>
                       <th class="py-2 align-middle">Комплектация:</th>
-                      <td class="py-2"></td>
-                    </tr>
-                    <tr>
+                      <td class="py-2 text-break"></td>
+                  </tr>
+                  <tr>
                       <th class="py-2 align-middle">Мощность блока питания:</th>
-                      <td class="py-2">
-                        {% for power in product.power_supplies.all %}{{ power.power }}{% if not forloop.last %}/{% endif %}{% endfor %} Вт
+                      <td class="py-2 text-break">
+                        {% if product.power_supplies.all %}{% for power in product.power_supplies.all %}{{ power.power }}{% if not forloop.last %}/{% endif %}{% endfor %} Вт{% endif %}
                       </td>
-                    </tr>
-                  </table>
+                  </tr>
+                  <tr>
+                    <th class="py-2 align-middle">Температура эксплуатации:</th>
+                    <td class="py-2 text-break">
+                      {% if product.operating_temperature is not none %}
+                        {{ product.operating_temperature }}
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="py-2 align-middle">Температура хранения:</th>
+                    <td class="py-2 text-break">
+                      {% if product.storage_temperature is not none %}
+                        {{ product.storage_temperature }}
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="py-2 align-middle">Рабочая влажность:</th>
+                    <td class="py-2 text-break">
+                      {% if product.operating_humidity is not none %}
+                        {{ product.operating_humidity }}
+                      {% endif %}
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="py-2 align-middle">Влажность хранения:</th>
+                    <td class="py-2 text-break">
+                      {% if product.storage_humidity is not none %}
+                        {{ product.storage_humidity }}
+                      {% endif %}
+                    </td>
+                  </tr>
+              </table>
+              
               </div>
             </div>
             <!-- Pills content -->
@@ -245,25 +284,20 @@
         </div>
         <div class="col-lg-4">
           <div class="px-0 border rounded-2 shadow-0">
-            <div class="card">
+            <div class="card no-hover-zoom">
               <div class="card-body">
                 <h5 class="card-title">Похожие товары</h5>
-
-                    
-                    {% for similar_product in similar_products %}
-                    <div class="d-flex mb-2 overflow-hidden">
-                      <a href="{% url 'product_detail' similar_product.id %}" class="me-3">
-                        <img src="{{ similar_product.images.all.0.image.url }}" style="object-fit: contain; min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                      </a>
-                      <div class="info">
-                        <a href="{% url 'product_detail' similar_product.id %}" class="nav-link mb-1 ">
-                        <strong class="text-dark"> {{ similar_product.name }} </strong>
-                        <span class="features">{{ similar_product.features }}</span>
-                        </a>
-                      </div>
-                    </div>
-                    {% endfor %}
-                    
+                {% for similar_product in similar_products %}
+                <a href="{% url 'product_detail' similar_product.id %}" class="d-flex mt-4 hover-zoom-container nav-link">
+                  <div class="me-3">
+                    <img src="{{ similar_product.images.all.0.image.url }}" style="object-fit: contain; width: 100px; height: 100px;" class="img-md img-thumbnail" />
+                  </div>
+                  <div class="info">
+                    <strong class="text-dark"> {{ similar_product.name }} </strong>
+                    <span class="features">{{ similar_product.features }}</span>
+                  </div>
+                </a>
+                {% endfor %}
                 </div>
               </div>
             </div>

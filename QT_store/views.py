@@ -26,38 +26,39 @@ def product_detail(request, product_id):
 
     ram_by_type = defaultdict(list)
     for ram in product.ram.all():
-        ram_by_type[ram.type].append(ram.size)
+        if ram.size is not None:
+            ram_by_type[ram.type].append(ram.size)
     ram_by_type = {ram_type: sorted(sizes, key=lambda x: int(x)) for ram_type, sizes in ram_by_type.items()}
 
-    all_ram_sizes = [int(size) for sizes in ram_by_type.values() for size in sizes]
-    min_ram_size = min(all_ram_sizes)
-    max_ram_size = max(all_ram_sizes)
+    all_ram_sizes = [int(size) for sizes in ram_by_type.values() for size in sizes if size is not None]
+    min_ram_size = min(all_ram_sizes) if all_ram_sizes else None
+    max_ram_size = max(all_ram_sizes) if all_ram_sizes else None
 
     storage_by_type = defaultdict(list)
     for storage in product.storage.all():
-        storage_by_type[storage.type].append(storage.size)
+        if storage.size is not None:
+            storage_by_type[storage.type].append(storage.size)
     storage_by_type = {storage_type: sorted(sizes, key=lambda x: int(x)) for storage_type, sizes in storage_by_type.items()}
 
     formatted_storage_by_type = {}
     for storage_type, sizes in storage_by_type.items():
         formatted_sizes = []
         for size in sizes:
-            size_int = int(size)
-            unit = "TB" if size_int >= 1024 else "GB"
-            formatted_sizes.append((size_int / 1024 if unit == "TB" else size_int, unit))
+            if size is not None:
+                size_int = int(size)
+                unit = "TB" if size_int >= 1024 else "GB"
+                formatted_sizes.append((size_int / 1024 if unit == "TB" else size_int, unit))
         formatted_storage_by_type[storage_type] = formatted_sizes
 
-
-
-    all_sizes = [int(size) for sizes in storage_by_type.values() for size in sizes]
-    min_storage_size = min(all_sizes)
-    max_storage_size = max(all_sizes)
+    all_sizes = [int(size) for sizes in storage_by_type.values() for size in sizes if size is not None]
+    min_storage_size = min(all_sizes) if all_sizes else None
+    max_storage_size = max(all_sizes) if all_sizes else None
     min_storage_unit = "GB"
     max_storage_unit = "GB"
-    if min_storage_size >= 1024:
+    if min_storage_size is not None and min_storage_size >= 1024:
         min_storage_size = min_storage_size / 1024
         min_storage_unit = "TB"
-    if max_storage_size >= 1024:
+    if max_storage_size is not None and max_storage_size >= 1024:
         max_storage_size = max_storage_size / 1024
         max_storage_unit = "TB"
 
