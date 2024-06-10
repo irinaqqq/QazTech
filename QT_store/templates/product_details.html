@@ -52,7 +52,7 @@
                 {% endfor %}
             {% endfor %}
               </dd>
-  
+        
               <dt class="col-4">Оперативная память:</dt>
               <dd class="col-8">
                 {% if min_ram_size is not none and max_ram_size is not none %}
@@ -137,7 +137,15 @@
                       {% endfor %}
                   {% endfor %}
                     </td>
-
+                  </tr>
+                  <tr>
+                    <th class="py-2">Материнская плата:</th>
+                    <td class="py-2 text-break">
+                      {% for line, types in motherboards_by_line.items %}
+                      <li>{{ line }}: {% for type, names in types.items %}{{ type }}{% if not forloop.last %}/{% endif %}{% endfor %}
+                      </li>
+                    {% endfor %}
+                    </td>
                   </tr>
                   <tr>
                     <th class="py-2">Операционная система:</th>

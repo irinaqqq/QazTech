@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=110, verbose_name="Описание(кратко)", null=True)
@@ -7,6 +8,8 @@ class Category(models.Model):
     # Другие поля, если нужно
     def __str__(self):
         return self.name
+    class Meta:
+        ordering = ['name']
 
 class ProcBrand(models.Model):
     name = models.CharField(max_length=50, verbose_name="Бренд", null=True, unique=True)
@@ -36,12 +39,18 @@ class Processor(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ['name']
 
 class OperatingSystem(models.Model):
     name = models.CharField(max_length=255, verbose_name="Операционная система")
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ['name']
 
 class Graphics(models.Model):
     name = models.CharField(max_length=255, verbose_name="Видеокарта")
@@ -85,7 +94,7 @@ class Storage(models.Model):
 class Motherboard(models.Model):
     
     TYPE_CHOICES = [
-        ('SOCKET', 'Socket'),
+        ('Socket', 'Socket'),
         ('FCBGA', 'FCBGA'),
     ]
     line = models.CharField(max_length=50, verbose_name="Линейка", choices=TYPE_CHOICES, default='Socket')
@@ -98,6 +107,8 @@ class Motherboard(models.Model):
 
     def __str__(self):
         return self.name
+    class Meta:
+        ordering = ['name']
 
 class Port(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название порта", unique=True)
@@ -188,6 +199,7 @@ class Product(models.Model):
     weight = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Вес", null=True, blank=True)
     features = models.CharField(max_length=60, verbose_name="Особенности(кратко)", null=True, blank=True)
     processor = models.ManyToManyField(Processor, verbose_name="Процессор", blank=True)
+    mother = models.ManyToManyField(Motherboard, verbose_name="Материнская плата", blank=True)
     operating_system = models.ManyToManyField(OperatingSystem, verbose_name="Операционная система", blank=True)
     # graphics = models.ForeignKey(Graphics, on_delete=models.SET_NULL, null=True, verbose_name="Видеокарта", blank=True)
     ram = models.ManyToManyField(RAM, verbose_name="Оперативная память", blank=True)

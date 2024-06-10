@@ -27,6 +27,11 @@ def product_detail(request, product_id):
         processors_by_brand[processor.brand.name][processor.line.name].append(processor.series or '')
     processors_by_brand = {brand: dict(lines) for brand, lines in processors_by_brand.items()}
 
+    motherboards_by_line = defaultdict(lambda: defaultdict(list))
+    for motherboard in product.mother.all():
+        motherboards_by_line[motherboard.line][motherboard.type].append(motherboard.name)
+    motherboards_by_line = {line: dict(sorted(types.items())) for line, types in motherboards_by_line.items()}
+
     ram_by_type = defaultdict(list)
     for ram in product.ram.all():
         if ram.size is not None:
@@ -79,6 +84,7 @@ def product_detail(request, product_id):
         'min_storage_unit': min_storage_unit,
         'max_storage_unit': max_storage_unit,
         'formatted_storage_by_type': formatted_storage_by_type,
+        'motherboards_by_line': motherboards_by_line,
     }
     return render(request, 'product_details.html', context)
 

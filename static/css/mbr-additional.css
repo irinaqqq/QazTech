@@ -2257,8 +2257,8 @@ div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
 }
 .title-whowe{
   font-size: 1.375em;
-  font-weight: bold;
-  line-height: 1.81;
+  font-weight: 400;
+  line-height: 1.5;
   margin-bottom: 1rem;
   margin-top: 2rem;
   /* color: #00a2e8; */
@@ -2528,7 +2528,7 @@ a{
 }
 .main-timeline .timeline-content{
     color: #404247;
-    text-align: center;
+    /* text-align: center; */
     padding: 15px 80px 15px 10px;
     display: block;
     position: relative;
