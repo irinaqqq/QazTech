@@ -2515,6 +2515,7 @@ a{
     float: left;
     position: relative;
     z-index: 1;
+    text-align: right;
 }
 .main-timeline .timeline:before{
     content: "";
@@ -2529,7 +2530,7 @@ a{
 .main-timeline .timeline-content{
     color: #404247;
     /* text-align: center; */
-    padding: 15px 80px 15px 10px;
+    padding: 15px 100px 15px 10px;
     display: block;
     position: relative;
     min-height: 160px;
@@ -2570,13 +2571,13 @@ a{
     margin: 0;
     padding: 0.25rem;
 }
-.main-timeline .timeline:nth-child(even){ float: right; }
+.main-timeline .timeline:nth-child(even){ float: right; text-align: left;}
 .main-timeline .timeline:nth-child(even):before{
     right: auto;
     left: 0;
 }
 .main-timeline .timeline:nth-child(even) .timeline-content{
-    padding: 15px 10px 15px 80px;
+    padding: 15px 10px 15px 100px;
 }
 .main-timeline .timeline:nth-child(even) .timeline-content:before{
     right: auto;

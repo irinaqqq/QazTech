@@ -53,10 +53,13 @@ class OperatingSystem(models.Model):
         ordering = ['name']
 
 class Graphics(models.Model):
-    name = models.CharField(max_length=255, verbose_name="Видеокарта")
+    size = models.PositiveIntegerField(verbose_name="Объем видеокарты(ГБ)", null=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.size} ГБ"
+    
+    class Meta:
+        ordering = ['size']
     
 class RAM(models.Model):
     TYPE_CHOICES = [
@@ -65,11 +68,17 @@ class RAM(models.Model):
         ('DDR5', 'DDR5'),
     ]
 
-    size = models.CharField(max_length=10, verbose_name="Объем оперативной памяти(ГБ)", null=True)
+    size = models.PositiveIntegerField(verbose_name="Объем оперативной памяти(ГБ)", null=True)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES, verbose_name="Тип оперативной памяти", null=True)
+
+    class Meta:
+        ordering = ['-type', models.F('size').asc(nulls_last=True)]
 
     def __str__(self):
         return f"{self.size} ({self.type})"
+
+from django.db import models
+from django.core.exceptions import ValidationError
 
 class Storage(models.Model):
     HDD = 'HDD'
@@ -77,19 +86,44 @@ class Storage(models.Model):
     NVME = 'NVMe'
     
     STORAGE_TYPE_CHOICES = [
-        (HDD, 'Hard Disk Drive (HDD)'),
-        (SSD, 'Solid-State Drive (SSD)'),
-        (NVME, 'Non-Volatile Memory Express (NVMe)'),
+        (HDD, 'HDD'),
+        (SSD, 'SSD'),
+        (NVME, 'NVMe'),
     ]
 
-    size = models.CharField(max_length=10, verbose_name="Объем накопителя(ГБ)", null=True)
+    size = models.PositiveIntegerField(verbose_name="Объем накопителя(ГБ)", null=True, blank=True)
+    size_tb = models.FloatField(verbose_name="Объем накопителя(ТБ)", null=True, blank=True)
     type = models.CharField(max_length=4, choices=STORAGE_TYPE_CHOICES, default=SSD, verbose_name="Тип накопителя", null=True)
-    
+
     class Meta:
         unique_together = ('size', 'type')
+        ordering = ['-type', models.F('size').asc(nulls_last=True)]
+
+    def clean(self):
+        if not self.size and not self.size_tb:
+            raise ValidationError('Either size (ГБ) or size_tb (ТБ) must be provided.')
+        
+        if self.size_tb and not self.size:
+            self.size = int(self.size_tb * 1024)
+        elif self.size and not self.size_tb:
+            self.size_tb = self.size / 1024
+
+    def save(self, *args, **kwargs):
+        self.clean()  # Ensure clean() is called on save
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.size} ({self.get_type_display()})"
+        if self.size:
+            if self.size < 1024:
+                return f"{self.size} ГБ ({self.get_type_display()})"
+            else:
+                tb_size = self.size / 1024
+                return f"{tb_size:.1f} ТБ ({self.get_type_display()})"
+        elif self.size_tb:
+            return f"{self.size_tb:.1f} ТБ ({self.get_type_display()})"
+        else:
+            return f"({self.get_type_display()})"
+
 
 class Motherboard(models.Model):
     
@@ -117,17 +151,20 @@ class Port(models.Model):
         return self.name
 
 class ScreenSize(models.Model):
-    size = models.CharField(max_length=50, verbose_name="Размер экрана")
+    size = models.CharField(max_length=50, verbose_name="Размер экрана", unique=True)
 
     def __str__(self):
         return self.size
 
 class PowerSupply(models.Model):
-    power = models.CharField(max_length=100, verbose_name="Мощность")
+    power = models.PositiveIntegerField(verbose_name="Мощность", unique=True)
 
 
     def __str__(self):
-        return self.power
+        return f"{self.power} W"
+    
+    class Meta:
+        ordering = ['power']
 
 class Controller(models.Model):
     name = models.CharField(max_length=50, verbose_name="Название")
@@ -136,99 +173,82 @@ class Controller(models.Model):
         return self.name
 
 class Size(models.Model):
-    name = models.CharField(max_length=50, verbose_name="Название")
+    name = models.CharField(max_length=50, verbose_name="Название", unique=True)
 
     def __str__(self):
         return self.name
     
 class KeyboardLight(models.Model):
-    light = models.CharField(max_length=50, verbose_name="Название")
+    light = models.CharField(max_length=50, verbose_name="Название", unique=True)
 
     def __str__(self):
         return self.light
     
 class ScreenResolution(models.Model):
-    resolution = models.CharField(max_length=50, verbose_name="Название")
+    resolution = models.CharField(max_length=50, verbose_name="Название", unique=True)
 
     def __str__(self):
         return self.resolution
+    
+class FormFactor(models.Model):
+    formf = models.CharField(max_length=50, verbose_name="Название", unique=True)
+
+    def __str__(self):
+        return self.formf
+    
+class KeyboardSet(models.Model):
+    set = models.CharField(max_length=50, verbose_name="Название", unique=True)
+
+    def __str__(self):
+        return self.set
+    
+class TouchST(models.Model):
+    touches = models.CharField(max_length=50, verbose_name="Название", unique=True)
+
+    def __str__(self):
+        return self.touches
+    
+class ScreenType(models.Model):
+    stype = models.CharField(max_length=50, verbose_name="Название", unique=True)
+
+    def __str__(self):
+        return self.stype
+    
+class WebCam(models.Model):
+    cam = models.CharField(max_length=50, verbose_name="Название", unique=True)
+
+    def __str__(self):
+        return self.cam
 
 class Product(models.Model):
-    DISCRETE_GRAPHICS_CHOICES = [
-        (None, 'Нет'),
-        (2, '2GB'),
-        (4, '4GB'),
-        (8, '8GB'),
-        (16, '16GB'),
-        (24, '24GB'),
-    ]
-    SCREEN_TYPE_CHOICES = [
-        (None, 'Нет'),
-        ('IPS', 'IPS'),
-        ('VA', 'VA'),
-        ('TN', 'TN'),
-        ('PLS', 'PLS'),
-        ('LED', 'LED'),
-    ]
-    
-    WEBCAM_CHOICES = [
-        (None, 'Нет'),
-        (False, 'Без встроенной вебкамеры'),
-        (True, 'Со встроенной веб камерой'),
-    ]
-    KEYBOARD_TYPE_CHOICES = [
-        (None, 'Нет'),
-        ('Wired', 'Проводная'),
-        ('Wireless', 'Беспроводная'),
-    ]
-    TOUCH_SCREEN_CHOICES = [
-        (None, 'Нет'),
-        (True, 'Да'),
-        (False, 'Нет'),
-    ]
-    FORM_FACTOR_CHOICES = [
-        (None, 'Нет'),
-        ('Horizontal', 'Горизонтальный'),
-        ('Vertical', 'Вертикальный'),
-    ]
-    
-
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Категория")
     name = models.CharField(max_length=100, verbose_name="Название", unique=True)
-    description = models.TextField(verbose_name="Описание", blank=True)
-    weight = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Вес", null=True, blank=True)
     features = models.CharField(max_length=60, verbose_name="Особенности(кратко)", null=True, blank=True)
+    description = models.TextField(verbose_name="Описание", blank=True)
     processor = models.ManyToManyField(Processor, verbose_name="Процессор", blank=True)
     mother = models.ManyToManyField(Motherboard, verbose_name="Материнская плата", blank=True)
-    operating_system = models.ManyToManyField(OperatingSystem, verbose_name="Операционная система", blank=True)
-    # graphics = models.ForeignKey(Graphics, on_delete=models.SET_NULL, null=True, verbose_name="Видеокарта", blank=True)
     ram = models.ManyToManyField(RAM, verbose_name="Оперативная память", blank=True)
     storage = models.ManyToManyField(Storage, verbose_name="Накопители", blank=True)
-    ports = models.ManyToManyField(Port, verbose_name="Порты и разъемы", blank=True)
+    graphics = models.ManyToManyField(Graphics, verbose_name="Видеокарта(дискретная)", blank=True)
+    operating_system = models.ManyToManyField(OperatingSystem, verbose_name="Операционная система", blank=True)
+    weight = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Вес", null=True, blank=True)
+    screen_sizes = models.ManyToManyField(ScreenSize, verbose_name="Размер экрана", blank=True)
+    screen_type = models.ManyToManyField(ScreenType, verbose_name="Тип экрана", blank=True)
+    screen_resolution = models.ManyToManyField(ScreenResolution, verbose_name="Разрешение экрана", blank=True)
+    touch_screen_touches = models.ManyToManyField(TouchST, verbose_name="Количество касаний одновременно", blank=True)
+    formfactor = models.ManyToManyField(FormFactor, verbose_name="Форм-фактор", blank=True)
+    webcam = models.ManyToManyField(WebCam, verbose_name="Веб камера", blank=True)
+    keyset = models.ManyToManyField(KeyboardSet, verbose_name="Комплект клавиатура и мышь", blank=True)
+    keyboard_backlight = models.ManyToManyField(KeyboardLight, verbose_name="Подсветка клавиатуры", blank=True)
+    power_supplies = models.ManyToManyField(PowerSupply, verbose_name="Блоки питания", blank=True)
     operating_temperature = models.CharField(max_length=20, verbose_name="Температура эксплуатации", null=True, blank=True)
     storage_temperature = models.CharField(max_length=20, verbose_name="Температура хранения", null=True, blank=True)
     operating_humidity = models.CharField(max_length=20, verbose_name="Рабочая влажность", null=True, blank=True)
     storage_humidity = models.CharField(max_length=20, verbose_name="Влажность хранения", null=True, blank=True)
-
-    screen_type = models.CharField(max_length=50, verbose_name="Тип экрана", choices=SCREEN_TYPE_CHOICES, blank=True, null=True)
-    webcam = models.CharField(max_length=20, verbose_name="Веб камера", choices=WEBCAM_CHOICES, default=None, blank=True,)
-    discrete_graphics = models.IntegerField(verbose_name="Видеокарта дискретная", choices=DISCRETE_GRAPHICS_CHOICES, blank=True, null=True)
-    keyboard_type = models.CharField(max_length=50, verbose_name="Комплект клавиатура и мышь", choices=KEYBOARD_TYPE_CHOICES, blank=True, null=True)
-
-    keyboard_backlight = models.ManyToManyField(KeyboardLight, verbose_name="Подсветка клавиатуры", blank=True)
-
-    touch_screen = models.CharField(max_length=20, verbose_name="Сенсорный экран", choices=TOUCH_SCREEN_CHOICES, blank=True, default=None, null=True)
-
-    touch_screen_touches = models.IntegerField(verbose_name="Количество касаний одновременно", blank=True, null=True)
-    screen_sizes = models.ManyToManyField(ScreenSize, verbose_name="Размер экрана", blank=True)
-
-    screen_resolution = models.ManyToManyField(ScreenResolution, verbose_name="Разрешение экрана", blank=True)
-
-    power_supplies = models.ManyToManyField(PowerSupply, verbose_name="Блоки питания", blank=True)
-    controllers  = models.ManyToManyField(Controller, verbose_name="Контроллеры", blank=True)
     sizes = models.ManyToManyField('Size', verbose_name="Размеры", blank=True)
-    form_factor = models.CharField(max_length=20, verbose_name="Форм-фактор", choices=FORM_FACTOR_CHOICES, blank=True, null=True)
-
+    controllers  = models.ManyToManyField(Controller, verbose_name="Контроллеры", blank=True)
+    # ports = models.ManyToManyField(Port, verbose_name="Порты и разъемы", blank=True)
+    
     def get_absolute_url(self):
         return reverse('product_detail', args=[str(self.pk)])
     def __str__(self):

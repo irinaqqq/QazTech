@@ -43,14 +43,13 @@
       </div>
     </div>
 
-        <div class="navbar-nav flex-row borderXwidth d-flex" id="myTopnav" style="width: 100%; padding: 0.75rem;">
+        <div class="navbar-nav flex-row borderXwidth d-flex" id="myTopnav" style="width: 100%; padding: 1rem;">
           {% for category in categories %}
           <a class="nav-link" href="{% url 'category_products' category.id %}" data-category-id="{{ category.id }}">{{ category.name }}</a>
       {% endfor %}      
       </div>
     </div>
-      <div id="hoveredCategoryProducts" style="display: none; position: absolute; z-index: 9999; background-color: white; overflow: hidden;">
-        <!-- Здесь будут отображаться продукты -->
+      <div id="hoveredCategoryProducts" style="display: none; position: absolute; z-index: 9999; background-color: white; overflow: hidden; width: 100%;">
     </div>
     <script>
 $(document).ready(function() {
@@ -75,7 +74,7 @@ $(document).ready(function() {
             if (products.length > 0) {
                 var productList = '<div class="row g-5 px-5 my-2">'; // Начинаем с контейнера
                 for (var i = 0; i < Math.min(products.length, limit); i++) {
-                    productList += '<div class="col-md-3" style="width: 11%; opacity: 0; margin:0;">';
+                    productList += '<div class="col-md-3 mx-3" style="width: 11%; opacity: 0; margin:0; padding:0;">';
                     productList += '<a href="' + products[i].url + '" class="h-100">';
                     productList += '<div class="card h-100" style="box-shadow: none;">';
                     productList += '<img src="' + products[i].image_url + '" class="card-img-top" alt="' + products[i].name + '" style="object-fit: contain;"/>';
