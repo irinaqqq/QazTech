@@ -4,7 +4,7 @@ from django.urls import reverse
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=110, verbose_name="Описание(кратко)", null=True)
-    image = models.ImageField(upload_to='static/category_images/', verbose_name="Фото", null=True)
+    image = models.ImageField(upload_to='category_images/', verbose_name="Фото", null=True)
     # Другие поля, если нужно
     def __str__(self):
         return self.name
@@ -256,7 +256,7 @@ class Product(models.Model):
     
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name="Продукт")
-    image = models.ImageField(upload_to='static/product_images/', verbose_name="Изображение")
+    image = models.ImageField(upload_to='product_images/', verbose_name="Изображение")
 
     def __str__(self):
         return f"Изображение для {self.product.name}"
@@ -265,7 +265,7 @@ class ProductImage(models.Model):
 class ProductDescription(models.Model):
     product = models.ForeignKey(Product, related_name='descriptions', on_delete=models.CASCADE, verbose_name="Продукт")
     title = models.CharField(max_length=255, verbose_name="Заголовок")
-    image = models.ImageField(upload_to='static/product_descriptions/', verbose_name="Фото", blank=True, null=True)
+    image = models.ImageField(upload_to='product_descriptions/', verbose_name="Фото", blank=True, null=True)
     text = models.TextField(verbose_name="Описание")
 
     def __str__(self):

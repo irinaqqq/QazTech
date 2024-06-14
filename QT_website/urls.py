@@ -37,4 +37,11 @@ urlpatterns = [
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
     path('get_category_products/', views.get_category_products, name='get_category_products'),
     
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] 
+
+# Добавьте обработку медиа-файлов
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Обработка статических файлов
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
