@@ -35,7 +35,7 @@ wheels/
 # If your build process includes any Django-specific stuff:
 # static files
 staticfiles/
-media/
+# media/
 myvenv/
 # local env files
 .env

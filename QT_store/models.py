@@ -5,6 +5,7 @@ class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=110, verbose_name="Описание(кратко)", null=True)
     image = models.ImageField(upload_to='category_images/', verbose_name="Фото", null=True)
+    imageback = models.ImageField(upload_to='category_images/', verbose_name="Задний фон", null=True)
     # Другие поля, если нужно
     def __str__(self):
         return self.name

@@ -14,7 +14,7 @@
                     <img id="main-image" style="width: 100%; max-height: 500px; margin: auto; object-fit: contain;" class="rounded-4 fit" src="{{ product.images.all.0.image.url }}" alt="{{ product.name }}" />
                 {% else %}
                     <!-- Placeholder если нет изображений -->
-                    <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="placeholder-image-url.jpg" alt="Нет изображения" />
+                    <!-- <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="placeholder-image-url.jpg" alt="Нет изображения" /> -->
                 {% endif %}
             </div>
             <div class="d-flex justify-content-center mb-3">
@@ -45,35 +45,34 @@
             </p>
             <hr/>
             <div class="row">
+              {% if processors_by_brand %}
               <dt class="col-4">Процессор:</dt>
               <dd class="col-8">
                 {% for brand, processors in processors_by_brand.items %}
                 {% if not forloop.first %}<br>{% endif %}{{ brand }} {% for processor_type, processor_list in processors.items %}{% if processor_type %}{{ processor_type }} {% endif %}{% for processor in processor_list %}{{ processor }}{% if not forloop.last %}/{% endif %}{% endfor %}{% if not forloop.last %}/{% endif %}
                 {% endfor %}
-            {% endfor %}
+                {% endfor %}
               </dd>
-        
+              {% endif %}
+              {% if min_ram_size is not none and max_ram_size is not none %}
               <dt class="col-4">Оперативная память:</dt>
               <dd class="col-8">
-                {% if min_ram_size is not none and max_ram_size is not none %}
                   от {{ min_ram_size }} ГБ до {{ max_ram_size }} ГБ
-                {% endif %}
               </dd>
-              
+              {% endif %}
+              {% if min_storage_size is not none and max_storage_size is not none %}
               <dt class="col-4">Накопители:</dt>
               <dd class="col-8">
-                {% if min_storage_size is not none and max_storage_size is not none %}
                   от {{ min_storage_size }} {% if min_storage_unit == "GB" %} ГБ {% else %} ТБ {% endif %}
                   до {{ max_storage_size }} {% if max_storage_unit == "GB" %} ГБ {% else %} ТБ {% endif %}
-                {% endif %}
               </dd>
-              
-  
+              {% endif %}
+              {% if product.weight %}
               <dt class="col-4">Вес:</dt>
               <dd class="col-8">                          
-                {% if product.weight %}
                 {{ product.weight }} кг
-                {% endif %}</dd>
+                </dd>
+                {% endif %}
             </div>
           </div>
         </main>
@@ -124,7 +123,7 @@
             <div class="tab-content" id="ex1-content">
               <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
                 <table class="table border mt-3 mb-2">
-
+                  {% if processors_by_brand %}
                   <tr>
                     <th class="py-2">Процессор:</th>
                     <td class="py-2 text-break">
@@ -139,8 +138,8 @@
                   {% endfor %}
                     </td>
                   </tr>
-                  
-
+                  {% endif %}
+                  {% if motherboards_by_line %}
                   <tr>
                     <th class="py-2">Материнская плата:</th>
                     <td class="py-2 text-break">
@@ -150,7 +149,8 @@
                     {% endfor %}
                     </td>
                   </tr>
-
+                  {% endif %}
+                  {% if ram_by_type %}
                   <tr>
                     <th class="py-2">Оперативная память:</th>
                     <td class="py-2 text-break">
@@ -161,7 +161,8 @@
                       {% endfor %}
                     </td>
                   </tr>
-
+                  {% endif %}
+                  {% if formatted_storage_by_type %}
                   <tr>
                     <th class="py-2">Накопители:</th>
                     <td class="py-2 text-break">
@@ -170,143 +171,163 @@
                         {% endfor %}
                     </td>
                   </tr>
-
+                  {% endif %}
+                  {% if product.graphics.all %}
                   <tr>
-                    <th class="py-2">Видеокарта(дискретная):</th>
+                    <th class="py-2">Видеокарта (дискретная):</th>
                     <td class="py-2 text-break">
-                      {% if product.graphics.all %}{% for graph in product.graphics.all %}{{ graph.size }}{% if not forloop.last %}/{% endif %}{% endfor %} ГБ{% endif %}
+                      {% for graph in product.graphics.all %}{{ graph.size }}{% if not forloop.last %}/{% endif %}{% endfor %} ГБ
                     </td>
                   </tr>
-
+                  {% endif %}
+                  {% if product.power_supplies.all %}
                     <tr>
-                      <th class="py-2 align-middle">Мощность блока питания:</th>
+                      <th class="py-2">Мощность блока питания:</th>
                       <td class="py-2 text-break">
-                        {% if product.power_supplies.all %}{% for power in product.power_supplies.all %}{{ power.power }}{% if not forloop.last %}/{% endif %}{% endfor %} Вт{% endif %}
+                        {% for power in product.power_supplies.all %}{{ power.power }}{% if not forloop.last %}/{% endif %}{% endfor %} Вт
                       </td>
                   </tr>
-
+                  {% endif %}
+                  {% if product.controllers.all %}
                   <tr>
-                    <th class="py-2 align-middle">Контроллеры:</th>
+                    <th class="py-2">Контроллеры:</th>
                     <td class="py-2 text-break">
                         {% for contr in product.controllers.all %}{{ contr.name }}{% if not forloop.last %}/{% endif %}{% endfor %}
                     </td>
                 </tr>
-
+                {% endif %}
                 </table>
               </div>
               <div class="tab-pane fade mb-2" id="ex1-pills-2" role="tabpanel" aria-labelledby="ex1-tab-2">
                 <table class="table border mt-3 mb-2">
+                          {% if product.screen_sizes.all %}
                           <tr>
                             <th class="py-2 align-middle">Размер экрана:</th>
                             <td class="py-2 text-break">
-                              {% if product.screen_sizes.all %}{% for screen_size in product.screen_sizes.all %}{{ screen_size.size }}{% if not forloop.last %}/{% endif %}{% endfor %} дюймов{% endif %}
+                              {% for screen_size in product.screen_sizes.all %}{{ screen_size.size }}{% if not forloop.last %}/{% endif %}{% endfor %} дюймов
                             </td>
                         </tr>
+                        {% endif %}
+                        {% if product.screen_type.all %}
                         <tr>
                           <th class="py-2 align-middle">Тип экрана:</th>
                           <td class="py-2 text-break">
-                            {% if product.screen_type.all %}{% for type in product.screen_type.all %}{{ type.stype }}{% if not forloop.last %}/{% endif %}{% endfor %}{% endif %}
+                            {% for type in product.screen_type.all %}{{ type.stype }}{% if not forloop.last %}/{% endif %}{% endfor %}
                           </td>
                       </tr> 
+                      {% endif %}
+                      {% if product.screen_resolution.all %}
                       <tr>
                         <th class="py-2 align-middle">Разрешение экрана:</th>
                         <td class="py-2 text-break">
                             {% for resolution in product.screen_resolution.all %}{{ resolution.resolution }}{% if not forloop.last %}/{% endif %}{% endfor %}
                         </td>
                     </tr>
+                    {% endif %}
+                    {% if product.touch_screen_touches.all %}
                     <tr>
                       <th class="py-2 align-middle">Кол-во одновременных касаний:</th>
                       <td class="py-2 text-break">
-                        {% if product.touch_screen_touches.all %}{% for touches in product.touch_screen_touches.all %}{{ touches.touches }}{% if not forloop.last %}/{% endif %}{% endfor %} касаний{% endif %}
+                        {% for touches in product.touch_screen_touches.all %}{{ touches.touches }}{% if not forloop.last %}/{% endif %}{% endfor %} касаний
                       </td>
                   </tr> 
+                  {% endif %}
+                  {% if product.keyset.all %}
                   <tr>
                     <th class="py-2 align-middle">Комплект клавиатура и мышь:</th>
                     <td class="py-2 text-break">
                       {% for set in product.keyset.all %}{{ set.set }}{% if not forloop.last %}/{% endif %}{% endfor %}
                     </td>
                   </tr>
+                  {% endif %}
+                  {% if product.keyboard_backlight.all %}
                   <tr>
                     <th class="py-2 align-middle">Подсветка клавиатуры:</th>
                     <td class="py-2 text-break">
                         {% for light in product.keyboard_backlight.all %}{{ light.light }}{% if not forloop.last %}/{% endif %}{% endfor %}
                     </td>
                 </tr>
+                {% endif %}
                   </table>
               </div>
               <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">
                 <table class="table border mt-3 mb-2">
+                  {% if product.webcam.all %}
                     <tr>
                       <th class="py-2 align-middle">Веб-камера:</th>
                       <td class="py-2 text-break">
                         {% for web in product.webcam.all %}{{ web.cam }}{% if not forloop.last %}/{% endif %}{% endfor %}
                       </td>
                     </tr>
+                    {% endif %}
+                    {% if product.operating_system.all %}
                 <tr>
                   <th class="py-2">Операционная система:</th>
                   <td class="py-2 text-break">
-                    {% if product.operating_system.all %}
                     {{ product.operating_system }}
-                    {% endif %}
                   </td>
                 </tr>
+                {% endif %}
                   </table>
               </div>
               <div class="tab-pane fade mb-2" id="ex1-pills-4" role="tabpanel" aria-labelledby="ex1-tab-4">
                 <table class="table border mt-3 mb-2">
+                  {% if product.weight %}
                   <tr>
                     <th class="py-2 align-middle">Вес:</th>
                     <td class="py-2 text-break">
-                      {% if product.weight %}
                       {{ product.weight }} кг
-                      {% endif %}
                     </td>
                   </tr>
+                  {% endif %}
+                  {% if product.formfactor.all %}
                   <tr>
                     <th class="py-2 align-middle">Форм-фактор:</th>
                     <td class="py-2 text-break">
                       {% for formf in product.formfactor.all %}{{ formf.formf }}{% if not forloop.last %}/{% endif %}{% endfor %}
                     </td>
                   </tr>
-
+                  {% endif %}
+                  {% if product.sizes.all %}
                   <tr>
                     <th class="py-2 align-middle">Размеры:</th>
                     <td class="py-2 text-break">
                         {% for size in product.sizes.all %}{{ size.name }}{% if not forloop.last %}/{% endif %}{% endfor %}
                     </td>
                 </tr>
+                {% endif %}
+                {% if product.operating_temperature is not none %}
                   <tr>
                     <th class="py-2 align-middle">Температура эксплуатации:</th>
                     <td class="py-2 text-break">
-                      {% if product.operating_temperature is not none %}
                         {{ product.operating_temperature }}
-                      {% endif %}
                     </td>
                   </tr>
+                  {% endif %}
+                  {% if product.storage_temperature is not none %}
                   <tr>
                     <th class="py-2 align-middle">Температура хранения:</th>
                     <td class="py-2 text-break">
-                      {% if product.storage_temperature is not none %}
                         {{ product.storage_temperature }}
-                      {% endif %}
                     </td>
                   </tr>
+                  {% endif %}
+                  {% if product.operating_humidity is not none %}
                   <tr>
                     <th class="py-2 align-middle">Рабочая влажность:</th>
                     <td class="py-2 text-break">
-                      {% if product.operating_humidity is not none %}
                         {{ product.operating_humidity }}
-                      {% endif %}
                     </td>
                   </tr>
+                  {% endif %}
+                  {% if product.storage_humidity is not none %}
                   <tr>
                     <th class="py-2 align-middle">Влажность хранения:</th>
                     <td class="py-2 text-break">
-                      {% if product.storage_humidity is not none %}
                         {{ product.storage_humidity }}
-                      {% endif %}
                     </td>
                   </tr>
+                  {% endif %}
               </table>
               
               </div>
