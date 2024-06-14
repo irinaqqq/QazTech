@@ -15,8 +15,13 @@
         <div class="col-md-3">
             <a href="{% url 'product_detail' product.id %}" class="h-100">
           <div class="card h-100">
+            {% if product.images.all.0.image.url %}
             <img src="{{ product.images.all.0.image.url }}" class="card-img-top"
               alt="Hollywood Sign on The Hill" style="object-fit: contain;"/>
+            {% else %}
+            <img src="{% static 'images/placeholder.png' %}" class="card-img-top"
+            alt="Hollywood Sign on The Hill" style="object-fit: contain;"/>
+            {% endif %}
             <div class="card-body d-flex">
               <div class="mt-auto">
                 <h5 class="card-title">{{ product.name }}</h5>

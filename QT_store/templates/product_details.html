@@ -343,11 +343,17 @@
                 {% for similar_product in similar_products %}
                 <a href="{% url 'product_detail' similar_product.id %}" class="d-flex mt-4 hover-zoom-container nav-link">
                   <div class="me-3">
+                    {% if similar_product.images.all.0.image.url %}
                     <img src="{{ similar_product.images.all.0.image.url }}" style="object-fit: contain; width: 100px; height: 100px;" class="img-md img-thumbnail" />
+                    {% else %}
+                    <img src="{% static 'images/placeholder.png' %}" style="object-fit: contain; width: 100px; height: 100px;" class="img-md img-thumbnail" />
+                    {% endif %}
                   </div>
                   <div class="info">
                     <strong class="text-dark"> {{ similar_product.name }} </strong>
+                    {% if similar_product.features %}
                     <span class="features">{{ similar_product.features }}</span>
+                    {% endif %}
                   </div>
                 </a>
                 {% endfor %}

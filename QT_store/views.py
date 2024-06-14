@@ -146,3 +146,7 @@ def get_category_products(request):
         return JsonResponse({'products': products_data})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
+
+def lab(request):
+    return render(request, 'lab.html')
