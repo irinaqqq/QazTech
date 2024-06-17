@@ -2371,7 +2371,7 @@ a{
   .card-img-top{
       border-radius: 0;
       transition: transform 0.3s ease;
-      width: 300px;
+      width: 100%;
       height: 300px;
       object-fit: contain;
   }
@@ -2487,9 +2487,10 @@ a{
 
 
 .img {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   animation: scroll 60s linear infinite;
+  object-fit: contain;
 }
 
 .slide-track {
