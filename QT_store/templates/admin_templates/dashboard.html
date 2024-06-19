@@ -1,0 +1,76 @@
+{% extends 'admin_templates/admin_base.html' %}
+{% load static %}
+{% block title %}
+Панель управления
+{% endblock %}
+{% block content %}
+<div class="container" style="width: 80%; padding-top: 3rem;">
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        <div class="col">
+            <a href="{% url 'products'%}" class="h-100">
+          <div class="card h-100 w-100">
+            {% comment %} <img src="{% static 'images/company.jpg' %}" class="card-img-top w-auto h-auto"/> {% endcomment %}
+            <div class="card-body">
+              <h5 class="card-title">Товары</h5>
+              <p class="card-text">
+                Общее количество: {{ total_products }}
+              </p>
+            </div>
+          </div>
+        </a>
+        </div>
+        <div class="col">
+            <a href="{% url 'users'%}" class="h-100">
+          <div class="card h-100 w-100">
+            {% comment %} <img src="{% static 'images/handshake.jpg' %}" class="card-img-top w-auto h-auto"> {% endcomment %}
+            <div class="card-body">
+              <h5 class="card-title">Пользователи</h5>
+              <p class="card-text">
+                Общее количество: {{ total_users }}
+            </p>
+            </div>
+          </div>
+        </a>
+        </div>
+        <div class="col">
+            <a href="{% url 'orders'%}" class="h-100">
+          <div class="card h-100 w-100">
+            {% comment %} <img src="{% static 'images/faq.png' %}" class="card-img-top w-auto h-auto"/> {% endcomment %}
+            <div class="card-body">
+              <h5 class="card-title">Заказы</h5>
+              <p class="card-text">
+                Новых заказов:
+            </p>
+            </div>
+          </div>
+        </a>
+        </div>
+        <div class="col">
+            <a href="{% url 'feedbacks'%}" class="h-100">
+          <div class="card h-100 w-100">
+            {% comment %} <img src="{% static 'images/map.png' %}" class="card-img-top w-auto h-auto"/> {% endcomment %}
+            <div class="card-body">
+              <h5 class="card-title">Отзывы</h5>
+              <p class="card-text">
+                Новых отзывов:
+              </p>
+            </div>
+          </div>
+        </a>
+        </div>
+        <div class="col">
+            <a href="{% url 'requests'%}" class="h-100">
+            <div class="card h-100 w-100">
+              {% comment %} <img src="{% static 'images/contactus.png' %}" class="card-img-top w-auto h-auto"/> {% endcomment %}
+              <div class="card-body">
+                <h5 class="card-title">Запросы на регистрацию</h5>
+                <p class="card-text">
+                    Новых запросов:
+                </p>
+              </div>
+            </div>
+        </a>
+          </div>
+      </div>
+    </div>
+{% endblock %}

@@ -17,8 +17,9 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from QT_store import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +38,15 @@ urlpatterns = [
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
     path('get_category_products/', views.get_category_products, name='get_category_products'),
     path('lab/', views.lab, name='lab'),
+    path('login/', views.login_view, name='login'),
+    path('signup/', views.signup_view, name='signup'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('feedbacks/', views.feedbacks, name='feedbacks'),
+    path('orders/', views.orders, name='orders'),
+    path('products/', views.products, name='products'),
+    path('requests/', views.requests, name='requests'),
+    path('users/', views.users, name='users'),
     
 ] 
 

@@ -1,10 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
-from django.db.models import Q
 from collections import defaultdict
 from django.http import JsonResponse
-from django.template.loader import render_to_string
-from django.core import serializers
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from .forms import *
+from django.contrib.auth.decorators import user_passes_test
+
+def is_staff(user):
+    return user.is_staff
 
 def home(request):
     return render(request, 'home.html')
@@ -150,3 +154,68 @@ def get_category_products(request):
 
 def lab(request):
     return render(request, 'lab.html')
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+@user_passes_test(is_staff, login_url='/')
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.first_name = form.cleaned_data.get('first_name')
+            user.last_name = form.cleaned_data.get('last_name')
+            user.email = form.cleaned_data.get('email')
+            user.phone_number = form.cleaned_data.get('phone_number')
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+            return redirect('/')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
+
+
+
+@user_passes_test(is_staff, login_url='/')
+def dashboard(request):
+    total_products = Product.objects.count()
+    total_users = User.objects.count()
+    context = {
+        'total_products': total_products,
+        'total_users': total_users,
+    }
+    return render(request, 'admin_templates/dashboard.html', context)
+
+@user_passes_test(is_staff, login_url='/')
+def feedbacks(request):
+    return render(request, 'admin_templates/feedbacks.html')
+
+@user_passes_test(is_staff, login_url='/')
+def orders(request):
+    return render(request, 'admin_templates/orders.html')
+
+@user_passes_test(is_staff, login_url='/')
+def products(request):
+    return render(request, 'admin_templates/products.html')
+
+@user_passes_test(is_staff, login_url='/')
+def requests(request):
+    return render(request, 'admin_templates/requests.html')
+
+@user_passes_test(is_staff, login_url='/')
+def users(request):
+    return render(request, 'admin_templates/users.html')

@@ -2489,7 +2489,7 @@ a{
 .img {
   width: 200px;
   height: 200px;
-  animation: scroll 60s linear infinite;
+  animation: scroll 30s linear infinite;
   object-fit: contain;
 }
 
@@ -2507,7 +2507,7 @@ a{
 
 @keyframes scroll {
   0% {transform: translateX(0);}
-  100% {transform: translatex(-1000%)}
+  100% {transform: translatex(-3400%)}
 }
 
 
@@ -2619,4 +2619,16 @@ a{
 
 .hover-zoom-container:hover img {
   transform: scale(1.05);
+}
+
+
+@keyframes fadeInFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px); /* Начальное положение - поднять на 50px */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Конечное положение - без смещения */
+  }
 }

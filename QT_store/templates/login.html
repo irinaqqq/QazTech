@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Вход
+{% endblock %}
+{% block content %}
+<div class="container" style="width: 80%; padding-top: 6rem;">
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <form method="post" class="form">
+                {% csrf_token %}
+                <div class="form-outline mb-4">
+                    <input type="text" name="username" placeholder="Username" class="form-control form-control-lg">
+                </div>
+                <div class="form-outline mb-4">
+                    <input type="password" name="password" placeholder="Password" class="form-control form-control-lg">
+                </div>
+                <div class="form-outline mb-4 d-grid gap-2">
+                    <button type="submit" class="btn btn-info">Login</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}
