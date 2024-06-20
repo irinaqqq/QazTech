@@ -4,16 +4,192 @@
 Все Продукты
 {% endblock %}
 {% block content %}
-<div class="container" style="width: 80%; padding-top: 3rem;">
-<ul class="list-group">
-    <li class="list-group-item">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuaPhxgtyaCQStpttEXIZj4VctG9goIoOAtQ&s" style="width: 50px; height: 50px; margin-right: 10px;">
-        An item
-    </li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-    <li class="list-group-item">A fourth item</li>
-    <li class="list-group-item">And a fifth one</li>
-  </ul>
+<style>
+  .products {
+    font-size: 18px;
+    color: #fff;
+    line-height: 1.4;
+    background-color: #00a2e8 !important;
+  }
+  th span {
+    cursor: pointer;
+    user-select: none;
+  }
+  select{
+
+  }
+  select:focus {
+
+  }
+  .form-select:focus{
+    border-color: transparent;
+    box-shadow: none;
+    border: 1px solid #bdbdbd;
+  }
+  .fixed-action-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  .fixed-action-button a i:hover {
+    color: #0056b3; /* Цвет кнопки при наведении */
+  }
+  td{
+    vertical-align: middle;
+    
+  }
+</style>
+<div class="container" style="width: 80%; padding-top: 1rem;">
+  <div class="pb-3">
+    <select id="category-select" class="form-select" style="width: auto;">
+      <option value="">Все категории</option>
+      {% for category in categories %}
+        <option value="{{ category.name  }}">{{ category.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <table id="products-table" class="table text-center" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <thead>
+      <tr class="products">
+        <th><span id="index-header">#</span></th>
+        <th><span id="category-header">Категория</span></th>
+        <th><span id="name-header">Название</span></th>
+        <th>Изображение</th>
+        <th>Редактировать</th>
+        <th>Удаление</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.name }}</td>
+        <td><img src="{{ product.images.all.0.image.url }}" alt="{{ product.name }}" style="max-width: 100px;"></td>
+        <td><a href="{% url 'edit_product' product.pk %}" class="justify-content-center"><i class="fa-solid fa-pen-to-square fa-3x" style="color:#00a2e8;"></i></a></td>
+        <td>
+          <form action="{% url 'delete_product' product.pk %}" method="post" class="d-flex justify-content-center">
+              {% csrf_token %}
+              <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот продукт?')" style="border: none; background-color: transparent;"><i class="fa-solid fa-trash fa-3x" style="color: red;"></i></button>
+          </form>
+      </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
+<div class="fixed-action-button">
+  <a href="{% url 'add_product' %}" style="color: #00a2e8;">
+      <i class="fa-solid fa-circle-plus fa-5x"></i>
+  </a>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const indexHeader = document.getElementById('index-header');
+    const categoryHeader = document.getElementById('category-header');
+    const nameHeader = document.getElementById('name-header');
+    const table = indexHeader.closest('table');
+    const tbody = table.querySelector('tbody');
+    let isIndexAscending = true;
+    let isCategoryAscending = true;
+    let isNameAscending = true;
+
+    // Устанавливаем начальный порядок сортировки по номеру
+    indexHeader.classList.add('ascending');
+
+    indexHeader.addEventListener('click', function () {
+      sortTable('index');
+    });
+
+    categoryHeader.addEventListener('click', function () {
+      sortTable('category');
+    });
+
+    nameHeader.addEventListener('click', function () {
+      sortTable('name');
+    });
+
+    function sortTable(type) {
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+
+      rows.sort((a, b) => {
+        let aValue, bValue;
+
+        if (type === 'index') {
+          aValue = parseInt(a.children[0].innerText.trim());
+          bValue = parseInt(b.children[0].innerText.trim());
+        } else if (type === 'category') {
+          aValue = a.children[1].innerText.trim().toLowerCase();
+          bValue = b.children[1].innerText.trim().toLowerCase();
+        } else if (type === 'name') {
+          aValue = a.children[2].innerText.trim().toLowerCase();
+          bValue = b.children[2].innerText.trim().toLowerCase();
+        }
+
+        if (type === 'index') {
+          return aValue - bValue;
+        } else {
+          return aValue.localeCompare(bValue);
+        }
+      });
+
+      // Изменяем порядок строк в зависимости от текущего направления сортировки
+      if (type === 'index') {
+        if (!isIndexAscending) {
+          rows.reverse();
+        }
+        isIndexAscending = !isIndexAscending;
+        indexHeader.classList.toggle('ascending', isIndexAscending);
+        indexHeader.classList.toggle('descending', !isIndexAscending);
+        categoryHeader.classList.remove('ascending', 'descending');
+        nameHeader.classList.remove('ascending', 'descending');
+      } else if (type === 'category') {
+        if (!isCategoryAscending) {
+          rows.reverse();
+        }
+        isCategoryAscending = !isCategoryAscending;
+        categoryHeader.classList.toggle('ascending', isCategoryAscending);
+        categoryHeader.classList.toggle('descending', !isCategoryAscending);
+        indexHeader.classList.remove('ascending', 'descending');
+        nameHeader.classList.remove('ascending', 'descending');
+      } else if (type === 'name') {
+        if (!isNameAscending) {
+          rows.reverse();
+        }
+        isNameAscending = !isNameAscending;
+        nameHeader.classList.toggle('ascending', isNameAscending);
+        nameHeader.classList.toggle('descending', !isNameAscending);
+        indexHeader.classList.remove('ascending', 'descending');
+        categoryHeader.classList.remove('ascending', 'descending');
+      }
+
+      // Перерисовываем таблицу с учетом нового порядка строк
+      rows.forEach((row, index) => {
+        tbody.appendChild(row);
+      });
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const categorySelect = document.getElementById('category-select');
+    const productsTable = document.getElementById('products-table');
+    const tbody = productsTable.querySelector('tbody');
+    
+    categorySelect.addEventListener('change', function () {
+      const selectedCategoryId = categorySelect.value;
+      const rows = tbody.querySelectorAll('tr');
+
+      rows.forEach(row => {
+        const categoryCell = row.children[1].innerText.trim();
+        if (selectedCategoryId === '' || categoryCell === selectedCategoryId) {
+          row.style.display = ''; // Показываем строку
+        } else {
+          row.style.display = 'none'; // Скрываем строку
+        }
+      });
+    });
+  });
+</script>
 {% endblock %}

@@ -8,69 +8,110 @@
     <div class="row row-cols-1 row-cols-md-5 g-4">
         <div class="col">
             <a href="{% url 'products'%}" class="h-100">
-          <div class="card h-100 w-100">
-            {% comment %} <img src="{% static 'images/company.jpg' %}" class="card-img-top w-auto h-auto"/> {% endcomment %}
-            <div class="card-body">
-              <h5 class="card-title">Товары</h5>
-              <p class="card-text">
-                Общее количество: {{ total_products }}
-              </p>
+              <div class="card h-100 w-100" style="background-color: #337ab7; color: white;">
+                <div class="row no-gutters h-100 p-4">
+                    <!-- Левая часть: иконка с подписью -->
+                    <div class="col-md-7">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center h-100" style="padding: 0;">
+                          <i class="fa-solid fa-cart-flatbed fa-3x"></i>
+                        </div>
+                    </div>
+                    <!-- Правая часть: количество с подписью -->
+                    <div class="col-md-5">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center h-100" style="padding: 0;">
+                            <h1 class="mb-0">{{ total_products }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <h5 class="card-title text-center mt-auto p-1">Товары</h5>
             </div>
-          </div>
         </a>
         </div>
         <div class="col">
             <a href="{% url 'users'%}" class="h-100">
-          <div class="card h-100 w-100">
-            {% comment %} <img src="{% static 'images/handshake.jpg' %}" class="card-img-top w-auto h-auto"> {% endcomment %}
-            <div class="card-body">
-              <h5 class="card-title">Пользователи</h5>
-              <p class="card-text">
-                Общее количество: {{ total_users }}
-            </p>
+          <div class="card h-100 w-100" style="background-color: #01bf8f; color: white;">
+            <div class="row no-gutters p-4">
+                <!-- Левая часть: иконка с подписью -->
+                <div class="col-md-7">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center h-100" style="padding: 0;">
+                        <i class="fa-solid fa-user fa-3x" style="color: white;"></i>
+                    </div>
+                </div>
+                <!-- Правая часть: количество с подписью -->
+                <div class="col-md-5">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center h-100" style="padding: 0;">
+                        <h1 class="mb-0">{{ total_users }}</h1>
+                    </div>
+                </div>
             </div>
-          </div>
+            <h5 class="card-title text-center mt-auto p-1">Пользователи</h5>
+        </div>
         </a>
         </div>
         <div class="col">
             <a href="{% url 'orders'%}" class="h-100">
-          <div class="card h-100 w-100">
-            {% comment %} <img src="{% static 'images/faq.png' %}" class="card-img-top w-auto h-auto"/> {% endcomment %}
-            <div class="card-body">
-              <h5 class="card-title">Заказы</h5>
-              <p class="card-text">
-                Новых заказов:
-            </p>
+          <div class="card h-100 w-100" style="background-color: #00bdbf; color: white;">
+            <div class="row no-gutters p-4">
+                <!-- Левая часть: иконка с подписью -->
+                <div class="col-md-7">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center h-100" style="padding: 0;">
+                        <i class="fa-solid fa-cart-shopping fa-3x" style="color: white;"></i>
+                    </div>
+                </div>
+                <!-- Правая часть: количество с подписью -->
+                <div class="col-md-5">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center h-100" style="padding: 0;">
+                        <h1 class="mb-0">{{ total_users }}</h1>
+                    </div>
+                </div>
             </div>
-          </div>
+            <h5 class="card-title text-center mt-auto p-1">Новых заказов</h5>
+        </div>
         </a>
         </div>
         <div class="col">
             <a href="{% url 'feedbacks'%}" class="h-100">
-          <div class="card h-100 w-100">
-            {% comment %} <img src="{% static 'images/map.png' %}" class="card-img-top w-auto h-auto"/> {% endcomment %}
-            <div class="card-body">
-              <h5 class="card-title">Отзывы</h5>
-              <p class="card-text">
-                Новых отзывов:
-              </p>
+              <div class="card h-100 w-100" style="background-color: #01beff; color: white;">
+                <div class="row no-gutters p-4">
+                    <!-- Левая часть: иконка с подписью -->
+                    <div class="col-md-7">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center h-100" style="padding: 0;">
+                            <i class="fa-solid fa-comment fa-3x" style="color: white;"></i>
+                        </div>
+                    </div>
+                    <!-- Правая часть: количество с подписью -->
+                    <div class="col-md-5">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center h-100" style="padding: 0;">
+                            <h1 class="mb-0">{{ total_users }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <h5 class="card-title text-center mt-auto p-1">Новых отзывов</h5>
             </div>
-          </div>
         </a>
         </div>
         <div class="col">
             <a href="{% url 'requests'%}" class="h-100">
-            <div class="card h-100 w-100">
-              {% comment %} <img src="{% static 'images/contactus.png' %}" class="card-img-top w-auto h-auto"/> {% endcomment %}
-              <div class="card-body">
-                <h5 class="card-title">Запросы на регистрацию</h5>
-                <p class="card-text">
-                    Новых запросов:
-                </p>
-              </div>
+              <div class="card h-100 w-100" style="background-color: #007fff; color: white;">
+                <div class="row no-gutters p-4">
+                    <!-- Левая часть: иконка с подписью -->
+                    <div class="col-md-7">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center h-100" style="padding: 0;">
+                            <i class="fa-solid fa-user-plus fa-3x" style="color: white;"></i>
+                        </div>
+                    </div>
+                    <!-- Правая часть: количество с подписью -->
+                    <div class="col-md-5">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center h-100" style="padding: 0;">
+                            <h1 class="mb-0">{{ total_users }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <h5 class="card-title text-center mt-auto p-1">Новых запросов</h5>
             </div>
         </a>
           </div>
       </div>
     </div>
+    
 {% endblock %}

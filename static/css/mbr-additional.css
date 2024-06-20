@@ -448,9 +448,6 @@ body {
 .text-warning {
   color: #6c758f !important;
 }
-.text-danger {
-  color: #00a2e8 !important;
-}
 .text-white {
   color: #fafafa !important;
 }
@@ -514,9 +511,6 @@ a[class*="text-"]:not(.nav-link):not(.dropdown-item):not([role]):not(.navbar-cap
 }
 .alert-warning {
   background-color: #6c758f;
-}
-.alert-danger {
-  background-color: #00a2e8;
 }
 .mbr-section-btn a.btn:not(.btn-form) {
   border-radius: 100px;

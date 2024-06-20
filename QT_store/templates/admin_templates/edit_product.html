@@ -1,0 +1,18 @@
+{% extends 'admin_templates/admin_base.html' %}
+{% load static %}
+{% block title %}
+Редактировать продукт
+{% endblock %}
+{% block content %}
+<h2>Редактировать продукт "{{ product.name }}"</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Сохранить изменения</button>
+</form>
+
+<br>
+<a href="{% url 'products' %}">Вернуться к списку продуктов</a>
+{% endblock %}

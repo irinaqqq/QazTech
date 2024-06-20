@@ -1,0 +1,14 @@
+{% extends 'admin_templates/admin_base.html' %}
+{% load static %}
+{% block title %}
+Добавить продукт
+{% endblock %}
+{% block content %}
+<div class="container" style="width: 80%; padding-top: 1rem;">
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+</div>
+{% endblock %}

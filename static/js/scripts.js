@@ -119,4 +119,54 @@ $(document).ready(function() {
       isHovered = false;
       $('#hoveredCategoryProducts').hide();
   });
+})
+
+
+
+$(document).ready(function(){
+    $('#feedbackForm').on('submit', function(e){
+        e.preventDefault();
+        
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function(response){
+                if(response.success){
+                    $('#successMessage').fadeIn().delay(10000).fadeOut();
+                    $('#errorMessage').hide();
+                    $('#feedbackForm')[0].reset();
+                } else {
+                    $('#successMessage').hide();
+                    $('#errorMessage').show();
+                    if(response.errors){
+                        if(response.errors.name){
+                            $('#nameError').text(response.errors.name);
+                        } else {
+                            $('#nameError').text('');
+                        }
+                        if(response.errors.email){
+                            $('#emailError').text(response.errors.email);
+                        } else {
+                            $('#emailError').text('');
+                        }
+                        if(response.errors.phone){
+                            $('#phoneError').text(response.errors.phone);
+                        } else {
+                            $('#phoneError').text('');
+                        }
+                        if(response.errors.message){
+                            $('#messageError').text(response.errors.message);
+                        } else {
+                            $('#messageError').text('');
+                        }
+                    }
+                }
+            },
+            error: function(){
+                $('#successMessage').hide();
+                $('#errorMessage').show();
+            }
+        });
+    });
 });

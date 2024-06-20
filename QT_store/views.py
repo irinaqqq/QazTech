@@ -102,7 +102,21 @@ def partners_view(request):
     return render(request, 'partners.html')
 
 def contactus(request):
-    return render(request, 'contactus.html')
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': True})
+            else:
+                return redirect('contactus')
+        else:
+            errors = {field: error[0] for field, error in form.errors.items()}
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'errors': errors})
+    else:
+        form = FeedbackForm()
+    return render(request, 'contactus.html', {'form': form})
 
 def faq(request):
     return render(request, 'faq.html')
@@ -202,7 +216,8 @@ def dashboard(request):
 
 @user_passes_test(is_staff, login_url='/')
 def feedbacks(request):
-    return render(request, 'admin_templates/feedbacks.html')
+    feedbacks = Feedback.objects.all()
+    return render(request, 'admin_templates/feedbacks.html', {'feedbacks': feedbacks})
 
 @user_passes_test(is_staff, login_url='/')
 def orders(request):
@@ -210,7 +225,8 @@ def orders(request):
 
 @user_passes_test(is_staff, login_url='/')
 def products(request):
-    return render(request, 'admin_templates/products.html')
+    products = Product.objects.all()
+    return render(request, 'admin_templates/products.html', {'products': products})
 
 @user_passes_test(is_staff, login_url='/')
 def requests(request):
@@ -219,3 +235,37 @@ def requests(request):
 @user_passes_test(is_staff, login_url='/')
 def users(request):
     return render(request, 'admin_templates/users.html')
+
+@user_passes_test(is_staff, login_url='/')
+def add_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = form.save() 
+            return redirect('products')
+    else:
+        form = ProductForm()
+    
+    return render(request, 'admin_templates/add_product.html', {'form': form})
+
+@user_passes_test(is_staff, login_url='/')
+def delete_product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('products')
+    
+    return render(request, 'admin_templates/products.html', {'product': product})
+
+@user_passes_test(is_staff, login_url='/')
+def edit_product(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('products') 
+    else:
+        form = ProductForm(instance=product)
+    
+    return render(request, 'admin_templates/edit_product.html', {'form': form, 'product': product})
