@@ -4,11 +4,502 @@
 Добавить продукт
 {% endblock %}
 {% block content %}
+
+<style>
+    .needs-validation {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+}
+.custom-select, .form-control {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    font-weight: 400;
+    padding: .375rem .75rem;
+    height: 2.5rem !important;
+    }
+
+.custom-select:focus-visible{
+    outline: none;
+    /* border-color: transparent;
+    box-shadow: none;
+    border: 1px solid #bdbdbd; */
+    border-color: #00a2e8;
+}
+.form-control:focus{
+    box-shadow: none !important;
+}
+.form-select{
+    height: 2.5rem;
+}
+
+</style>
+
+
 <div class="container" style="width: 80%; padding-top: 1rem;">
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
+
+    
+    
+    <form class="needs-validation" method="post">
+        {% csrf_token %}
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label for="firstName" class="form-label">Название</label>
+            <input type="text" name="name" maxlength="100" required="" id="id_name" class="form-control mt-auto">
+            <div class="invalid-feedback">
+              Valid first name is required.
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="id_category" class="form-label">Категория</label>
+            <select name="category" id="id_category" class="form-select">
+                <option value="" disabled selected>Выберите категорию</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <div class="invalid-feedback">
+              Valid last name is required.
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="username" class="form-label">Особенности (кратко)</label>
+            <div class="input-group has-validation">    
+              <input type="text" class="form-control" id="username">
+            <div class="invalid-feedback">
+                Your username is required.
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="email" class="form-label">Описание<span class="text-muted"></span></label>
+            <textarea name="description" id="id_description" class="form-control" style="min-height: 105px;"></textarea>
+            <div class="invalid-feedback">
+              Please enter a valid email address for shipping updates.
+            </div>
+          </div>
+        </div>
+
+
+        <hr class="my-4">
+        <div class="row g-3">
+          <h4 class="m-0 mt-2">Основные характеристики</h4>
+          <div class="col-sm-6">
+            <label for="firstName" class="form-label">Процессор</label>
+            <select name="category" id="id_category" class="form-select">
+                <option value="" disabled selected>Выберите процессор</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <div class="invalid-feedback">
+              Valid first name is required.
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="id_category" class="form-label">Материнская плата</label>
+            <select name="category" id="id_category" class="form-select">
+                <option value="" disabled selected>Выберите материнскую плату</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <div class="invalid-feedback">
+              Valid last name is required.
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="country" class="form-label">Накопители</label>
+            <select class="form-select" id="country">
+                <option value="" disabled selected>Выберите накопители</option>
+              <option>United States</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid country.
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="state" class="form-label">Оперативная память</label>
+            <select class="form-select" id="state">
+                <option value="" disabled selected>Выберите оперативную память</option>
+              <option>California</option>
+            </select>
+            <div class="invalid-feedback">
+              Please provide a valid state.
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label for="zip" class="form-label">Видеокарта</label>
+            <select class="form-select" id="country">
+                <option value="" disabled selected>Выберите видеокарту</option>
+                <option>United States</option>
+              </select>
+            <div class="invalid-feedback">
+              Zip code required.
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="zip" class="form-label">Мощность блока питания</label>
+            <select class="form-select" id="country">
+                <option value="" disabled selected>Выберите мощность блока питания</option>
+                <option>United States</option>
+              </select>
+            <div class="invalid-feedback">
+              Zip code required.
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="zip" class="form-label">Контроллеры</label>
+            <select class="form-select" id="country">
+                <option value="" disabled selected>Выберите контроллеры</option>
+                <option>United States</option>
+              </select>
+            <div class="invalid-feedback">
+              Zip code required.
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="zip" class="form-label">Операционная система</label>
+            <select class="form-select" id="country">
+                <option value="" disabled selected>Выберите операционную систему</option>
+                <option>United States</option>
+              </select>
+            <div class="invalid-feedback">
+              Zip code required.
+            </div>
+          </div>
+        </div>
+
+
+        <hr class="my-4">
+        <div class="row g-3">
+            <h4 class="m-0 mt-2">Экран и Ввод</h4>
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Размер экрана</label>
+              <select name="category" id="id_category" class="form-select">
+                  <option value="" disabled selected>Выберите размер экрана</option>
+                  {% for category in categories %}
+                      <option value="{{ category.id }}">{{ category.name }}</option>
+                  {% endfor %}
+              </select>
+              <div class="invalid-feedback">
+                Valid first name is required.
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="id_category" class="form-label">Тип экрана</label>
+              <select name="category" id="id_category" class="form-select">
+                  <option value="" disabled selected>Выберите тип экрана</option>
+                  {% for category in categories %}
+                      <option value="{{ category.id }}">{{ category.name }}</option>
+                  {% endfor %}
+              </select>
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="country" class="form-label">Разрешение экрана</label>
+              <select class="form-select" id="country">
+                  <option value="" disabled selected>Выберите разрешение экрана</option>
+                <option>United States</option>
+              </select>
+              <div class="invalid-feedback">
+                Please select a valid country.
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="state" class="form-label">Кол-во одновременных касаний</label>
+              <select class="form-select" id="state">
+                  <option value="" disabled selected>Выберите кол-во касаний</option>
+                <option>California</option>
+              </select>
+              <div class="invalid-feedback">
+                Please provide a valid state.
+              </div>
+            </div>
+          </div>
+
+
+          <hr class="my-4">
+          <div class="row g-3">
+            <h4 class="m-0 mt-2">Связь и Периферия</h4>
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Веб-камера</label>
+              <select name="category" id="id_category" class="form-select">
+                  <option value="" disabled selected>Есть ли веб камера?</option>
+                  {% for category in categories %}
+                      <option value="{{ category.id }}">{{ category.name }}</option>
+                  {% endfor %}
+              </select>
+              <div class="invalid-feedback">
+                Valid first name is required.
+              </div>
+            </div>
+            <div class="col-sm-4">
+                <label for="zip" class="form-label">Комплект клавиатура и мышь</label>
+                <select class="form-select" id="country">
+                    <option value="" disabled selected>Выберите тип клавиатуры и мыши</option>
+                    <option>United States</option>
+                  </select>
+                <div class="invalid-feedback">
+                  Zip code required.
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label for="zip" class="form-label">Подсветка клавиатуры</label>
+                <select class="form-select" id="country">
+                    <option value="" disabled selected>Есть ли подстветка клавиатуры?</option>
+                    <option>United States</option>
+                  </select>
+                <div class="invalid-feedback">
+                  Zip code required.
+                </div>
+              </div>
+          </div>
+          <hr class="my-4">
+
+          <div class="row g-3">
+            <h4 class="m-0 mt-2">Эксплуатация и Габариты</h4>
+            <div class="col-sm-6">
+              <label for="firstName" class="form-label">Вес</label>
+              <select name="category" id="id_category" class="form-select">
+                  <option value="" disabled selected></option>
+              </select>
+              <div class="invalid-feedback">
+                Valid first name is required.
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="id_category" class="form-label">Форм-фактор</label>
+              <select name="category" id="id_category" class="form-select">
+                  <option value="" disabled selected>Выберите Форм-фактор</option>
+                  {% for category in categories %}
+                      <option value="{{ category.id }}">{{ category.name }}</option>
+                  {% endfor %}
+              </select>
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="country" class="form-label">Размеры</label>
+              <select class="form-select" id="country">
+                  <option value="" disabled selected>Выберите размеры</option>
+                <option>United States</option>
+              </select>
+              <div class="invalid-feedback">
+                Please select a valid country.
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="state" class="form-label">Температура эксплуатации</label>
+              <select class="form-select" id="state">
+                  <option value="" disabled selected></option>
+                <option>California</option>
+              </select>
+              <div class="invalid-feedback">
+                Please provide a valid state.
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="zip" class="form-label">Температура хранения</label>
+              <select class="form-select" id="country">
+                  <option value="" disabled selected></option>
+                  <option>United States</option>
+                </select>
+              <div class="invalid-feedback">
+                Zip code required.
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="zip" class="form-label">Рабочая влажность</label>
+              <select class="form-select" id="country">
+                  <option value="" disabled selected></option>
+                  <option>United States</option>
+                </select>
+              <div class="invalid-feedback">
+                Zip code required.
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="zip" class="form-label">Влажность хранения</label>
+              <select class="form-select" id="country">
+                  <option value="" disabled selected></option>
+                  <option>United States</option>
+                </select>
+              <div class="invalid-feedback">
+                Zip code required.
+              </div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Сохранить</button>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <form class="needs-validation" method="post">
+        {% csrf_token %}
+        <div class="row g-3">
+            <!-- Категория, Название, Особенности, Описание -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_category">Категория:</label>
+                    <select name="category" id="id_category" class="custom-select">
+                        <option value="" disabled selected>Выберите категорию</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">Название</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.features.id_for_label }}">Особенности (кратко)</label>
+                    {{ form.features }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">Описание</label>
+                    {{ form.description }}
+                </div>
+            </div>
+    
+            <!-- Основные характеристики -->
+            <div class="col-md-6">
+                <h4>Основные характеристики</h4>
+                <div class="form-group">
+                    <label for="{{ form.processor.id_for_label }}">Процессор</label>
+                    {{ form.processor }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.mother.id_for_label }}">Материнская плата</label>
+                    {{ form.mother }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.ram.id_for_label }}">Оперативная память</label>
+                    {{ form.ram }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.storage.id_for_label }}">Накопители</label>
+                    {{ form.storage }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.graphics.id_for_label }}">Видеокарта</label>
+                    {{ form.graphics }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.power_supplies.id_for_label }}">Мощность блока питания</label>
+                    {{ form.power_supplies }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.controllers.id_for_label }}">Контроллеры</label>
+                    {{ form.controllers }}
+                </div>
+            </div>
+    
+            <!-- Экран и Ввод -->
+            <div class="col-md-6">
+                <h4>Экран и Ввод</h4>
+                <div class="form-group">
+                    <label for="{{ form.screen_sizes.id_for_label }}">Размер экрана</label>
+                    {{ form.screen_sizes }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.screen_type.id_for_label }}">Тип экрана</label>
+                    {{ form.screen_type }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.screen_resolution.id_for_label }}">Разрешение экрана</label>
+                    {{ form.screen_resolution }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.touch_screen_touches.id_for_label }}">Кол-во одновременных касаний</label>
+                    {{ form.touch_screen_touches }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.keyset.id_for_label }}">Комплект клавиатура и мышь</label>
+                    {{ form.keyset }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.keyboard_backlight.id_for_label }}">Подсветка клавиатуры</label>
+                    {{ form.keyboard_backlight }}
+                </div>
+            </div>
+    
+            <!-- Связь и Периферия -->
+            <div class="col-md-6">
+                <h4>Связь и Периферия</h4>
+                <div class="form-group">
+                    <label for="{{ form.webcam.id_for_label }}">Веб-камера</label>
+                    {{ form.webcam }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.operating_system.id_for_label }}">Операционная система</label>
+                    {{ form.operating_system }}
+                </div>
+            </div>
+    
+            <!-- Эксплуатация и Габариты -->
+            <div class="col-md-6">
+                <h4>Эксплуатация и Габариты</h4>
+                <div class="form-group">
+                    <label for="{{ form.weight.id_for_label }}">Вес</label>
+                    {{ form.weight }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.formfactor.id_for_label }}">Форм-фактор</label>
+                    {{ form.formfactor }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.sizes.id_for_label }}">Размеры</label>
+                    {{ form.sizes }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.operating_temperature.id_for_label }}">Температура эксплуатации</label>
+                    {{ form.operating_temperature }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.storage_temperature.id_for_label }}">Температура хранения</label>
+                    {{ form.storage_temperature }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.operating_humidity.id_for_label }}">Рабочая влажность</label>
+                    {{ form.operating_humidity }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.storage_humidity.id_for_label }}">Влажность хранения</label>
+                    {{ form.storage_humidity }}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Кнопка отправки -->
+        <div class="col-12 mt-4">
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Сохранить</button>
+        </div>
+    </form>
+
+
 </div>
 {% endblock %}

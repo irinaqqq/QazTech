@@ -180,6 +180,14 @@
                     </td>
                   </tr>
                   {% endif %}
+                  {% if product.operating_system.all %}
+                  <tr>
+                    <th class="py-2">Операционная система:</th>
+                    <td class="py-2 text-break">
+                      {{ product.operating_system }}
+                    </td>
+                  </tr>
+                  {% endif %}
                   {% if product.power_supplies.all %}
                     <tr>
                       <th class="py-2">Мощность блока питания:</th>
@@ -232,26 +240,11 @@
                       </td>
                   </tr> 
                   {% endif %}
-                  {% if product.keyset.all %}
-                  <tr>
-                    <th class="py-2 align-middle">Комплект клавиатура и мышь:</th>
-                    <td class="py-2 text-break">
-                      {% for set in product.keyset.all %}{{ set.set }}{% if not forloop.last %}/{% endif %}{% endfor %}
-                    </td>
-                  </tr>
-                  {% endif %}
-                  {% if product.keyboard_backlight.all %}
-                  <tr>
-                    <th class="py-2 align-middle">Подсветка клавиатуры:</th>
-                    <td class="py-2 text-break">
-                        {% for light in product.keyboard_backlight.all %}{{ light.light }}{% if not forloop.last %}/{% endif %}{% endfor %}
-                    </td>
-                </tr>
-                {% endif %}
                   </table>
               </div>
               <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">
                 <table class="table border mt-3 mb-2">
+                  
                   {% if product.webcam.all %}
                     <tr>
                       <th class="py-2 align-middle">Веб-камера:</th>
@@ -260,14 +253,22 @@
                       </td>
                     </tr>
                     {% endif %}
-                    {% if product.operating_system.all %}
-                <tr>
-                  <th class="py-2">Операционная система:</th>
-                  <td class="py-2 text-break">
-                    {{ product.operating_system }}
-                  </td>
-                </tr>
-                {% endif %}
+                    {% if product.keyset.all %}
+                    <tr>
+                      <th class="py-2 align-middle">Комплект клавиатура и мышь:</th>
+                      <td class="py-2 text-break">
+                        {% for set in product.keyset.all %}{{ set.set }}{% if not forloop.last %}/{% endif %}{% endfor %}
+                      </td>
+                    </tr>
+                    {% endif %}
+                    {% if product.keyboard_backlight.all %}
+                    <tr>
+                      <th class="py-2 align-middle">Подсветка клавиатуры:</th>
+                      <td class="py-2 text-break">
+                          {% for light in product.keyboard_backlight.all %}{{ light.light }}{% if not forloop.last %}/{% endif %}{% endfor %}
+                      </td>
+                  </tr>
+                  {% endif %}
                   </table>
               </div>
               <div class="tab-pane fade mb-2" id="ex1-pills-4" role="tabpanel" aria-labelledby="ex1-tab-4">
