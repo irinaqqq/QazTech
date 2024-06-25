@@ -33,4 +33,4 @@ admin.site.register(TouchST)
 admin.site.register(Controller)
 admin.site.register(ScreenType)
 admin.site.register(WebCam)
-
+admin.site.register(RegistrationRequest)

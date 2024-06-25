@@ -39,17 +39,21 @@ urlpatterns = [
     path('get_category_products/', views.get_category_products, name='get_category_products'),
     path('lab/', views.lab, name='lab'),
     path('login/', views.login_view, name='login'),
-    path('signup/', views.signup_view, name='signup'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('dashboard/', views.dashboard, name='dashboard'),
-    path('feedbacks/', views.feedbacks, name='feedbacks'),
-    path('orders/', views.orders, name='orders'),
-    path('products/', views.products, name='products'),
-    path('requests/', views.requests, name='requests'),
-    path('users/', views.users, name='users'),
-    path('edit/<int:pk>/', views.edit_product, name='edit_product'),
-    path('add/', views.add_product, name='add_product'),
-    path('delete/<int:pk>/', views.delete_product, name='delete_product'),
+
+    path('signup/', views.signup_view, name='signup'),
+
+    path('myadmin/dashboard/', views.dashboard, name='dashboard'),
+    path('myadmin/feedbacks/', views.feedbacks, name='feedbacks'),
+    path('myadmin/orders/', views.orders, name='orders'),
+    path('myadmin/products/', views.products, name='products'),
+    path('myadmin/requests/', views.requests, name='requests'),
+    path('myadmin/users/', views.users, name='users'),
+    path('myadmin/edit/<int:pk>/', views.edit_product, name='edit_product'),
+    path('myadmin/add/', views.add_product, name='add_product'),
+    path('myadmin/delete/<int:pk>/', views.delete_product, name='delete_product'),
+    path('myadmin/approve_request/<int:request_id>/', views.approve_request, name='approve_request'),
+    path('myadmin/reject_request/<int:request_id>/', views.reject_request, name='reject_request'),
     
 ] 
 

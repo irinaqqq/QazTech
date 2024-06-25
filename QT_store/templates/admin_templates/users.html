@@ -4,5 +4,28 @@
 Пользователи
 {% endblock %}
 {% block content %}
-
+<div class="container" style="width: 80%; padding-top: 1rem;">
+    <table class="table text-center" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Initial Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in users_with_data %}
+            <tr>
+                <td>{{ data.user.username }}</td>
+                <td>{{ data.user.email }}</td>
+                <td>{{ data.user.first_name }}</td>
+                <td>{{ data.user.last_name }}</td>
+                <td>{{ data.initial_password }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

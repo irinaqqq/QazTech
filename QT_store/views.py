@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.admin.views.decorators import staff_member_required
 from .models import *
 from collections import defaultdict
 from django.http import JsonResponse
@@ -6,6 +7,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import *
 from django.contrib.auth.decorators import user_passes_test
+import random
+import string
 
 def is_staff(user):
     return user.is_staff
@@ -185,22 +188,7 @@ def login_view(request):
 
 @user_passes_test(is_staff, login_url='/')
 def signup_view(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.first_name = form.cleaned_data.get('first_name')
-            user.last_name = form.cleaned_data.get('last_name')
-            user.email = form.cleaned_data.get('email')
-            user.phone_number = form.cleaned_data.get('phone_number')
-            user.save()
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=user.username, password=raw_password)
-            login(request, user)
-            return redirect('/')
-    else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html')
 
 
 
@@ -230,23 +218,60 @@ def products(request):
 
 @user_passes_test(is_staff, login_url='/')
 def requests(request):
-    return render(request, 'admin_templates/requests.html')
+    registration_requests = RegistrationRequest.objects.filter(status='pending')
+    return render(request, 'admin_templates/requests.html', {'requests': registration_requests})
 
 @user_passes_test(is_staff, login_url='/')
 def users(request):
-    return render(request, 'admin_templates/users.html')
+    all_users = User.objects.all()
+    users_with_data = []
+
+    for user in all_users:
+        # Находим соответствующий объект RegistrationRequest для каждого пользователя
+        registration_request = RegistrationRequest.objects.filter(email=user.email).first()
+
+        if registration_request:
+            users_with_data.append({
+                'user': user,
+                'initial_password': registration_request.initial_password,
+            })
+        else:
+            users_with_data.append({
+                'user': user,
+                'initial_password': None,  # Если нет соответствующего запроса на регистрацию
+            })
+
+    return render(request, 'admin_templates/users.html', {'users_with_data': users_with_data})
 
 @user_passes_test(is_staff, login_url='/')
 def add_product(request):
-    if request.method == 'POST':
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            product = form.save() 
-            return redirect('products')
+    ImageFormSet = inlineformset_factory(Product, ProductImage, form=ProductImageForm, extra=1, can_delete=True)
+    DescriptionFormSet = inlineformset_factory(Product, ProductDescription, form=ProductDescriptionForm, extra=1, can_delete=True)
+
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES)
+        image_formset = ImageFormSet(request.POST, request.FILES, instance=Product())
+        description_formset = DescriptionFormSet(request.POST, request.FILES, instance=Product())
+
+        if form.is_valid() and image_formset.is_valid() and description_formset.is_valid():
+            product = form.save()
+            instances = image_formset.save(commit=False)
+            for instance in instances:
+                instance.product = product
+                instance.save()
+            description_formset.instance = product
+            description_formset.save()
+            return redirect('products')  # Перенаправление на страницу списка продуктов
     else:
         form = ProductForm()
-    
-    return render(request, 'admin_templates/add_product.html', {'form': form})
+        image_formset = ImageFormSet(instance=Product())
+        description_formset = DescriptionFormSet(instance=Product())
+
+    return render(request, 'admin_templates/add_product.html', {
+        'form': form,
+        'image_formset': image_formset,
+        'description_formset': description_formset,
+    })
 
 @user_passes_test(is_staff, login_url='/')
 def delete_product(request, pk):
@@ -269,3 +294,26 @@ def edit_product(request, pk):
         form = ProductForm(instance=product)
     
     return render(request, 'admin_templates/edit_product.html', {'form': form, 'product': product})
+
+@staff_member_required
+def approve_request(request, request_id):
+    registration_request = get_object_or_404(RegistrationRequest, id=request_id)
+    if registration_request.status == 'pending':
+        # Генерация случайного пароля
+        password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+        user = User.objects.create_user(username=registration_request.email, email=registration_request.email, password=password, first_name=registration_request.first_name, last_name=registration_request.last_name)
+        registration_request.status = 'approved'
+        registration_request.initial_password = password  # Сохранение первоначального пароля
+        print(password)
+        registration_request.save()
+        # Отправка email (позже добавить)
+        # send_mail('Your Account Details', f'Your password is {password}', 'from@example.com', [registration_request.email])
+    return redirect('requests')
+
+@staff_member_required
+def reject_request(request, request_id):
+    registration_request = get_object_or_404(RegistrationRequest, id=request_id)
+    if registration_request.status == 'pending':
+        registration_request.status = 'rejected'
+        registration_request.save()
+    return redirect('requests')

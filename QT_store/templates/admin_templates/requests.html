@@ -4,5 +4,25 @@
 Запросы
 {% endblock %}
 {% block content %}
-
+<div class="container" style="width: 80%; padding-top: 1rem;">
+    <table class="table text-center" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+        {% for request in requests %}
+        <tr>
+            <td>{{ request.first_name }} {{ request.last_name }}</td>
+            <td>{{ request.email }}</td>
+            <td>{{ request.phone_number }}</td>
+            <td>
+                <a href="{% url 'approve_request' request.id %}">Approve</a>
+                <a href="{% url 'reject_request' request.id %}">Reject</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}

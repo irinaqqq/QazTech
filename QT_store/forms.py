@@ -2,15 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
-class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=True,)
-    last_name = forms.CharField(max_length=30, required=True)
-    phone_number = forms.CharField(max_length=15, required=True)
-    email = forms.EmailField(max_length=254, required=True )
-
-    class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'phone_number', 'password1', 'password2')
+from django.forms import inlineformset_factory
 
 class FeedbackForm(forms.ModelForm):
     name = forms.CharField(label='Имя', max_length=100, error_messages={'required': 'Это поле обязательно для заполнения'})
@@ -25,3 +17,21 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'  
+
+class ProductImageForm(forms.ModelForm):
+    class Meta:
+        model = ProductImage
+        fields = ['image']
+
+class ProductDescriptionForm(forms.ModelForm):
+    class Meta:
+        model = ProductDescription
+        fields = ['title', 'image', 'text']
+
+ProductImageFormSet = inlineformset_factory(Product, ProductImage, form=ProductImageForm, extra=1, can_delete=True)
+ProductDescriptionFormSet = inlineformset_factory(Product, ProductDescription, form=ProductDescriptionForm, extra=1, can_delete=True)
+
+class RegistrationRequestForm(forms.ModelForm):
+    class Meta:
+        model = RegistrationRequest
+        fields = ['first_name', 'last_name', 'email', 'phone_number']

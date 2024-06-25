@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import AbstractUser
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -257,7 +258,7 @@ class Product(models.Model):
     
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name="Продукт")
-    image = models.ImageField(upload_to='product_images/', verbose_name="Изображение")
+    image = models.ImageField(upload_to='product_images/', verbose_name="Изображение", null=True, blank=True)
 
     def __str__(self):
         return f"Изображение для {self.product.name}"
@@ -265,9 +266,9 @@ class ProductImage(models.Model):
 
 class ProductDescription(models.Model):
     product = models.ForeignKey(Product, related_name='descriptions', on_delete=models.CASCADE, verbose_name="Продукт")
-    title = models.CharField(max_length=255, verbose_name="Заголовок")
+    title = models.CharField(max_length=255, verbose_name="Заголовок", null=True, blank=True)
     image = models.ImageField(upload_to='product_descriptions/', verbose_name="Фото", blank=True, null=True)
-    text = models.TextField(verbose_name="Описание")
+    text = models.TextField(verbose_name="Описание", null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -282,3 +283,15 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.message[:20]}'
+    
+class RegistrationRequest(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    phone_number = models.CharField(max_length=20)
+    status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')], default='pending')
+    initial_password = models.CharField(max_length=100, blank=True, null=True, editable=False)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.email})"
+    

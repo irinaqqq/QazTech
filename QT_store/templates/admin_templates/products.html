@@ -23,8 +23,9 @@
   }
   .form-select:focus{
     border-color: transparent;
-    box-shadow: none;
     border: 1px solid #bdbdbd;
+    box-shadow: none !important;
+    border-color: #00a2e8;
   }
   .fixed-action-button {
     position: fixed;
@@ -33,11 +34,10 @@
     z-index: 1000;
   }
   .fixed-action-button a i:hover {
-    color: #0056b3; /* Цвет кнопки при наведении */
+    color: #0056b3;
   }
   td{
     vertical-align: middle;
-    
   }
 </style>
 <div class="container" style="width: 80%; padding-top: 1rem;">
@@ -67,7 +67,11 @@
         <td>{{ forloop.counter }}</td>
         <td>{{ product.category }}</td>
         <td>{{ product.name }}</td>
-        <td><img src="{{ product.images.all.0.image.url }}" alt="{{ product.name }}" style="max-width: 100px;"></td>
+        <td>
+          <!-- {% if product.images.exists %} -->
+          <img src="{{ product.images.all.0.image.url }}" alt="{{ product.name }}" style="max-width: 100px;">
+          <!-- {% endif %} -->
+        </td>
         <td><a href="{% url 'edit_product' product.pk %}" class="justify-content-center"><i class="fa-solid fa-pen-to-square fa-3x" style="color:#00a2e8;"></i></a></td>
         <td>
           <form action="{% url 'delete_product' product.pk %}" method="post" class="d-flex justify-content-center">

@@ -35,27 +35,43 @@
 }
 .form-control:focus{
     box-shadow: none !important;
+    border-color: #00a2e8;
+}
+.form-select:focus{
+    box-shadow: none !important;
+    border-color: #00a2e8;
 }
 .form-select{
     height: 2.5rem;
 }
-
+.custom-file-input {
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+    z-index: -1;
+}
+.custom-file-label {
+    background-color: #00a2e8;
+    color: white;
+    padding: .375rem .75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+.image-form, .custom-button, .description-form{
+    margin-bottom: var(--mdb-gutter-y);
+}
 </style>
 
 
-<div class="container" style="width: 80%; padding-top: 1rem;">
-
-    
-    
-    <form class="needs-validation" method="post">
+<div class="container py-5" style="width: 80%;">
+    <form class="needs-validation" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row g-3">
           <div class="col-sm-6">
             <label for="firstName" class="form-label">Название</label>
-            <input type="text" name="name" maxlength="100" required="" id="id_name" class="form-control mt-auto">
-            <div class="invalid-feedback">
-              Valid first name is required.
-            </div>
+            <input type="text" name="name" maxlength="100" required id="id_name" class="form-control mt-auto" placeholder="Введите название продукта">
           </div>
           <div class="col-sm-6">
             <label for="id_category" class="form-label">Категория</label>
@@ -65,441 +81,349 @@
                     <option value="{{ category.id }}">{{ category.name }}</option>
                 {% endfor %}
             </select>
-            <div class="invalid-feedback">
-              Valid last name is required.
-            </div>
           </div>
           <div class="col-12">
-            <label for="username" class="form-label">Особенности (кратко)</label>
-            <div class="input-group has-validation">    
-              <input type="text" class="form-control" id="username">
-            <div class="invalid-feedback">
-                Your username is required.
-              </div>
-            </div>
-          </div>
+            <label for="{{ form.features.id_for_label }}" class="form-label">Особенности (кратко)<span class="text-muted"></span></label>
+            <input type="text" name="features" id="{{ form.features.id_for_label }}" class="form-control">
+        </div>
           <div class="col-12">
-            <label for="email" class="form-label">Описание<span class="text-muted"></span></label>
-            <textarea name="description" id="id_description" class="form-control" style="min-height: 105px;"></textarea>
-            <div class="invalid-feedback">
-              Please enter a valid email address for shipping updates.
-            </div>
+            <label for="{{ form.description.id_for_label }}" class="form-label">Описание<span class="text-muted"></span></label>
+            <textarea name="description" id="{{ form.description.id_for_label }}" class="form-control" style="min-height: 105px;"></textarea>
           </div>
         </div>
-
-
         <hr class="my-4">
         <div class="row g-3">
           <h4 class="m-0 mt-2">Основные характеристики</h4>
           <div class="col-sm-6">
-            <label for="firstName" class="form-label">Процессор</label>
-            <select name="category" id="id_category" class="form-select">
-                <option value="" disabled selected>Выберите процессор</option>
-                {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                {% endfor %}
-            </select>
-            <div class="invalid-feedback">
-              Valid first name is required.
-            </div>
+            
+              <label for="id_processor" class="form-label">Процессор</label>
+              <select name="processor" id="id_processor" class="form-select">
+                  <option value="" disabled selected>Выберите процессор</option>
+                  {% for processor in form.processor.field.queryset %}
+                      <option value="{{ processor.id }}">{{ processor.name }}</option>
+                  {% endfor %}
+              </select>
           </div>
           <div class="col-sm-6">
-            <label for="id_category" class="form-label">Материнская плата</label>
-            <select name="category" id="id_category" class="form-select">
-                <option value="" disabled selected>Выберите материнскую плату</option>
-                {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                {% endfor %}
-            </select>
-            <div class="invalid-feedback">
-              Valid last name is required.
-            </div>
-          </div>
-          <div class="col-md-4">
-            <label for="country" class="form-label">Накопители</label>
-            <select class="form-select" id="country">
-                <option value="" disabled selected>Выберите накопители</option>
-              <option>United States</option>
-            </select>
-            <div class="invalid-feedback">
-              Please select a valid country.
-            </div>
-          </div>
-          <div class="col-md-4">
-            <label for="state" class="form-label">Оперативная память</label>
-            <select class="form-select" id="state">
-                <option value="" disabled selected>Выберите оперативную память</option>
-              <option>California</option>
-            </select>
-            <div class="invalid-feedback">
-              Please provide a valid state.
-            </div>
-          </div>
-          <div class="col-md-4">
-            <label for="zip" class="form-label">Видеокарта</label>
-            <select class="form-select" id="country">
-                <option value="" disabled selected>Выберите видеокарту</option>
-                <option>United States</option>
+              <label for="id_mother" class="form-label">Материнская плата</label>
+              <select name="mother" id="id_mother" class="form-select">
+                  <option value="" disabled selected>Выберите материнскую плату</option>
+                  {% for motherboard in form.mother.field.queryset %}
+                      <option value="{{ motherboard.id }}">{{ motherboard.name }}</option>
+                  {% endfor %}
               </select>
-            <div class="invalid-feedback">
-              Zip code required.
-            </div>
           </div>
           <div class="col-sm-6">
-            <label for="zip" class="form-label">Мощность блока питания</label>
-            <select class="form-select" id="country">
-                <option value="" disabled selected>Выберите мощность блока питания</option>
-                <option>United States</option>
+              <label for="id_storage" class="form-label">Накопители</label>
+              <select name="storage" id="id_storage" class="form-select">
+                  <option value="" disabled selected>Выберите накопители</option>
+                  {% for storage in form.storage.field.queryset %}
+                      <option value="{{ storage.id }}">{{ storage }}</option>
+                  {% endfor %}
               </select>
-            <div class="invalid-feedback">
-              Zip code required.
-            </div>
           </div>
           <div class="col-sm-6">
-            <label for="zip" class="form-label">Контроллеры</label>
-            <select class="form-select" id="country">
-                <option value="" disabled selected>Выберите контроллеры</option>
-                <option>United States</option>
+              <label for="id_ram" class="form-label">Оперативная память</label>
+              <select name="ram" id="id_ram" class="form-select">
+                  <option value="" disabled selected>Выберите оперативную память</option>
+                  {% for ram in form.ram.field.queryset %}
+                      <option value="{{ ram.id }}">{{ ram.size }} ГБ ({{ ram.type }})</option>
+                  {% endfor %}
               </select>
-            <div class="invalid-feedback">
-              Zip code required.
-            </div>
           </div>
           <div class="col-sm-6">
-            <label for="zip" class="form-label">Операционная система</label>
-            <select class="form-select" id="country">
-                <option value="" disabled selected>Выберите операционную систему</option>
-                <option>United States</option>
+              <label for="id_graphics" class="form-label">Видеокарта</label>
+              <select name="graphics" id="id_graphics" class="form-select">
+                  <option value="" disabled selected>Выберите видеокарту</option>
+                  {% for graphics in form.graphics.field.queryset %}
+                      <option value="{{ graphics.id }}">{{ graphics }}</option>
+                  {% endfor %}
               </select>
-            <div class="invalid-feedback">
-              Zip code required.
-            </div>
           </div>
-        </div>
-
-
-        <hr class="my-4">
-        <div class="row g-3">
+          <div class="col-sm-6">
+              <label for="id_power_supplies" class="form-label">Мощность блока питания</label>
+              <select name="power_supplies" id="id_power_supplies" class="form-select">
+                  <option value="" disabled selected>Выберите мощность блока питания</option>
+                  {% for power_supply in form.power_supplies.field.queryset %}
+                      <option value="{{ power_supply.id }}">{{ power_supply }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+          <div class="col-sm-6">
+              <label for="id_controllers" class="form-label">Контроллеры</label>
+              <select name="controllers" id="id_controllers" class="form-select">
+                  <option value="" disabled selected>Выберите контроллеры</option>
+                  {% for controller in form.controllers.field.queryset %}
+                      <option value="{{ controller.id }}">{{ controller.name }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+          <div class="col-sm-6">
+              <label for="id_operating_system" class="form-label">Операционная система</label>
+              <select name="operating_system" id="id_operating_system" class="form-select">
+                  <option value="" disabled selected>Выберите операционную систему</option>
+                  {% for os in form.operating_system.field.queryset %}
+                      <option value="{{ os.id }}">{{ os.name }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+      </div>
+          <hr class="my-4">
+          <div class="row g-3">
             <h4 class="m-0 mt-2">Экран и Ввод</h4>
             <div class="col-sm-6">
-              <label for="firstName" class="form-label">Размер экрана</label>
-              <select name="category" id="id_category" class="form-select">
-                  <option value="" disabled selected>Выберите размер экрана</option>
-                  {% for category in categories %}
-                      <option value="{{ category.id }}">{{ category.name }}</option>
-                  {% endfor %}
-              </select>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
+                <label for="id_screen_sizes" class="form-label">Размер экрана</label>
+                <select name="screen_sizes" id="id_screen_sizes" class="form-select">
+                    <option value="" disabled selected>Выберите размер экрана</option>
+                    {% for size in form.screen_sizes.field.queryset %}
+                        <option value="{{ size.id }}">{{ size }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="col-sm-6">
-              <label for="id_category" class="form-label">Тип экрана</label>
-              <select name="category" id="id_category" class="form-select">
-                  <option value="" disabled selected>Выберите тип экрана</option>
-                  {% for category in categories %}
-                      <option value="{{ category.id }}">{{ category.name }}</option>
-                  {% endfor %}
-              </select>
-              <div class="invalid-feedback">
-                Valid last name is required.
-              </div>
+                <label for="id_screen_types" class="form-label">Тип экрана</label>
+                <select name="screen_type" id="id_screen_type" class="form-select">
+                    <option value="" disabled selected>Выберите тип экрана</option>
+                    {% for type in form.screen_type.field.queryset %}
+                        <option value="{{ type.id }}">{{ type }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            <div class="col-md-4">
-              <label for="country" class="form-label">Разрешение экрана</label>
-              <select class="form-select" id="country">
-                  <option value="" disabled selected>Выберите разрешение экрана</option>
-                <option>United States</option>
-              </select>
-              <div class="invalid-feedback">
-                Please select a valid country.
-              </div>
+            <div class="col-sm-6">
+                <label for="id_screen_resolutions" class="form-label">Разрешение экрана</label>
+                <select name="screen_resolution" id="id_screen_resolution" class="form-select">
+                    <option value="" disabled selected>Выберите разрешение экрана</option>
+                    {% for resolution in form.screen_resolution.field.queryset %}
+                        <option value="{{ resolution.id }}">{{ resolution }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            <div class="col-md-4">
-              <label for="state" class="form-label">Кол-во одновременных касаний</label>
-              <select class="form-select" id="state">
-                  <option value="" disabled selected>Выберите кол-во касаний</option>
-                <option>California</option>
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid state.
-              </div>
+            <div class="col-sm-6">
+                <label for="id_touch_screen_touches" class="form-label">Кол-во одновременных касаний</label>
+                <select name="touch_screen_touches" id="id_touch_screen_touches" class="form-select">
+                    <option value="" disabled selected>Выберите кол-во касаний</option>
+                    {% for touch in form.touch_screen_touches.field.queryset %}
+                        <option value="{{ touch.id }}">{{ touch }}</option>
+                    {% endfor %}
+                </select>
             </div>
-          </div>
+        </div>
 
 
           <hr class="my-4">
           <div class="row g-3">
             <h4 class="m-0 mt-2">Связь и Периферия</h4>
-            <div class="col-sm-6">
-              <label for="firstName" class="form-label">Веб-камера</label>
-              <select name="category" id="id_category" class="form-select">
-                  <option value="" disabled selected>Есть ли веб камера?</option>
-                  {% for category in categories %}
-                      <option value="{{ category.id }}">{{ category.name }}</option>
-                  {% endfor %}
-              </select>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
+            <div class="col-sm-4">
+                <label for="id_webcam" class="form-label">Веб-камера</label>
+                <select name="webcam" id="id_webcam" class="form-select">
+                    <option value="" disabled selected>Выберите веб-камеру</option>
+                    {% for webcam_choice in form.webcam.field.queryset %}
+                        <option value="{{ webcam_choice.id }}">{{ webcam_choice }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="col-sm-4">
-                <label for="zip" class="form-label">Комплект клавиатура и мышь</label>
-                <select class="form-select" id="country">
+                <label for="id_keyset" class="form-label">Комплект клавиатура и мышь</label>
+                <select name="keyset" id="id_keyset" class="form-select">
                     <option value="" disabled selected>Выберите тип клавиатуры и мыши</option>
-                    <option>United States</option>
-                  </select>
-                <div class="invalid-feedback">
-                  Zip code required.
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <label for="zip" class="form-label">Подсветка клавиатуры</label>
-                <select class="form-select" id="country">
-                    <option value="" disabled selected>Есть ли подстветка клавиатуры?</option>
-                    <option>United States</option>
-                  </select>
-                <div class="invalid-feedback">
-                  Zip code required.
-                </div>
-              </div>
-          </div>
+                    {% for keyset_choice in form.keyset.field.queryset %}
+                        <option value="{{ keyset_choice.id }}">{{ keyset_choice }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="id_keyboard_backlight" class="form-label">Подсветка клавиатуры</label>
+                <select name="keyboard_backlight" id="id_keyboard_backlight" class="form-select">
+                    <option value="" disabled selected>Есть ли подсветка клавиатуры?</option>
+                    {% for backlight_choice in form.keyboard_backlight.field.queryset %}
+                        <option value="{{ backlight_choice.id }}">{{ backlight_choice }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
           <hr class="my-4">
 
           <div class="row g-3">
             <h4 class="m-0 mt-2">Эксплуатация и Габариты</h4>
-            <div class="col-sm-6">
-              <label for="firstName" class="form-label">Вес</label>
-              <select name="category" id="id_category" class="form-select">
-                  <option value="" disabled selected></option>
-              </select>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
+            <div class="col-sm-4">
+              <label for="id_weight" class="form-label">Вес (кг)</label>
+              <input type="number" name="weight" id="id_weight" class="form-control" placeholder="Введите вес">
             </div>
-            <div class="col-sm-6">
-              <label for="id_category" class="form-label">Форм-фактор</label>
-              <select name="category" id="id_category" class="form-select">
-                  <option value="" disabled selected>Выберите Форм-фактор</option>
-                  {% for category in categories %}
-                      <option value="{{ category.id }}">{{ category.name }}</option>
+          
+            <div class="col-sm-4">
+              <label for="id_formfactor" class="form-label">Форм-фактор</label>
+              <select name="formfactor" id="id_formfactor" class="form-select">
+                  <option value="" disabled selected>Выберите форм-фактор</option>
+                  {% for formfactor_choice in form.formfactor.field.queryset %}
+                      <option value="{{ formfactor_choice.id }}">{{ formfactor_choice }}</option>
                   {% endfor %}
               </select>
-              <div class="invalid-feedback">
-                Valid last name is required.
-              </div>
-            </div>
-            <div class="col-md-4">
-              <label for="country" class="form-label">Размеры</label>
-              <select class="form-select" id="country">
+          </div>
+          <div class="col-sm-4">
+              <label for="id_sizes" class="form-label">Размеры</label>
+              <select name="sizes" id="id_sizes" class="form-select">
                   <option value="" disabled selected>Выберите размеры</option>
-                <option>United States</option>
+                  {% for size_choice in form.sizes.field.queryset %}
+                      <option value="{{ size_choice.id }}">{{ size_choice.name }}</option>
+                  {% endfor %}
               </select>
-              <div class="invalid-feedback">
-                Please select a valid country.
-              </div>
+          </div>
+          <div class="col-sm-6">
+            <label for="id_operating_temperature" class="form-label">Температура эксплуатации</label>
+            <input type="text" name="operating_temperature" id="id_operating_temperature" class="form-control" placeholder="Введите температуру эксплуатации">
+        </div>
+        <div class="col-sm-6">
+            <label for="id_storage_temperature" class="form-label">Температура хранения</label>
+            <input type="text" name="storage_temperature" id="id_storage_temperature" class="form-control" placeholder="Введите температуру хранения">
+        </div>
+        <div class="col-sm-6">
+            <label for="id_operating_humidity" class="form-label">Рабочая влажность</label>
+            <input type="text" name="operating_humidity" id="id_operating_humidity" class="form-control" placeholder="Введите рабочую влажность">
+        </div>
+        <div class="col-sm-6">
+            <label for="id_storage_humidity" class="form-label">Влажность хранения</label>
+            <input type="text" name="storage_humidity" id="id_storage_humidity" class="form-control" placeholder="Введите влажность хранения">
+        </div>
+        </div>
+          <hr class="my-4">
+          <div class="row g-3">
+          <h4 class="m-0 mt-2">Фотографии продукта</h4>
+          <div class="col-sm-6">
+          <div id="image-formset">
+            {{ image_formset.management_form }}
+            {% for form in image_formset %}
+                <div class="image-form">
+                        <div class="custom-file-upload">
+                            <input type="file" name="images-0-image" accept="image/*" id="id_images-0-image" class="custom-file-input">
+                            <label for="id_images-0-image" class="custom-select custom-file-label">Выберите файл</label>
+                        </div>
+                </div>
+            {% endfor %}
             </div>
-            <div class="col-md-4">
-              <label for="state" class="form-label">Температура эксплуатации</label>
-              <select class="form-select" id="state">
-                  <option value="" disabled selected></option>
-                <option>California</option>
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid state.
-              </div>
             </div>
-            <div class="col-md-4">
-              <label for="zip" class="form-label">Температура хранения</label>
-              <select class="form-select" id="country">
-                  <option value="" disabled selected></option>
-                  <option>United States</option>
-                </select>
-              <div class="invalid-feedback">
-                Zip code required.
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <label for="zip" class="form-label">Рабочая влажность</label>
-              <select class="form-select" id="country">
-                  <option value="" disabled selected></option>
-                  <option>United States</option>
-                </select>
-              <div class="invalid-feedback">
-                Zip code required.
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <label for="zip" class="form-label">Влажность хранения</label>
-              <select class="form-select" id="country">
-                  <option value="" disabled selected></option>
-                  <option>United States</option>
-                </select>
-              <div class="invalid-feedback">
-                Zip code required.
-              </div>
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+          <button type="button" id="add-image-form" class="form-control custom-button">Добавить еще фото</button>
             </div>
           </div>
-          <hr class="my-4">
+        <hr class="my-4">
+        <div class="row g-3">
+            <h4 class="m-0 mt-2">Описание продукта</h4>
+            <div id="description-formset">
+                {{ description_formset.management_form }}
+                {% for form in description_formset %}
+                    <div class="description-form row g-3">
+                      <div class="col-sm-6">
+                          <label for="{{ form.title.id_for_label }}" class="form-label">Заголовок</label>
+                          <input type="text" name="descriptions-0-title" maxlength="255" id="id_descriptions-0-title" class="form-control" placeholder="Введите заголовок текста">
+                      </div>
+                      <div class="col-sm-6 d-flex flex-column justify-content-end">
+                          <input type="file" name="descriptions-0-image" accept="image/*" id="id_descriptions-0-image" class="custom-file-input">
+                          <label for="{{ form.image.id_for_label }}" class="custom-select custom-file-label">Выберите изображение</label>
+                      </div>
+                      <div class="col-sm-12">
+                          <label for="{{ form.text.id_for_label }}" class="form-label">Описание:</label>
+                          <textarea name="descriptions-0-text" cols="40" rows="10" id="id_descriptions-0-text" class="form-control" style="min-height: 105px;"></textarea>
+                      </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12">
+            <button type="button" id="add-description-form" class="form-control">Добавить еще описание</button>
+            </div>
+        </div>
+        
+        <hr class="my-4">
           <button class="w-100 btn btn-primary btn-lg" type="submit">Сохранить</button>
     </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Handle image formset
+            const addImageButton = document.getElementById('add-image-form');
+            const imageTotalForms = document.getElementById('id_images-TOTAL_FORMS');
+
+            addImageButton.addEventListener('click', function () {
+                const imageFormsetDiv = document.getElementById('image-formset');
+                const currentImageFormCount = imageFormsetDiv.getElementsByClassName('image-form').length;
+                const newImageFormHtml = `
+                    <div class="image-form">
+                        <div class="custom-file-upload">
+                            <input type="file" name="images-${currentImageFormCount}-image" accept="image/*" id="id_images-${currentImageFormCount}-image" class="custom-file-input">
+                            <label for="id_images-${currentImageFormCount}-image" class="custom-select custom-file-label">Выберите файл</label>
+                        </div>
+                    </div>`;
+                imageFormsetDiv.insertAdjacentHTML('beforeend', newImageFormHtml);
+                imageTotalForms.setAttribute('value', currentImageFormCount + 1);
+
+                // Reset the event listener for file input change
+                const newFileInput = imageFormsetDiv.querySelector(`#id_images-${currentImageFormCount}-image`);
+                const newFileLabel = imageFormsetDiv.querySelector(`label[for="id_images-${currentImageFormCount}-image"]`);
+
+                newFileInput.addEventListener('change', function () {
+                    const fileName = this.files[0].name;
+                    newFileLabel.innerText = fileName;
+                });
+            });
+        
+            // Handle description formset
+            const addDescriptionButton = document.getElementById('add-description-form');
+            const descriptionTotalForms = document.getElementById('id_descriptions-TOTAL_FORMS');
+
+            addDescriptionButton.addEventListener('click', function () {
+                const descriptionFormsetDiv = document.getElementById('description-formset');
+                const currentDescriptionFormCount = descriptionFormsetDiv.getElementsByClassName('description-form').length;
+                const newDescriptionFormHtml = `
+                    <div class="description-form row g-3">
+                        <div class="col-sm-6">
+                            <label for="id_descriptions-${currentDescriptionFormCount}-title" class="form-label">Заголовок</label>
+                            <input type="text" name="descriptions-${currentDescriptionFormCount}-title" maxlength="255" id="id_descriptions-${currentDescriptionFormCount}-title" class="form-control" placeholder="Введите заголовок текста">
+                        </div>
+                        <div class="col-sm-6 d-flex flex-column justify-content-end">
+                            <input type="file" name="descriptions-${currentDescriptionFormCount}-image" accept="image/*" id="id_descriptions-${currentDescriptionFormCount}-image" class="custom-file-input">
+                            <label for="id_descriptions-${currentDescriptionFormCount}-image" class="custom-select custom-file-label">Выберите изображение</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="id_descriptions-${currentDescriptionFormCount}-text" class="form-label">Описание:</label>
+                            <textarea name="descriptions-${currentDescriptionFormCount}-text" cols="40" rows="10" id="id_descriptions-${currentDescriptionFormCount}-text" class="form-control" style="min-height: 105px;"></textarea>
+                        </div>
+                    </div>`;
+                descriptionFormsetDiv.insertAdjacentHTML('beforeend', newDescriptionFormHtml);
+                descriptionTotalForms.setAttribute('value', currentDescriptionFormCount + 1);
+
+                // Reset the event listener for file input change
+                const newFileInput = descriptionFormsetDiv.querySelector(`#id_descriptions-${currentDescriptionFormCount}-image`);
+                const newFileLabel = descriptionFormsetDiv.querySelector(`label[for="id_descriptions-${currentDescriptionFormCount}-image"]`);
+
+                newFileInput.addEventListener('change', function () {
+                    const fileName = this.files[0].name;
+                    newFileLabel.innerText = fileName;
+                });
+            });
 
 
+            
 
+            const fileInputs1 = document.querySelectorAll('#image-formset input[type="file"]');
+            const fileLabels1 = document.querySelectorAll('#image-formset .custom-file-label');
 
+            fileInputs1.forEach((fileInput, index) => {
+                fileInput.addEventListener('change', function() {
+                    const fileName = this.files[0].name;
+                    fileLabels1[index].innerText = fileName;
+                });
+            });
 
+            // Для второй формы (описание продукта)
+            const fileInputs2 = document.querySelectorAll('#description-formset input[type="file"]');
+            const fileLabels2 = document.querySelectorAll('#description-formset .custom-file-label');
 
-
-
-
-
-
-
-
-
-      <form class="needs-validation" method="post">
-        {% csrf_token %}
-        <div class="row g-3">
-            <!-- Категория, Название, Особенности, Описание -->
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="id_category">Категория:</label>
-                    <select name="category" id="id_category" class="custom-select">
-                        <option value="" disabled selected>Выберите категорию</option>
-                        {% for category in categories %}
-                            <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.name.id_for_label }}">Название</label>
-                    {{ form.name }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.features.id_for_label }}">Особенности (кратко)</label>
-                    {{ form.features }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.description.id_for_label }}">Описание</label>
-                    {{ form.description }}
-                </div>
-            </div>
-    
-            <!-- Основные характеристики -->
-            <div class="col-md-6">
-                <h4>Основные характеристики</h4>
-                <div class="form-group">
-                    <label for="{{ form.processor.id_for_label }}">Процессор</label>
-                    {{ form.processor }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.mother.id_for_label }}">Материнская плата</label>
-                    {{ form.mother }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.ram.id_for_label }}">Оперативная память</label>
-                    {{ form.ram }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.storage.id_for_label }}">Накопители</label>
-                    {{ form.storage }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.graphics.id_for_label }}">Видеокарта</label>
-                    {{ form.graphics }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.power_supplies.id_for_label }}">Мощность блока питания</label>
-                    {{ form.power_supplies }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.controllers.id_for_label }}">Контроллеры</label>
-                    {{ form.controllers }}
-                </div>
-            </div>
-    
-            <!-- Экран и Ввод -->
-            <div class="col-md-6">
-                <h4>Экран и Ввод</h4>
-                <div class="form-group">
-                    <label for="{{ form.screen_sizes.id_for_label }}">Размер экрана</label>
-                    {{ form.screen_sizes }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.screen_type.id_for_label }}">Тип экрана</label>
-                    {{ form.screen_type }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.screen_resolution.id_for_label }}">Разрешение экрана</label>
-                    {{ form.screen_resolution }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.touch_screen_touches.id_for_label }}">Кол-во одновременных касаний</label>
-                    {{ form.touch_screen_touches }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.keyset.id_for_label }}">Комплект клавиатура и мышь</label>
-                    {{ form.keyset }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.keyboard_backlight.id_for_label }}">Подсветка клавиатуры</label>
-                    {{ form.keyboard_backlight }}
-                </div>
-            </div>
-    
-            <!-- Связь и Периферия -->
-            <div class="col-md-6">
-                <h4>Связь и Периферия</h4>
-                <div class="form-group">
-                    <label for="{{ form.webcam.id_for_label }}">Веб-камера</label>
-                    {{ form.webcam }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.operating_system.id_for_label }}">Операционная система</label>
-                    {{ form.operating_system }}
-                </div>
-            </div>
-    
-            <!-- Эксплуатация и Габариты -->
-            <div class="col-md-6">
-                <h4>Эксплуатация и Габариты</h4>
-                <div class="form-group">
-                    <label for="{{ form.weight.id_for_label }}">Вес</label>
-                    {{ form.weight }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.formfactor.id_for_label }}">Форм-фактор</label>
-                    {{ form.formfactor }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.sizes.id_for_label }}">Размеры</label>
-                    {{ form.sizes }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.operating_temperature.id_for_label }}">Температура эксплуатации</label>
-                    {{ form.operating_temperature }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.storage_temperature.id_for_label }}">Температура хранения</label>
-                    {{ form.storage_temperature }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.operating_humidity.id_for_label }}">Рабочая влажность</label>
-                    {{ form.operating_humidity }}
-                </div>
-                <div class="form-group">
-                    <label for="{{ form.storage_humidity.id_for_label }}">Влажность хранения</label>
-                    {{ form.storage_humidity }}
-                </div>
-            </div>
-        </div>
-    
-        <!-- Кнопка отправки -->
-        <div class="col-12 mt-4">
-            <button class="w-100 btn btn-primary btn-lg" type="submit">Сохранить</button>
-        </div>
-    </form>
-
-
-</div>
+            fileInputs2.forEach((fileInput, index) => {
+                fileInput.addEventListener('change', function() {
+                    const fileName = this.files[0].name;
+                    fileLabels2[index].innerText = fileName;
+                });
+            });
+        });
+        </script>
+  
 {% endblock %}

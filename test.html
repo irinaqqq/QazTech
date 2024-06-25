@@ -1,0 +1,142 @@
+      <form class="needs-validation" method="post">
+        {% csrf_token %}
+        <div class="row g-3">
+            <!-- Категория, Название, Особенности, Описание -->
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_category">Категория:</label>
+                    <select name="category" id="id_category" class="custom-select">
+                        <option value="" disabled selected>Выберите категорию</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">Название</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.features.id_for_label }}">Особенности (кратко)</label>
+                    {{ form.features }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">Описание</label>
+                    {{ form.description }}
+                </div>
+            </div>
+    
+            <!-- Основные характеристики -->
+            <div class="col-md-6">
+                <h4>Основные характеристики</h4>
+                <div class="form-group">
+                    <label for="{{ form.processor.id_for_label }}">Процессор</label>
+                    {{ form.processor }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.mother.id_for_label }}">Материнская плата</label>
+                    {{ form.mother }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.ram.id_for_label }}">Оперативная память</label>
+                    {{ form.ram }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.storage.id_for_label }}">Накопители</label>
+                    {{ form.storage }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.graphics.id_for_label }}">Видеокарта</label>
+                    {{ form.graphics }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.power_supplies.id_for_label }}">Мощность блока питания</label>
+                    {{ form.power_supplies }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.controllers.id_for_label }}">Контроллеры</label>
+                    {{ form.controllers }}
+                </div>
+            </div>
+    
+            <!-- Экран и Ввод -->
+            <div class="col-md-6">
+                <h4>Экран и Ввод</h4>
+                <div class="form-group">
+                    <label for="{{ form.screen_sizes.id_for_label }}">Размер экрана</label>
+                    {{ form.screen_sizes }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.screen_type.id_for_label }}">Тип экрана</label>
+                    {{ form.screen_type }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.screen_resolution.id_for_label }}">Разрешение экрана</label>
+                    {{ form.screen_resolution }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.touch_screen_touches.id_for_label }}">Кол-во одновременных касаний</label>
+                    {{ form.touch_screen_touches }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.keyset.id_for_label }}">Комплект клавиатура и мышь</label>
+                    {{ form.keyset }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.keyboard_backlight.id_for_label }}">Подсветка клавиатуры</label>
+                    {{ form.keyboard_backlight }}
+                </div>
+            </div>
+    
+            <!-- Связь и Периферия -->
+            <div class="col-md-6">
+                <h4>Связь и Периферия</h4>
+                <div class="form-group">
+                    <label for="{{ form.webcam.id_for_label }}">Веб-камера</label>
+                    {{ form.webcam }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.operating_system.id_for_label }}">Операционная система</label>
+                    {{ form.operating_system }}
+                </div>
+            </div>
+    
+            <!-- Эксплуатация и Габариты -->
+            <div class="col-md-6">
+                <h4>Эксплуатация и Габариты</h4>
+                <div class="form-group">
+                    <label for="{{ form.weight.id_for_label }}">Вес</label>
+                    {{ form.weight }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.formfactor.id_for_label }}">Форм-фактор</label>
+                    {{ form.formfactor }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.sizes.id_for_label }}">Размеры</label>
+                    {{ form.sizes }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.operating_temperature.id_for_label }}">Температура эксплуатации</label>
+                    {{ form.operating_temperature }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.storage_temperature.id_for_label }}">Температура хранения</label>
+                    {{ form.storage_temperature }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.operating_humidity.id_for_label }}">Рабочая влажность</label>
+                    {{ form.operating_humidity }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.storage_humidity.id_for_label }}">Влажность хранения</label>
+                    {{ form.storage_humidity }}
+                </div>
+            </div>
+        </div>
+    
+        <!-- Кнопка отправки -->
+        <div class="col-12 mt-4">
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Сохранить</button>
+        </div>
+    </form>
