@@ -5,45 +5,12 @@
 {% endblock %}
 {% block content %}
 <style>
-  .products {
-    font-size: 18px;
-    color: #fff;
-    line-height: 1.4;
-    background-color: #00a2e8 !important;
-  }
-  th span {
-    cursor: pointer;
-    user-select: none;
-  }
-  select{
 
-  }
-  select:focus {
-
-  }
-  .form-select:focus{
-    border-color: transparent;
-    border: 1px solid #bdbdbd;
-    box-shadow: none !important;
-    border-color: #00a2e8;
-  }
-  .fixed-action-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-  }
-  .fixed-action-button a i:hover {
-    color: #0056b3;
-  }
-  td{
-    vertical-align: middle;
-  }
 </style>
 <div class="container" style="width: 80%; padding-top: 1rem;">
   <div class="pb-3">
-    <select id="category-select" class="form-select" style="width: auto;">
-      <option value="">Все категории</option>
+    <select id="category-select" class="ui fluid search dropdown" style="width: auto;">
+      <option value="all">Все категории</option>
       {% for category in categories %}
         <option value="{{ category.name  }}">{{ category.name }}</option>
       {% endfor %}
@@ -53,9 +20,9 @@
   <table id="products-table" class="table text-center" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <thead>
       <tr class="products">
-        <th><span id="index-header">#</span></th>
-        <th><span id="category-header">Категория</span></th>
-        <th><span id="name-header">Название</span></th>
+        <th><span id="index-header" class="products-span">#</span></th>
+        <th><span id="category-header" class="products-span">Категория</span></th>
+        <th><span id="name-header" class="products-span">Название</span></th>
         <th>Изображение</th>
         <th>Редактировать</th>
         <th>Удаление</th>
@@ -64,16 +31,16 @@
     <tbody>
       {% for product in products %}
       <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ product.category }}</td>
-        <td>{{ product.name }}</td>
-        <td>
+        <td class="products-td">{{ forloop.counter }}</td>
+        <td class="products-td">{{ product.category }}</td>
+        <td class="products-td">{{ product.name }}</td>
+        <td class="products-td">
           <!-- {% if product.images.exists %} -->
           <img src="{{ product.images.all.0.image.url }}" alt="{{ product.name }}" style="max-width: 100px;">
           <!-- {% endif %} -->
         </td>
-        <td><a href="{% url 'edit_product' product.pk %}" class="justify-content-center"><i class="fa-solid fa-pen-to-square fa-3x" style="color:#00a2e8;"></i></a></td>
-        <td>
+        <td class="products-td"><a href="{% url 'edit_product' product.pk %}" class="justify-content-center"><i class="fa-solid fa-pen-to-square fa-3x" style="color:#00a2e8;"></i></a></td>
+        <td class="products-td">
           <form action="{% url 'delete_product' product.pk %}" method="post" class="d-flex justify-content-center">
               {% csrf_token %}
               <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот продукт?')" style="border: none; background-color: transparent;"><i class="fa-solid fa-trash fa-3x" style="color: red;"></i></button>
@@ -187,7 +154,7 @@
 
       rows.forEach(row => {
         const categoryCell = row.children[1].innerText.trim();
-        if (selectedCategoryId === '' || categoryCell === selectedCategoryId) {
+        if (selectedCategoryId === 'all' || categoryCell === selectedCategoryId) {
           row.style.display = ''; // Показываем строку
         } else {
           row.style.display = 'none'; // Скрываем строку

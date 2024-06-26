@@ -1,8 +1,5 @@
-body {
-  font-family: Bellota Text;
-}
+
 .display-1 {
-  font-family: 'Bellota Text', display;
   font-size: 4rem;
   line-height: 1.1;
 }
@@ -10,7 +7,6 @@ body {
   font-size: 5rem;
 }
 .display-2 {
-  font-family: 'Bellota Text', display;
   font-size: 2.8rem;
   line-height: 1.1;
 }
@@ -18,7 +14,6 @@ body {
   font-size: 3.5rem;
 }
 .display-4 {
-  font-family: 'Bellota Text', display;
   font-size: 1.1rem;
   line-height: 1.5;
 }
@@ -26,7 +21,6 @@ body {
   font-size: 1.375rem;
 }
 .display-5 {
-  font-family: 'Bellota Text', display;
   font-size: 1.7rem;
   line-height: 1.5;
 }
@@ -34,7 +28,6 @@ body {
   font-size: 2.125rem;
 }
 .display-7 {
-  font-family: 'Bellota Text', display;
   font-size: 1.2rem;
   line-height: 1.5;
 }
@@ -558,7 +551,6 @@ a:hover {
   display: none;
 }
 .form-control {
-  font-family: 'Bellota Text', display;
   font-size: 1.1rem;
   line-height: 1.5;
   font-weight: 400;
@@ -572,7 +564,6 @@ a:hover {
   border-color: #00a2e8 !important;
 }
 .form-control:-webkit-input-placeholder {
-  font-family: 'Bellota Text', display;
   font-size: 1.1rem;
   line-height: 1.5;
   font-weight: 400;
@@ -806,7 +797,6 @@ a {
   position: fixed;
 }
 .cid-svGKGHe1ar .dropdown-item:before {
-  font-family: Moririse2 !important;
   content: "\e966";
   display: inline-block;
   width: 0;
@@ -2028,22 +2018,21 @@ a {
 }
 
 
-* {
+*, h1, h2, h3, h4, h5 {
   /* font-family: "Raleway", sans-serif !important; */
   /* font-weight: 400 !important; */
-  /* font-family: "Lato", Helvetica, Arial,sans-serif !important; */
   /* font-family: Bellota Text !important;*/
-  font-family: "Roboto" !important;
+  font-family: "Roboto";
 }
 .font-inter{
-  font-family: "Inter", sans-serif !important;
+  font-family: "Inter", sans-serif ;
 }
-.fa-solid, .fas, .fa{
+/* .fa-solid, .fas, .fa{
   font-family: "Font Awesome 6 Free" !important;
 }
 .fa-brands{
   font-family: "Font Awesome 6 Brands" !important;
-}
+} */
 #btn-back-to-top {
   position: fixed;
   bottom: 20px;
@@ -2505,7 +2494,6 @@ a{
 }
 
 
-.main-timeline{ font-family: 'Poppins', sans-serif; }
 .main-timeline:after{
     content: '';
     display: block;
@@ -2625,4 +2613,104 @@ a{
     opacity: 1;
     transform: translateY(0); /* Конечное положение - без смещения */
   }
+}
+
+
+.products {
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.4;
+  background-color: #00a2e8 !important;
+}
+.products-span {
+  cursor: pointer;
+  user-select: none;
+}
+.form-select:focus{
+  border-color: transparent;
+  border: 1px solid #bdbdbd;
+  box-shadow: none !important;
+  border-color: #00a2e8;
+}
+.fixed-action-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+.fixed-action-button a i:hover {
+  color: #0056b3;
+}
+.products-td{
+  vertical-align: middle;
+}
+
+
+.ui.default.dropdown:not(.button)>.text, .ui.dropdown:not(.button)>.default.text {
+  color: rgb(110 110 110 / 87%);
+}
+.ui.multiple.dropdown>.label {
+  box-shadow: none;
+
+}
+.ui.label {
+  color: #4f4f4f;
+}
+
+
+.needs-validation {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+}
+.custom-select, .form-control {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  font-weight: 400;
+  padding: .375rem .75rem;
+  height: 2.5rem !important;
+  }
+
+.custom-select:focus-visible{
+  outline: none;
+  /* border-color: transparent;
+  box-shadow: none;
+  border: 1px solid #bdbdbd; */
+  border-color: #00a2e8;
+}
+.form-control:focus{
+  box-shadow: none !important;
+  border-color: #00a2e8;
+}
+.form-select:focus{
+  box-shadow: none !important;
+  border-color: #00a2e8;
+}
+.form-select{
+  height: 2.5rem;
+}
+.custom-file-input {
+  opacity: 0;
+  width: 0.1px;
+  height: 0.1px;
+  position: absolute;
+  z-index: -1;
+}
+.custom-file-label {
+  background-color: #00a2e8;
+  color: white;
+  padding: .375rem .75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+.image-form, .custom-button, .description-form{
+  margin-bottom: var(--mdb-gutter-y);
 }

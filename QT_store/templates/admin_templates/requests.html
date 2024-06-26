@@ -6,20 +6,22 @@
 {% block content %}
 <div class="container" style="width: 80%; padding-top: 1rem;">
     <table class="table text-center" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Actions</th>
+        <tr class="products">
+            <th>Имя и Фамилия</th>
+            <th>Почта</th>
+            <th>Телефонный номер</th>
+            <th>Действия</th>
         </tr>
         {% for request in requests %}
         <tr>
-            <td>{{ request.first_name }} {{ request.last_name }}</td>
-            <td>{{ request.email }}</td>
-            <td>{{ request.phone_number }}</td>
-            <td>
-                <a href="{% url 'approve_request' request.id %}">Approve</a>
-                <a href="{% url 'reject_request' request.id %}">Reject</a>
+            <td class="products-td">{{ request.first_name }} {{ request.last_name }}</td>
+            <td class="products-td">{{ request.email }}</td>
+            <td class="products-td">{{ request.phone_number }}</td>
+            <td class="products-td">  
+                <div style="display: grid; justify-items: center;">
+                <a href="{% url 'approve_request' request.id %}">Зарегистрировать</a>
+                <a href="{% url 'reject_request' request.id %}">Отклонить</a>
+                </div>
             </td>
         </tr>
         {% endfor %}

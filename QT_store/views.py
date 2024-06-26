@@ -227,21 +227,24 @@ def users(request):
     users_with_data = []
 
     for user in all_users:
-        # Находим соответствующий объект RegistrationRequest для каждого пользователя
-        registration_request = RegistrationRequest.objects.filter(email=user.email).first()
+        # Находим соответствующий объект Custom для каждого пользователя
+        custom_data = Custom.objects.filter(user=user).first()
 
-        if registration_request:
+        if custom_data:
             users_with_data.append({
                 'user': user,
-                'initial_password': registration_request.initial_password,
+                'initial_password': custom_data.initial_password,
+                'phone_number': custom_data.phone_number,
             })
-        else:
-            users_with_data.append({
-                'user': user,
-                'initial_password': None,  # Если нет соответствующего запроса на регистрацию
-            })
+        # else:
+        #     users_with_data.append({
+        #         'user': user,
+        #         'initial_password': '',
+        #         'phone_number': '   ',
+        #     })
 
     return render(request, 'admin_templates/users.html', {'users_with_data': users_with_data})
+
 
 @user_passes_test(is_staff, login_url='/')
 def add_product(request):
@@ -301,10 +304,17 @@ def approve_request(request, request_id):
     if registration_request.status == 'pending':
         # Генерация случайного пароля
         password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
-        user = User.objects.create_user(username=registration_request.email, email=registration_request.email, password=password, first_name=registration_request.first_name, last_name=registration_request.last_name)
+        user = User.objects.create_user(
+            username=registration_request.email,
+            email=registration_request.email,
+            password=password,
+            first_name=registration_request.first_name,
+            last_name=registration_request.last_name
+        )
+        # Создание объекта Custom с номером телефона и начальным паролем
+        Custom.objects.create(user=user, phone_number=registration_request.phone_number, initial_password=password)
+
         registration_request.status = 'approved'
-        registration_request.initial_password = password  # Сохранение первоначального пароля
-        print(password)
         registration_request.save()
         # Отправка email (позже добавить)
         # send_mail('Your Account Details', f'Your password is {password}', 'from@example.com', [registration_request.email])

@@ -4,67 +4,6 @@
 Добавить продукт
 {% endblock %}
 {% block content %}
-
-<style>
-    .needs-validation {
-    background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-top: 20px;
-}
-.custom-select, .form-control {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 1.1rem;
-    line-height: 1.5;
-    font-weight: 400;
-    padding: .375rem .75rem;
-    height: 2.5rem !important;
-    }
-
-.custom-select:focus-visible{
-    outline: none;
-    /* border-color: transparent;
-    box-shadow: none;
-    border: 1px solid #bdbdbd; */
-    border-color: #00a2e8;
-}
-.form-control:focus{
-    box-shadow: none !important;
-    border-color: #00a2e8;
-}
-.form-select:focus{
-    box-shadow: none !important;
-    border-color: #00a2e8;
-}
-.form-select{
-    height: 2.5rem;
-}
-.custom-file-input {
-    opacity: 0;
-    width: 0.1px;
-    height: 0.1px;
-    position: absolute;
-    z-index: -1;
-}
-.custom-file-label {
-    background-color: #00a2e8;
-    color: white;
-    padding: .375rem .75rem;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-}
-.image-form, .custom-button, .description-form{
-    margin-bottom: var(--mdb-gutter-y);
-}
-</style>
-
-
 <div class="container py-5" style="width: 80%;">
     <form class="needs-validation" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -75,7 +14,7 @@
           </div>
           <div class="col-sm-6">
             <label for="id_category" class="form-label">Категория</label>
-            <select name="category" id="id_category" class="form-select">
+            <select name="category" id="id_category" class="ui fluid search dropdown">
                 <option value="" disabled selected>Выберите категорию</option>
                 {% for category in categories %}
                     <option value="{{ category.id }}">{{ category.name }}</option>
@@ -97,7 +36,7 @@
           <div class="col-sm-6">
             
               <label for="id_processor" class="form-label">Процессор</label>
-              <select name="processor" id="id_processor" class="form-select">
+              <select name="processor" id="id_processor" class="ui fluid search dropdown" multiple="">
                   <option value="" disabled selected>Выберите процессор</option>
                   {% for processor in form.processor.field.queryset %}
                       <option value="{{ processor.id }}">{{ processor.name }}</option>
@@ -106,7 +45,7 @@
           </div>
           <div class="col-sm-6">
               <label for="id_mother" class="form-label">Материнская плата</label>
-              <select name="mother" id="id_mother" class="form-select">
+              <select name="mother" id="id_mother" class="ui fluid search dropdown" multiple="">
                   <option value="" disabled selected>Выберите материнскую плату</option>
                   {% for motherboard in form.mother.field.queryset %}
                       <option value="{{ motherboard.id }}">{{ motherboard.name }}</option>
@@ -115,7 +54,7 @@
           </div>
           <div class="col-sm-6">
               <label for="id_storage" class="form-label">Накопители</label>
-              <select name="storage" id="id_storage" class="form-select">
+              <select name="storage" id="id_storage" class="ui fluid search dropdown" multiple="">
                   <option value="" disabled selected>Выберите накопители</option>
                   {% for storage in form.storage.field.queryset %}
                       <option value="{{ storage.id }}">{{ storage }}</option>
@@ -124,7 +63,7 @@
           </div>
           <div class="col-sm-6">
               <label for="id_ram" class="form-label">Оперативная память</label>
-              <select name="ram" id="id_ram" class="form-select">
+              <select name="ram" id="id_ram" class="ui fluid search dropdown" multiple="">
                   <option value="" disabled selected>Выберите оперативную память</option>
                   {% for ram in form.ram.field.queryset %}
                       <option value="{{ ram.id }}">{{ ram.size }} ГБ ({{ ram.type }})</option>
@@ -133,7 +72,7 @@
           </div>
           <div class="col-sm-6">
               <label for="id_graphics" class="form-label">Видеокарта</label>
-              <select name="graphics" id="id_graphics" class="form-select">
+              <select name="graphics" id="id_graphics" class="ui fluid search dropdown" multiple="">
                   <option value="" disabled selected>Выберите видеокарту</option>
                   {% for graphics in form.graphics.field.queryset %}
                       <option value="{{ graphics.id }}">{{ graphics }}</option>
@@ -142,7 +81,7 @@
           </div>
           <div class="col-sm-6">
               <label for="id_power_supplies" class="form-label">Мощность блока питания</label>
-              <select name="power_supplies" id="id_power_supplies" class="form-select">
+              <select name="power_supplies" id="id_power_supplies" class="ui fluid search dropdown" multiple="">
                   <option value="" disabled selected>Выберите мощность блока питания</option>
                   {% for power_supply in form.power_supplies.field.queryset %}
                       <option value="{{ power_supply.id }}">{{ power_supply }}</option>
@@ -151,7 +90,7 @@
           </div>
           <div class="col-sm-6">
               <label for="id_controllers" class="form-label">Контроллеры</label>
-              <select name="controllers" id="id_controllers" class="form-select">
+              <select name="controllers" id="id_controllers" class="ui fluid search dropdown" multiple="">
                   <option value="" disabled selected>Выберите контроллеры</option>
                   {% for controller in form.controllers.field.queryset %}
                       <option value="{{ controller.id }}">{{ controller.name }}</option>
@@ -160,7 +99,7 @@
           </div>
           <div class="col-sm-6">
               <label for="id_operating_system" class="form-label">Операционная система</label>
-              <select name="operating_system" id="id_operating_system" class="form-select">
+              <select name="operating_system" id="id_operating_system" class="ui fluid search dropdown" multiple="">
                   <option value="" disabled selected>Выберите операционную систему</option>
                   {% for os in form.operating_system.field.queryset %}
                       <option value="{{ os.id }}">{{ os.name }}</option>
@@ -173,7 +112,7 @@
             <h4 class="m-0 mt-2">Экран и Ввод</h4>
             <div class="col-sm-6">
                 <label for="id_screen_sizes" class="form-label">Размер экрана</label>
-                <select name="screen_sizes" id="id_screen_sizes" class="form-select">
+                <select name="screen_sizes" id="id_screen_sizes" class="ui fluid search dropdown" multiple="">
                     <option value="" disabled selected>Выберите размер экрана</option>
                     {% for size in form.screen_sizes.field.queryset %}
                         <option value="{{ size.id }}">{{ size }}</option>
@@ -182,7 +121,7 @@
             </div>
             <div class="col-sm-6">
                 <label for="id_screen_types" class="form-label">Тип экрана</label>
-                <select name="screen_type" id="id_screen_type" class="form-select">
+                <select name="screen_type" id="id_screen_type" class="ui fluid search dropdown" multiple="">
                     <option value="" disabled selected>Выберите тип экрана</option>
                     {% for type in form.screen_type.field.queryset %}
                         <option value="{{ type.id }}">{{ type }}</option>
@@ -191,7 +130,7 @@
             </div>
             <div class="col-sm-6">
                 <label for="id_screen_resolutions" class="form-label">Разрешение экрана</label>
-                <select name="screen_resolution" id="id_screen_resolution" class="form-select">
+                <select name="screen_resolution" id="id_screen_resolution"class="ui fluid search dropdown" multiple="">
                     <option value="" disabled selected>Выберите разрешение экрана</option>
                     {% for resolution in form.screen_resolution.field.queryset %}
                         <option value="{{ resolution.id }}">{{ resolution }}</option>
@@ -200,7 +139,7 @@
             </div>
             <div class="col-sm-6">
                 <label for="id_touch_screen_touches" class="form-label">Кол-во одновременных касаний</label>
-                <select name="touch_screen_touches" id="id_touch_screen_touches" class="form-select">
+                <select name="touch_screen_touches" id="id_touch_screen_touches" class="ui fluid search dropdown" multiple="">
                     <option value="" disabled selected>Выберите кол-во касаний</option>
                     {% for touch in form.touch_screen_touches.field.queryset %}
                         <option value="{{ touch.id }}">{{ touch }}</option>
@@ -215,7 +154,7 @@
             <h4 class="m-0 mt-2">Связь и Периферия</h4>
             <div class="col-sm-4">
                 <label for="id_webcam" class="form-label">Веб-камера</label>
-                <select name="webcam" id="id_webcam" class="form-select">
+                <select name="webcam" id="id_webcam" class="ui fluid search dropdown" multiple="">
                     <option value="" disabled selected>Выберите веб-камеру</option>
                     {% for webcam_choice in form.webcam.field.queryset %}
                         <option value="{{ webcam_choice.id }}">{{ webcam_choice }}</option>
@@ -224,7 +163,7 @@
             </div>
             <div class="col-sm-4">
                 <label for="id_keyset" class="form-label">Комплект клавиатура и мышь</label>
-                <select name="keyset" id="id_keyset" class="form-select">
+                <select name="keyset" id="id_keyset" class="ui fluid search dropdown" multiple="">
                     <option value="" disabled selected>Выберите тип клавиатуры и мыши</option>
                     {% for keyset_choice in form.keyset.field.queryset %}
                         <option value="{{ keyset_choice.id }}">{{ keyset_choice }}</option>
@@ -233,7 +172,7 @@
             </div>
             <div class="col-sm-4">
                 <label for="id_keyboard_backlight" class="form-label">Подсветка клавиатуры</label>
-                <select name="keyboard_backlight" id="id_keyboard_backlight" class="form-select">
+                <select name="keyboard_backlight" id="id_keyboard_backlight" class="ui fluid search dropdown" multiple="">
                     <option value="" disabled selected>Есть ли подсветка клавиатуры?</option>
                     {% for backlight_choice in form.keyboard_backlight.field.queryset %}
                         <option value="{{ backlight_choice.id }}">{{ backlight_choice }}</option>
@@ -253,7 +192,7 @@
           
             <div class="col-sm-4">
               <label for="id_formfactor" class="form-label">Форм-фактор</label>
-              <select name="formfactor" id="id_formfactor" class="form-select">
+              <select name="formfactor" id="id_formfactor" class="ui fluid search dropdown" multiple="">
                   <option value="" disabled selected>Выберите форм-фактор</option>
                   {% for formfactor_choice in form.formfactor.field.queryset %}
                       <option value="{{ formfactor_choice.id }}">{{ formfactor_choice }}</option>
@@ -262,7 +201,7 @@
           </div>
           <div class="col-sm-4">
               <label for="id_sizes" class="form-label">Размеры</label>
-              <select name="sizes" id="id_sizes" class="form-select">
+              <select name="sizes" id="id_sizes" class="ui fluid search dropdown" multiple="">
                   <option value="" disabled selected>Выберите размеры</option>
                   {% for size_choice in form.sizes.field.queryset %}
                       <option value="{{ size_choice.id }}">{{ size_choice.name }}</option>
@@ -336,94 +275,4 @@
         <hr class="my-4">
           <button class="w-100 btn btn-primary btn-lg" type="submit">Сохранить</button>
     </form>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Handle image formset
-            const addImageButton = document.getElementById('add-image-form');
-            const imageTotalForms = document.getElementById('id_images-TOTAL_FORMS');
-
-            addImageButton.addEventListener('click', function () {
-                const imageFormsetDiv = document.getElementById('image-formset');
-                const currentImageFormCount = imageFormsetDiv.getElementsByClassName('image-form').length;
-                const newImageFormHtml = `
-                    <div class="image-form">
-                        <div class="custom-file-upload">
-                            <input type="file" name="images-${currentImageFormCount}-image" accept="image/*" id="id_images-${currentImageFormCount}-image" class="custom-file-input">
-                            <label for="id_images-${currentImageFormCount}-image" class="custom-select custom-file-label">Выберите файл</label>
-                        </div>
-                    </div>`;
-                imageFormsetDiv.insertAdjacentHTML('beforeend', newImageFormHtml);
-                imageTotalForms.setAttribute('value', currentImageFormCount + 1);
-
-                // Reset the event listener for file input change
-                const newFileInput = imageFormsetDiv.querySelector(`#id_images-${currentImageFormCount}-image`);
-                const newFileLabel = imageFormsetDiv.querySelector(`label[for="id_images-${currentImageFormCount}-image"]`);
-
-                newFileInput.addEventListener('change', function () {
-                    const fileName = this.files[0].name;
-                    newFileLabel.innerText = fileName;
-                });
-            });
-        
-            // Handle description formset
-            const addDescriptionButton = document.getElementById('add-description-form');
-            const descriptionTotalForms = document.getElementById('id_descriptions-TOTAL_FORMS');
-
-            addDescriptionButton.addEventListener('click', function () {
-                const descriptionFormsetDiv = document.getElementById('description-formset');
-                const currentDescriptionFormCount = descriptionFormsetDiv.getElementsByClassName('description-form').length;
-                const newDescriptionFormHtml = `
-                    <div class="description-form row g-3">
-                        <div class="col-sm-6">
-                            <label for="id_descriptions-${currentDescriptionFormCount}-title" class="form-label">Заголовок</label>
-                            <input type="text" name="descriptions-${currentDescriptionFormCount}-title" maxlength="255" id="id_descriptions-${currentDescriptionFormCount}-title" class="form-control" placeholder="Введите заголовок текста">
-                        </div>
-                        <div class="col-sm-6 d-flex flex-column justify-content-end">
-                            <input type="file" name="descriptions-${currentDescriptionFormCount}-image" accept="image/*" id="id_descriptions-${currentDescriptionFormCount}-image" class="custom-file-input">
-                            <label for="id_descriptions-${currentDescriptionFormCount}-image" class="custom-select custom-file-label">Выберите изображение</label>
-                        </div>
-                        <div class="col-sm-12">
-                            <label for="id_descriptions-${currentDescriptionFormCount}-text" class="form-label">Описание:</label>
-                            <textarea name="descriptions-${currentDescriptionFormCount}-text" cols="40" rows="10" id="id_descriptions-${currentDescriptionFormCount}-text" class="form-control" style="min-height: 105px;"></textarea>
-                        </div>
-                    </div>`;
-                descriptionFormsetDiv.insertAdjacentHTML('beforeend', newDescriptionFormHtml);
-                descriptionTotalForms.setAttribute('value', currentDescriptionFormCount + 1);
-
-                // Reset the event listener for file input change
-                const newFileInput = descriptionFormsetDiv.querySelector(`#id_descriptions-${currentDescriptionFormCount}-image`);
-                const newFileLabel = descriptionFormsetDiv.querySelector(`label[for="id_descriptions-${currentDescriptionFormCount}-image"]`);
-
-                newFileInput.addEventListener('change', function () {
-                    const fileName = this.files[0].name;
-                    newFileLabel.innerText = fileName;
-                });
-            });
-
-
-            
-
-            const fileInputs1 = document.querySelectorAll('#image-formset input[type="file"]');
-            const fileLabels1 = document.querySelectorAll('#image-formset .custom-file-label');
-
-            fileInputs1.forEach((fileInput, index) => {
-                fileInput.addEventListener('change', function() {
-                    const fileName = this.files[0].name;
-                    fileLabels1[index].innerText = fileName;
-                });
-            });
-
-            // Для второй формы (описание продукта)
-            const fileInputs2 = document.querySelectorAll('#description-formset input[type="file"]');
-            const fileLabels2 = document.querySelectorAll('#description-formset .custom-file-label');
-
-            fileInputs2.forEach((fileInput, index) => {
-                fileInput.addEventListener('change', function() {
-                    const fileName = this.files[0].name;
-                    fileLabels2[index].innerText = fileName;
-                });
-            });
-        });
-        </script>
-  
 {% endblock %}

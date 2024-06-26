@@ -12,6 +12,8 @@ class ProductImageInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductDescriptionInline, ProductImageInline]
 
+class CustomAdmin(admin.ModelAdmin):
+    list_display = ('user', 'phone_number', 'initial_password')
 
 admin.site.register(Category)
 admin.site.register(Product, ProductAdmin)
@@ -34,3 +36,4 @@ admin.site.register(Controller)
 admin.site.register(ScreenType)
 admin.site.register(WebCam)
 admin.site.register(RegistrationRequest)
+admin.site.register(Custom, CustomAdmin)

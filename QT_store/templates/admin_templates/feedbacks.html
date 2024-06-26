@@ -4,13 +4,20 @@
 Отзывы
 {% endblock %}
 {% block content %}
-<h1>Feedback</h1>
-<ul>
+<h1>Отзывы</h1>
+<div class="card-list">
     {% for feedback in feedbacks %}
-    <li>
-        <strong>{{ feedback.name }}</strong> ({{ feedback.phone }}, {{ feedback.email }}): {{ feedback.message }}
-        {{ feedback.created_at }}
-    </li>
+        <div class="card">
+            <div class="card-header">
+                <div class="feedback-header-item">{{ feedback.name }}</div>
+                <div class="feedback-header-item">{{ feedback.phone }}</div>
+                <div class="feedback-header-item">{{ feedback.email }}</div>
+                <div class="feedback-header-item">{{ feedback.created_at }}</div>
+            </div>
+            <div class="card-body">
+                <p>{{ feedback.message }}</p>
+            </div>
+        </div>
     {% endfor %}
-</ul> 
+</div>
 {% endblock %}
