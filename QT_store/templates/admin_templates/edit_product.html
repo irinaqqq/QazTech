@@ -4,15 +4,344 @@
 Редактировать продукт
 {% endblock %}
 {% block content %}
-<h2>Редактировать продукт "{{ product.name }}"</h2>
+<div class="container py-5" style="width: 80%;">
+    <form class="needs-validation" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label for="firstName" class="form-label">Название</label>
+            <input type="text" name="name" maxlength="100" required id="id_name" class="form-control mt-auto" placeholder="Введите название продукта" value="{{ product.name }}">
+          </div>
+          <div class="col-sm-6">
+            <label for="id_category" class="form-label">Категория</label>
+            <select name="category" id="id_category" class="ui fluid search dropdown">
+                <option value="" disabled>Выберите категорию</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if category.id == product.category.id %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>            
+          </div>
+          <div class="col-12">
+            <label for="{{ form.features.id_for_label }}" class="form-label">Особенности (кратко)<span class="text-muted"></span></label>
+            <input type="text" name="features" id="{{ form.features.id_for_label }}" class="form-control" value="{{ product.features }}">
+        </div>
+          <div class="col-12">
+            <label for="{{ form.description.id_for_label }}" class="form-label">Описание<span class="text-muted"></span></label>
+            <textarea name="description" id="{{ form.description.id_for_label }}" class="form-control" style="min-height: 105px;">{{ product.description }}</textarea>
+        </div>
+        </div>
+        <hr class="my-4">
+        <div class="row g-3">
+          <h4 class="m-0 mt-2">Основные характеристики</h4>
+          <div class="col-sm-6">
+              <label for="id_processor" class="form-label">Процессор</label>
+              <select name="processor" id="id_processor" class="ui fluid search dropdown" multiple>
+                <option value="" disabled>Выберите процессор</option>
+                {% for processor in form.processor.field.queryset %}
+                    {% if processor in product.processor.all %}
+                        <option value="{{ processor.id }}" selected>{{ processor.name }}</option>
+                    {% else %}
+                        <option value="{{ processor.id }}">{{ processor.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+                       
+          </div>
+          <div class="col-sm-6">
+              <label for="id_mother" class="form-label">Материнская плата</label>
+              <select name="mother" id="id_mother" class="ui fluid search dropdown" multiple="">
+                <option value="" disabled selected>Выберите материнскую плату</option>
+                {% for motherboard in form.mother.field.queryset %}
+                    {% if motherboard in product.mother.all %}
+                        <option value="{{ motherboard.id }}" selected>{{ motherboard.name }}</option>
+                    {% else %}
+                        <option value="{{ motherboard.id }}">{{ motherboard.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>            
+          </div>
+          <div class="col-sm-6">
+              <label for="id_storage" class="form-label">Накопители</label>
+              <select name="storage" id="id_storage" class="ui fluid search dropdown" multiple="">
+                <option value="" disabled selected>Выберите накопители</option>
+                {% for storage in form.storage.field.queryset %}
+                    {% if storage in product.storage.all %}
+                        <option value="{{ storage.id }}" selected>{{ storage }}</option>
+                    {% else %}
+                        <option value="{{ storage.id }}">{{ storage }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            
+          </div>
+          <div class="col-sm-6">
+              <label for="id_ram" class="form-label">Оперативная память</label>
+              <select name="ram" id="id_ram" class="ui fluid search dropdown" multiple="">
+                <option value="" disabled selected>Выберите оперативную память</option>
+                {% for ram in form.ram.field.queryset %}
+                    {% if ram in product.ram.all %}
+                        <option value="{{ ram.id }}" selected>{{ ram }}</option>
+                    {% else %}
+                        <option value="{{ ram.id }}">{{ ram }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+          </div>
+          <div class="col-sm-6">
+              <label for="id_graphics" class="form-label">Видеокарта</label>
+              <select name="graphics" id="id_graphics" class="ui fluid search dropdown" multiple="">
+                <option value="" disabled selected>Выберите видеокарту</option>
+                {% for graphics in form.graphics.field.queryset %}
+                    {% if graphics in product.graphics.all %}
+                        <option value="{{ graphics.id }}" selected>{{ graphics }}</option>
+                    {% else %}
+                        <option value="{{ graphics.id }}">{{ graphics }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+          </div>
+          <div class="col-sm-6">
+              <label for="id_power_supplies" class="form-label">Мощность блока питания</label>
+              <select name="power_supplies" id="id_power_supplies" class="ui fluid search dropdown" multiple="">
+                <option value="" disabled selected>Выберите мощность блока питания</option>
+                {% for power_supply in form.power_supplies.field.queryset %}
+                    {% if power_supply in product.power_supplies.all %}
+                        <option value="{{ power_supply.id }}" selected>{{ power_supply }}</option>
+                    {% else %}
+                        <option value="{{ power_supply.id }}">{{ power_supply }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            
+          </div>
+          <div class="col-sm-6">
+              <label for="id_controllers" class="form-label">Контроллеры</label>
+              <select name="controllers" id="id_controllers" class="ui fluid search dropdown" multiple="">
+                <option value="" disabled selected>Выберите контроллеры</option>
+                {% for controller in form.controllers.field.queryset %}
+                    {% if controller in product.controllers.all %}
+                        <option value="{{ controller.id }}" selected>{{ controller.name }}</option>
+                    {% else %}
+                        <option value="{{ controller.id }}">{{ controller.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            
+          </div>
+          <div class="col-sm-6">
+              <label for="id_operating_system" class="form-label">Операционная система</label>
+              <select name="operating_system" id="id_operating_system" class="ui fluid search dropdown" multiple="">
+                <option value="" disabled selected>Выберите операционную систему</option>
+                {% for os in form.operating_system.field.queryset %}
+                    {% if os in product.operating_system.all %}
+                        <option value="{{ os.id }}" selected>{{ os.name }}</option>
+                    {% else %}
+                        <option value="{{ os.id }}">{{ os.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            
+          </div>
+      </div>
+          <hr class="my-4">
+          <div class="row g-3">
+            <h4 class="m-0 mt-2">Экран и Ввод</h4>
+            <div class="col-sm-6">
+                <label for="id_screen_sizes" class="form-label">Размер экрана</label>
+                <select name="screen_sizes" id="id_screen_sizes" class="ui fluid search dropdown" multiple="">
+                    <option value="" disabled selected>Выберите размер экрана</option>
+                    {% for size in form.screen_sizes.field.queryset %}
+                        {% if size in product.screen_sizes.all %}
+                            <option value="{{ size.id }}" selected>{{ size }}</option>
+                        {% else %}
+                            <option value="{{ size.id }}">{{ size }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                
+            </div>
+            <div class="col-sm-6">
+                <label for="id_screen_types" class="form-label">Тип экрана</label>
+                <select name="screen_type" id="id_screen_type" class="ui fluid search dropdown" multiple="">
+                    <option value="" disabled selected>Выберите тип экрана</option>
+                    {% for type in form.screen_type.field.queryset %}
+                        {% if type in product.screen_type.all %}
+                            <option value="{{ type.id }}" selected>{{ type }}</option>
+                        {% else %}
+                            <option value="{{ type.id }}">{{ type }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                
+            </div>
+            <div class="col-sm-6">
+                <label for="id_screen_resolutions" class="form-label">Разрешение экрана</label>
+                <select name="screen_resolution" id="id_screen_resolution" class="ui fluid search dropdown" multiple="">
+                    <option value="" disabled selected>Выберите разрешение экрана</option>
+                    {% for resolution in form.screen_resolution.field.queryset %}
+                        {% if resolution in product.screen_resolution.all %}
+                            <option value="{{ resolution.id }}" selected>{{ resolution }}</option>
+                        {% else %}
+                            <option value="{{ resolution.id }}">{{ resolution }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                
+            </div>
+            <div class="col-sm-6">
+                <label for="id_touch_screen_touches" class="form-label">Кол-во одновременных касаний</label>
+                <select name="touch_screen_touches" id="id_touch_screen_touches" class="ui fluid search dropdown" multiple="">
+                    <option value="" disabled selected>Выберите количество касаний</option>
+                    {% for touch in form.touch_screen_touches.field.queryset %}
+                        {% if touch in product.touch_screen_touches.all %}
+                            <option value="{{ touch.id }}" selected>{{ touch }}</option>
+                        {% else %}
+                            <option value="{{ touch.id }}">{{ touch }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                
+            </div>
+        </div>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
 
-    <button type="submit">Сохранить изменения</button>
-</form>
+          <hr class="my-4">
+          <div class="row g-3">
+            <h4 class="m-0 mt-2">Связь и Периферия</h4>
+            <div class="col-sm-4">
+                <label for="id_webcam" class="form-label">Веб-камера</label>
+                <select name="webcam" id="id_webcam" class="ui fluid search dropdown" multiple="">
+                    <option value="" disabled selected>Выберите веб-камеру</option>
+                    {% for webcam_choice in form.webcam.field.queryset %}
+                        {% if webcam_choice in product.webcam.all %}
+                            <option value="{{ webcam_choice.id }}" selected>{{ webcam_choice }}</option>
+                        {% else %}
+                            <option value="{{ webcam_choice.id }}">{{ webcam_choice }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="id_keyset" class="form-label">Комплект клавиатура и мышь</label>
+                <select name="keyset" id="id_keyset" class="ui fluid search dropdown" multiple="">
+                    <option value="" disabled selected>Выберите тип клавиатуры и мыши</option>
+                    {% for keyset_choice in form.keyset.field.queryset %}
+                        {% if keyset_choice in product.keyset.all %}
+                            <option value="{{ keyset_choice.id }}" selected>{{ keyset_choice }}</option>
+                        {% else %}
+                            <option value="{{ keyset_choice.id }}">{{ keyset_choice }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="id_keyboard_backlight" class="form-label">Подсветка клавиатуры</label>
+                <select name="keyboard_backlight" id="id_keyboard_backlight" class="ui fluid search dropdown" multiple="">
+                    <option value="" disabled selected>Есть ли подсветка клавиатуры?</option>
+                    {% for backlight_choice in form.keyboard_backlight.field.queryset %}
+                        {% if backlight_choice in product.keyboard_backlight.all %}
+                            <option value="{{ backlight_choice.id }}" selected>{{ backlight_choice }}</option>
+                        {% else %}
+                            <option value="{{ backlight_choice.id }}">{{ backlight_choice }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            
+        </div>
+        
+          <hr class="my-4">
 
-<br>
-<a href="{% url 'products' %}">Вернуться к списку продуктов</a>
+          <div class="row g-3">
+            <h4 class="m-0 mt-2">Эксплуатация и Габариты</h4>
+            <div class="col-sm-4">
+              <label for="id_weight" class="form-label">Вес (кг)</label>
+              <input type="number" name="weight" id="id_weight" class="form-control" placeholder="Введите вес" value="{{ product.weight }}">
+            </div>
+          
+            <div class="col-sm-4">
+                <label for="id_formfactor" class="form-label">Форм-фактор</label>
+                <select name="formfactor" id="id_formfactor" class="ui fluid search dropdown" multiple="">
+                    <option value="" disabled selected>Выберите форм-фактор</option>
+                    {% for formfactor_choice in form.formfactor.field.queryset %}
+                        {% if formfactor_choice in product.formfactor.all %}
+                            <option value="{{ formfactor_choice.id }}" selected>{{ formfactor_choice }}</option>
+                        {% else %}
+                            <option value="{{ formfactor_choice.id }}">{{ formfactor_choice }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label for="id_sizes" class="form-label">Размеры</label>
+                <select name="sizes" id="id_sizes" class="ui fluid search dropdown" multiple="">
+                    <option value="" disabled selected>Выберите размеры</option>
+                    {% for size_choice in form.sizes.field.queryset %}
+                        {% if size_choice in product.sizes.all %}
+                            <option value="{{ size_choice.id }}" selected>{{ size_choice.name }}</option>
+                        {% else %}
+                            <option value="{{ size_choice.id }}">{{ size_choice.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="col-sm-6">
+                <label for="id_operating_temperature" class="form-label">Температура эксплуатации</label>
+                <input type="text" name="operating_temperature" id="id_operating_temperature" class="form-control" placeholder="Введите температуру эксплуатации" value="{{ product.operating_temperature }}">
+            </div>
+            <div class="col-sm-6">
+                <label for="id_storage_temperature" class="form-label">Температура хранения</label>
+                <input type="text" name="storage_temperature" id="id_storage_temperature" class="form-control" placeholder="Введите температуру хранения" value="{{ product.storage_temperature }}">
+            </div>
+            <div class="col-sm-6">
+                <label for="id_operating_humidity" class="form-label">Рабочая влажность</label>
+                <input type="text" name="operating_humidity" id="id_operating_humidity" class="form-control" placeholder="Введите рабочую влажность" value="{{ product.operating_humidity }}">
+            </div>
+            <div class="col-sm-6">
+                <label for="id_storage_humidity" class="form-label">Влажность хранения</label>
+                <input type="text" name="storage_humidity" id="id_storage_humidity" class="form-control" placeholder="Введите влажность хранения" value="{{ product.storage_humidity }}">
+            </div>
+            
+        </div>
+          <hr class="my-4">
+          <div class="row g-3">
+          <h4 class="m-0 mt-2">Фотографии продукта</h4>
+          <div class="col-sm-6">
+          <div id="image-formset">
+            {{ image_formset.management_form }}
+            {% for form in image_formset %}
+            <div class="image-form">
+                {% if form.instance.id %}
+                    <label class="custom-select custom-file-label">{{ form.instance.image.name }}</label>
+                    {{ form.DELETE }}
+                    {{ form.product }}
+                    {{ form.id }}
+                {% endif %}
+            </div>
+            {% endfor %}
+            </div>
+            </div>
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+          <button type="button" id="add-image-form" class="form-control custom-button">Добавить еще фото</button>
+            </div>
+          </div>
+        <hr class="my-4">
+        <div class="row g-3">
+            <h4 class="m-0 mt-2">Описание продукта</h4>
+            <div id="description-formset">
+                {{ description_formset.management_form }}
+                {% for form in description_formset %}
+                    {{ form.as_p }}
+                {% endfor %}
+            </div>
+            <div class="col-sm-12">
+            <button type="button" id="add-description-form" class="form-control">Добавить еще описание</button>
+            </div>
+        </div>
+        
+        <hr class="my-4">
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Сохранить</button>
+    </form>
+</div>
 {% endblock %}

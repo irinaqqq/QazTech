@@ -212,7 +212,7 @@ function initFormsets() {
             const newFileInput = imageFormsetDiv.querySelector(`#id_images-${currentImageFormCount}-image`);
             const newFileLabel = imageFormsetDiv.querySelector(`label[for="id_images-${currentImageFormCount}-image"]`);
 
-            newFileInput.addEventListener('change', function () {
+            newFileInput.addEventListener('change', function () { 
                 const fileName = this.files[0].name;
                 newFileLabel.innerText = fileName;
             });

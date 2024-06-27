@@ -181,7 +181,10 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('/')
+                if user.is_superuser:
+                    return redirect('dashboard')  # Перенаправляем администратора на другую страницу
+                else:
+                    return redirect('/')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -288,15 +291,55 @@ def delete_product(request, pk):
 @user_passes_test(is_staff, login_url='/')
 def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
+    ImageFormSet = inlineformset_factory(Product, ProductImage, form=ProductImageForm, extra=1, can_delete=True)
+    DescriptionFormSet = inlineformset_factory(Product, ProductDescription, form=ProductDescriptionForm, extra=1, can_delete=True)
+
     if request.method == 'POST':
-        form = ProductForm(request.POST, instance=product)
-        if form.is_valid():
-            form.save()
-            return redirect('products') 
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        image_formset = ImageFormSet(request.POST, request.FILES, instance=product)
+        description_formset = DescriptionFormSet(request.POST, request.FILES, instance=product)
+
+        if form.is_valid() and image_formset.is_valid() and description_formset.is_valid():
+            product = form.save()  # Save the main product form
+            
+            # Сохраняем изображения и обрабатываем удаление
+            for form in image_formset.deleted_forms:
+                if form.instance.pk:
+                    form.instance.delete()
+            
+            image_instances = image_formset.save(commit=False)
+            for instance in image_instances:
+                instance.product = product
+                instance.save()
+            
+            # Сохраняем описания товара и обрабатываем удаление
+            for form in description_formset.deleted_forms:
+                if form.instance.pk:
+                    form.instance.delete()
+            
+            description_formset.save()
+
+            return redirect('products')
+        else:
+            # Отображаем ошибки форм и формсетов для отладки
+            print("form bug")
+            print(form.errors)
+            print("image bug")
+            print(image_formset.errors)
+            print("desc bug")
+            print(description_formset.errors)
     else:
         form = ProductForm(instance=product)
-    
-    return render(request, 'admin_templates/edit_product.html', {'form': form, 'product': product})
+        image_formset = ImageFormSet(instance=product)
+        description_formset = DescriptionFormSet(instance=product)
+
+    return render(request, 'admin_templates/edit_product.html', {
+        'form': form,
+        'image_formset': image_formset,
+        'description_formset': description_formset,
+        'product': product,
+    })
+
 
 @staff_member_required
 def approve_request(request, request_id):
