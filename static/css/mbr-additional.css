@@ -2711,3 +2711,7 @@ a{
 .image-form, .custom-button, .description-form{
   margin-bottom: var(--mdb-gutter-y);
 }
+
+.hidden-checkbox {
+  display: none;
+}

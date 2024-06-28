@@ -188,6 +188,25 @@ function initDropdownMenus() {
     });
 }
 
+function previewImage(event, formIndex) {
+    var input = event.target;
+    var preview = document.getElementById(`image-preview-${formIndex}`);
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        }
+
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+    } else {
+        preview.style.display = 'none';
+        preview.src = '#';
+    }
+}
+
 // Function to initialize image and description formsets
 function initFormsets() {
     // Handle image formset
@@ -200,8 +219,9 @@ function initFormsets() {
             const currentImageFormCount = imageFormsetDiv.getElementsByClassName('image-form').length;
             const newImageFormHtml = `
                 <div class="image-form">
-                    <div class="custom-file-upload">
-                        <input type="file" name="images-${currentImageFormCount}-image" accept="image/*" id="id_images-${currentImageFormCount}-image" class="custom-file-input">
+                    <div class="custom-file-upload d-flex flex-column">
+                        <img id="image-preview-${currentImageFormCount}" src="#" alt="Preview" style="display: none; height: 100px; align-self: center; margin-bottom: 10px;">
+                        <input type="file" name="images-${currentImageFormCount}-image" accept="image/*" id="id_images-${currentImageFormCount}-image" class="custom-file-input" onchange="previewImage(event, ${currentImageFormCount})">
                         <label for="id_images-${currentImageFormCount}-image" class="custom-select custom-file-label">Выберите файл</label>
                     </div>
                 </div>`;
@@ -212,10 +232,20 @@ function initFormsets() {
             const newFileInput = imageFormsetDiv.querySelector(`#id_images-${currentImageFormCount}-image`);
             const newFileLabel = imageFormsetDiv.querySelector(`label[for="id_images-${currentImageFormCount}-image"]`);
 
-            newFileInput.addEventListener('change', function () { 
-                const fileName = this.files[0].name;
-                newFileLabel.innerText = fileName;
+
+            newFileInput.addEventListener('change', function (event) {
+                if (this.files && this.files[0]) {
+                    const fileName = this.files[0].name;
+                    newFileLabel.innerText = fileName;
+                    previewImage(event, currentImageFormCount);
+                } else {
+                    newFileLabel.innerText = 'Выберите файл';
+                    const preview = document.getElementById(`image-preview-${currentImageFormCount}`);
+                    preview.style.display = 'none';
+                    preview.src = '#';
+                }
             });
+
         });
     }
 
@@ -262,10 +292,15 @@ function initFormsets() {
 
     fileInputs1.forEach((fileInput, index) => {
         fileInput.addEventListener('change', function () {
-            const fileName = this.files[0].name;
-            fileLabels1[index].innerText = fileName;
+            if (this.files && this.files[0]) {
+                const fileName = this.files[0].name;
+                fileLabels1[index].innerText = fileName;
+            } else {
+                fileLabels1[index].innerText = 'Выберите файл';
+            }
         });
     });
+    
 
     // For second form (product description)
     const fileInputs2 = document.querySelectorAll('#description-formset input[type="file"]');

@@ -4,6 +4,9 @@
 Редактировать продукт
 {% endblock %}
 {% block content %}
+<style>
+
+</style>
 <div class="container py-5" style="width: 80%;">
     <form class="needs-validation" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -311,15 +314,19 @@
           <div id="image-formset">
             {{ image_formset.management_form }}
             {% for form in image_formset %}
-            <div class="image-form">
                 {% if form.instance.id %}
-                    <label class="custom-select custom-file-label">{{ form.instance.image.name }}</label>
+                <div class="image-form" id="image-form-{{ forloop.counter0 }}">
+                <div class="d-flex flex-column">
+                    <img id="image-preview-{{ forloop.counter0 }}" src="{{ form.image.value.url }}" alt="Preview" style="max-height: 100px; align-self: center; margin-bottom: 10px;">
+                    <label class="custom-select custom-file-label" data-index="{{ forloop.counter0 }}" style="background-color: #FF2400;">{{ form.instance.image.name }}</label>
                     {{ form.DELETE }}
                     {{ form.product }}
                     {{ form.id }}
-                {% endif %}
+                </div>
             </div>
+                {% endif %}
             {% endfor %}
+            
             </div>
             </div>
             <div class="col-sm-6 d-flex flex-column justify-content-end">
@@ -332,8 +339,39 @@
             <div id="description-formset">
                 {{ description_formset.management_form }}
                 {% for form in description_formset %}
-                    {{ form.as_p }}
+                    {% if form.instance.id %}
+                        <div class="description-form row g-3" id="description-form-{{ forloop.counter0 }}">
+                            <div class="col-sm-6">
+                                <label for="id_{{ form.prefix }}-title" class="form-label">Заголовок:</label>
+                                <input type="text" class="form-control" name="{{ form.prefix }}-title" maxlength="255" id="id_{{ form.prefix }}-title" value="{{ form.title.value }}">
+                            </div>
+                            <!-- <p>
+                                {% if form.image.value %}
+                                <img src="{{ form.image.value.url }}" alt="Current Image">
+                                <span>{{ form.image.value.name }}</span>
+                                {% endif %}
+                            </p>     -->
+                            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                                <input type="file" name="{{ form.prefix }}-image" accept="image/*" id="id_{{ form.prefix }}-image" class="custom-file-input">
+                                <label for="id_{{ form.prefix }}-image" class="custom-select custom-file-label">{% if form.image.value %}{{ form.image.value.name }} {% else %} Выберите изображение {% endif %}</label>
+
+                            </div>
+                
+                            <div class="col-sm-12">
+                                <label for="id_{{ form.prefix }}-text" class="form-label">Описание:</label>
+                                <textarea name="{{ form.prefix }}-text" cols="40" rows="10" id="id_{{ form.prefix }}-text" class="form-control" style="min-height: 105px;">{{ form.text.value }}</textarea>
+                            </div>
+                
+                            <div class="col-sm-12">
+                                <label for="id_{{ form.prefix }}-DELETE" class="custom-select custom-file-label" style="background-color: #FF2400;">Удалить</label>
+                                <input type="checkbox" name="{{ form.prefix }}-DELETE" id="id_{{ form.prefix }}-DELETE" class="hidden-checkbox">
+                            </div>
+                            {{ form.product }}
+                            {{ form.id }}
+                        </div>
+                    {% endif %}
                 {% endfor %}
+                
             </div>
             <div class="col-sm-12">
             <button type="button" id="add-description-form" class="form-control">Добавить еще описание</button>
@@ -344,4 +382,41 @@
           <button class="w-100 btn btn-primary btn-lg" type="submit">Сохранить</button>
     </form>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const labels = document.querySelectorAll('.custom-file-label');
+        
+        labels.forEach(label => {
+            label.addEventListener('click', function() {
+                const index = label.getAttribute('data-index');
+                const checkbox = document.getElementById(`id_images-${index}-DELETE`);
+                const preview = document.getElementById(`image-preview-${index}`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    label.style.display = 'none';
+                    preview.style.display = 'none';
+                }
+            });
+        });
+    
+        const checkboxes = document.querySelectorAll('input[type="checkbox"][id^="id_images-"][id$="-DELETE"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.classList.add('hidden-checkbox');
+        });
+
+        const deleteCheckboxes = document.querySelectorAll('input[type="checkbox"][name$="-DELETE"]');
+        deleteCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const descriptionForm = checkbox.closest('.description-form');
+                if (checkbox.checked) {
+                    descriptionForm.style.display = 'none';
+                } else {
+                    descriptionForm.style.display = 'block';
+                }
+            });
+        });
+    });
+    </script>
+    
+    
 {% endblock %}

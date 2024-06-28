@@ -14,17 +14,16 @@
           </div>
           <div class="col-sm-6">
             <label for="id_category" class="form-label">Категория</label>
-            <select name="category" id="id_category" class="ui fluid search dropdown">
+            <select name="category" id="id_category" class="ui fluid search dropdown" required>
                 <option value="" disabled selected>Выберите категорию</option>
                 {% for category in categories %}
                     <option value="{{ category.id }}">{{ category.name }}</option>
                 {% endfor %}
-            </select>
-            
+            </select>            
           </div>
           <div class="col-12">
             <label for="{{ form.features.id_for_label }}" class="form-label">Особенности (кратко)<span class="text-muted"></span></label>
-            <input type="text" name="features" id="{{ form.features.id_for_label }}" class="form-control">
+                <input type="text" name="features" id="{{ form.features.id_for_label }}" class="form-control">
         </div>
           <div class="col-12">
             <label for="{{ form.description.id_for_label }}" class="form-label">Описание<span class="text-muted"></span></label>
@@ -234,10 +233,11 @@
             {{ image_formset.management_form }}
             {% for form in image_formset %}
                 <div class="image-form">
-                        <div class="custom-file-upload">
-                            <input type="file" name="images-0-image" accept="image/*" id="id_images-0-image" class="custom-file-input">
-                            <label for="id_images-0-image" class="custom-select custom-file-label">Выберите файл</label>
-                        </div>
+                    <div class="custom-file-upload d-flex flex-column">
+                        <img id="image-preview-{{ forloop.counter0 }}" src="#" alt="Preview" style="display: none; max-height: 100px; align-self: center; margin-bottom: 10px;">
+                        <input type="file" name="images-{{ forloop.counter0 }}-image" accept="image/*" id="id_images-{{ forloop.counter0 }}-image" class="custom-file-input" onchange="previewImage(event, {{ forloop.counter0 }})">
+                        <label for="id_images-{{ forloop.counter0 }}-image" class="custom-select custom-file-label">Выберите файл</label>
+                    </div>
                 </div>
             {% endfor %}
             </div>
@@ -277,4 +277,7 @@
           <button class="w-100 btn btn-primary btn-lg" type="submit">Сохранить</button>
     </form>
 </div>
+<script>
+
+</script>
 {% endblock %}

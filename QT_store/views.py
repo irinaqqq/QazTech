@@ -260,13 +260,24 @@ def add_product(request):
         description_formset = DescriptionFormSet(request.POST, request.FILES, instance=Product())
 
         if form.is_valid() and image_formset.is_valid() and description_formset.is_valid():
-            product = form.save()
+            product = form.save(commit=False)
+
+            # Проверяем и обрабатываем поля с температурой и влажностью
+            fields_to_check = ['features','operating_temperature', 'storage_temperature', 'operating_humidity', 'storage_humidity']
+            for field_name in fields_to_check:
+                if getattr(product, field_name) is None:
+                    setattr(product, field_name, '')
+
+            product.save()
+
             instances = image_formset.save(commit=False)
             for instance in instances:
                 instance.product = product
                 instance.save()
+
             description_formset.instance = product
             description_formset.save()
+
             return redirect('products')  # Перенаправление на страницу списка продуктов
     else:
         form = ProductForm()
@@ -302,6 +313,13 @@ def edit_product(request, pk):
         if form.is_valid() and image_formset.is_valid() and description_formset.is_valid():
             product = form.save()  # Save the main product form
             
+            fields_to_check = ['features','operating_temperature', 'storage_temperature', 'operating_humidity', 'storage_humidity']
+            for field_name in fields_to_check:
+                if getattr(product, field_name) is None:
+                    setattr(product, field_name, '')
+
+            product.save()
+
             # Сохраняем изображения и обрабатываем удаление
             for form in image_formset.deleted_forms:
                 if form.instance.pk:
@@ -370,3 +388,33 @@ def reject_request(request, request_id):
         registration_request.status = 'rejected'
         registration_request.save()
     return redirect('requests')
+
+
+
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+from django.conf import settings
+import os
+
+def clean_unused_images():
+    """
+    Cleans up image files that are no longer associated with any `ProductImage` objects in the database.
+    """
+    from django.db.models import F
+
+    # Get all image files in the specified upload directory
+    image_directory = os.path.join(settings.MEDIA_ROOT, 'product_images/')
+    existing_images = set(os.listdir(image_directory))
+
+    # Get all image paths currently associated with `ProductImage` objects in the database
+    used_images = set(ProductImage.objects.values_list('image', flat=True))
+
+    # Determine images in the directory that are not in use
+    unused_images = existing_images - used_images
+
+    # Delete unused image files from the filesystem
+    for image_filename in unused_images:
+        image_path = os.path.join(image_directory, image_filename)
+        if os.path.isfile(image_path):
+            os.remove(image_path)
+            print(f"Deleted unused image file: {image_path}")
