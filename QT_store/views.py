@@ -226,6 +226,7 @@ def requests(request):
 
 @user_passes_test(is_staff, login_url='/')
 def users(request):
+    clean_unused_images()
     all_users = User.objects.all()
     users_with_data = []
 
@@ -398,10 +399,9 @@ import os
 
 def clean_unused_images():
     """
-    Cleans up image files that are no longer associated with any `ProductImage` objects in the database.
+    Prints out the names of unused image files that are no longer associated with any `ProductImage` objects in the database,
+    along with a count of how many unused images there are.
     """
-    from django.db.models import F
-
     # Get all image files in the specified upload directory
     image_directory = os.path.join(settings.MEDIA_ROOT, 'product_images/')
     existing_images = set(os.listdir(image_directory))
@@ -412,9 +412,15 @@ def clean_unused_images():
     # Determine images in the directory that are not in use
     unused_images = existing_images - used_images
 
-    # Delete unused image files from the filesystem
+    # Print names of unused image files
+    print("Unused image files:")
+    unused_count = 0
     for image_filename in unused_images:
-        image_path = os.path.join(image_directory, image_filename)
-        if os.path.isfile(image_path):
-            os.remove(image_path)
-            print(f"Deleted unused image file: {image_path}")
+        print(image_filename)
+        unused_count += 1
+
+    # Print total count of unused images
+    print(f"Total unused images: {unused_count}")
+
+# Вызываем функцию для вывода неиспользуемых изображений и их количества
+
