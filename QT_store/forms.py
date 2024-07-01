@@ -34,4 +34,4 @@ ProductDescriptionFormSet = inlineformset_factory(Product, ProductDescription, f
 class RegistrationRequestForm(forms.ModelForm):
     class Meta:
         model = RegistrationRequest
-        fields = ['first_name', 'last_name', 'email', 'phone_number']
+        fields = ['first_name', 'last_name', 'organization', 'email', 'phone_number']

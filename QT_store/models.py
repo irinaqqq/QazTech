@@ -1,6 +1,10 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+from django.conf import settings
+import os
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -255,7 +259,15 @@ class Product(models.Model):
         return reverse('product_detail', args=[str(self.pk)])
     def __str__(self):
         return self.name
-    
+    def delete(self, *args, **kwargs):
+    # Удаляем связанные изображения из папки
+        for image in self.images.all():
+            image_path = os.path.join(settings.MEDIA_ROOT, image.image.name)
+            if os.path.exists(image_path):
+                os.remove(image_path)
+        # Затем вызываем оригинальный метод delete
+        super(Product, self).delete(*args, **kwargs)
+        
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name="Продукт")
     image = models.ImageField(upload_to='product_images/', verbose_name="Изображение", null=True, blank=True)
@@ -263,6 +275,13 @@ class ProductImage(models.Model):
     def __str__(self):
         return f"Изображение для {self.product.name}"
 
+
+@receiver(post_delete, sender=ProductImage)
+def delete_image_file(sender, instance, **kwargs):
+    if instance.image:
+        image_path = os.path.join(settings.MEDIA_ROOT, instance.image.name)
+        if os.path.exists(image_path):
+            os.remove(image_path)
 
 class ProductDescription(models.Model):
     product = models.ForeignKey(Product, related_name='descriptions', on_delete=models.CASCADE, verbose_name="Продукт")
@@ -287,6 +306,7 @@ class Feedback(models.Model):
 class RegistrationRequest(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    organization = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20)
     status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')], default='pending')

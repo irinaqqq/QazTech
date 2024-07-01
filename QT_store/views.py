@@ -226,7 +226,6 @@ def requests(request):
 
 @user_passes_test(is_staff, login_url='/')
 def users(request):
-    clean_unused_images()
     all_users = User.objects.all()
     users_with_data = []
 
@@ -399,8 +398,8 @@ import os
 
 def clean_unused_images():
     """
-    Prints out the names of unused image files that are no longer associated with any `ProductImage` objects in the database,
-    along with a count of how many unused images there are.
+    Deletes unused image files that are no longer associated with any `ProductImage` objects in the database,
+    and prints out the names of these files along with a count of how many were deleted.
     """
     # Get all image files in the specified upload directory
     image_directory = os.path.join(settings.MEDIA_ROOT, 'product_images/')
@@ -409,18 +408,22 @@ def clean_unused_images():
     # Get all image paths currently associated with `ProductImage` objects in the database
     used_images = set(ProductImage.objects.values_list('image', flat=True))
 
-    # Determine images in the directory that are not in use
-    unused_images = existing_images - used_images
+    # Extract the filenames only, without the directory
+    existing_image_names = set(os.path.basename(image) for image in existing_images)
+    used_image_names = set(os.path.basename(image) for image in used_images)
 
-    # Print names of unused image files
-    print("Unused image files:")
-    unused_count = 0
-    for image_filename in unused_images:
-        print(image_filename)
-        unused_count += 1
+    # Find unused images
+    unused_images = existing_image_names - used_image_names
 
-    # Print total count of unused images
-    print(f"Total unused images: {unused_count}")
+    # Delete unused images
+    for unused_image in unused_images:
+        image_path = os.path.join(image_directory, unused_image)
+        try:
+            os.remove(image_path)
+            print(f"Deleted: {image_path}")
+        except OSError as e:
+            print(f"Error deleting {image_path}: {e}")
 
-# Вызываем функцию для вывода неиспользуемых изображений и их количества
+    print(f"Count of unused images deleted: {len(unused_images)}")
+
 

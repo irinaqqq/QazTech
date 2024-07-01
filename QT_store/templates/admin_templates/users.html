@@ -4,7 +4,7 @@
 Пользователи
 {% endblock %}
 {% block content %}
-<div class="container" style="width: 80%; padding-top: 1rem;">
+<div class="container py-3" style="width: 80%;">
     <table class="table text-center" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
         <thead>
             <tr class="products">
@@ -34,20 +34,4 @@
         </tbody>
     </table>
 </div>
-<script>
-    function togglePassword(userId) {
-        var passwordField = document.getElementById(`plain_password_${userId}`);
-        var eyeIcon = document.getElementById(`eyeIcon_${userId}`);
-
-        if (passwordField.textContent === "*******") {
-            passwordField.textContent = document.getElementById(`initial_password_${userId}`).textContent;
-            eyeIcon.classList.remove('fa-eye');
-            eyeIcon.classList.add('fa-eye-slash');
-        } else {
-            passwordField.textContent = "*******";
-            eyeIcon.classList.remove('fa-eye-slash');
-            eyeIcon.classList.add('fa-eye');
-        }
-    }
-</script>
 {% endblock %}

@@ -4,11 +4,11 @@
 Отзывы
 {% endblock %}
 {% block content %}
-<h1>Отзывы</h1>
+<div class="container py-3" style="width: 80%;">
 <div class="card-list">
     {% for feedback in feedbacks %}
-        <div class="card">
-            <div class="card-header">
+        <div class="card mb-4">
+            <div class="card-header d-flex" style="justify-content: space-between;">
                 <div class="feedback-header-item">{{ feedback.name }}</div>
                 <div class="feedback-header-item">{{ feedback.phone }}</div>
                 <div class="feedback-header-item">{{ feedback.email }}</div>
@@ -20,4 +20,5 @@
         </div>
     {% endfor %}
 </div>
+</div>  
 {% endblock %}

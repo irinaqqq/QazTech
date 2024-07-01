@@ -7,7 +7,7 @@
 <style>
 
 </style>
-<div class="container" style="width: 80%; padding-top: 1rem;">
+<div class="container py-3" style="width: 80%;">
   <div class="pb-3">
     <select id="category-select" class="ui fluid search dropdown" style="width: auto;">
       <option value="all">Все категории</option>
@@ -56,111 +56,4 @@
       <i class="fa-solid fa-circle-plus fa-5x"></i>
   </a>
 </div>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const indexHeader = document.getElementById('index-header');
-    const categoryHeader = document.getElementById('category-header');
-    const nameHeader = document.getElementById('name-header');
-    const table = indexHeader.closest('table');
-    const tbody = table.querySelector('tbody');
-    let isIndexAscending = true;
-    let isCategoryAscending = true;
-    let isNameAscending = true;
-
-    // Устанавливаем начальный порядок сортировки по номеру
-    indexHeader.classList.add('ascending');
-
-    indexHeader.addEventListener('click', function () {
-      sortTable('index');
-    });
-
-    categoryHeader.addEventListener('click', function () {
-      sortTable('category');
-    });
-
-    nameHeader.addEventListener('click', function () {
-      sortTable('name');
-    });
-
-    function sortTable(type) {
-      const rows = Array.from(tbody.querySelectorAll('tr'));
-
-      rows.sort((a, b) => {
-        let aValue, bValue;
-
-        if (type === 'index') {
-          aValue = parseInt(a.children[0].innerText.trim());
-          bValue = parseInt(b.children[0].innerText.trim());
-        } else if (type === 'category') {
-          aValue = a.children[1].innerText.trim().toLowerCase();
-          bValue = b.children[1].innerText.trim().toLowerCase();
-        } else if (type === 'name') {
-          aValue = a.children[2].innerText.trim().toLowerCase();
-          bValue = b.children[2].innerText.trim().toLowerCase();
-        }
-
-        if (type === 'index') {
-          return aValue - bValue;
-        } else {
-          return aValue.localeCompare(bValue);
-        }
-      });
-
-      // Изменяем порядок строк в зависимости от текущего направления сортировки
-      if (type === 'index') {
-        if (!isIndexAscending) {
-          rows.reverse();
-        }
-        isIndexAscending = !isIndexAscending;
-        indexHeader.classList.toggle('ascending', isIndexAscending);
-        indexHeader.classList.toggle('descending', !isIndexAscending);
-        categoryHeader.classList.remove('ascending', 'descending');
-        nameHeader.classList.remove('ascending', 'descending');
-      } else if (type === 'category') {
-        if (!isCategoryAscending) {
-          rows.reverse();
-        }
-        isCategoryAscending = !isCategoryAscending;
-        categoryHeader.classList.toggle('ascending', isCategoryAscending);
-        categoryHeader.classList.toggle('descending', !isCategoryAscending);
-        indexHeader.classList.remove('ascending', 'descending');
-        nameHeader.classList.remove('ascending', 'descending');
-      } else if (type === 'name') {
-        if (!isNameAscending) {
-          rows.reverse();
-        }
-        isNameAscending = !isNameAscending;
-        nameHeader.classList.toggle('ascending', isNameAscending);
-        nameHeader.classList.toggle('descending', !isNameAscending);
-        indexHeader.classList.remove('ascending', 'descending');
-        categoryHeader.classList.remove('ascending', 'descending');
-      }
-
-      // Перерисовываем таблицу с учетом нового порядка строк
-      rows.forEach((row, index) => {
-        tbody.appendChild(row);
-      });
-    }
-  });
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const categorySelect = document.getElementById('category-select');
-    const productsTable = document.getElementById('products-table');
-    const tbody = productsTable.querySelector('tbody');
-    
-    categorySelect.addEventListener('change', function () {
-      const selectedCategoryId = categorySelect.value;
-      const rows = tbody.querySelectorAll('tr');
-
-      rows.forEach(row => {
-        const categoryCell = row.children[1].innerText.trim();
-        if (selectedCategoryId === 'all' || categoryCell === selectedCategoryId) {
-          row.style.display = ''; // Показываем строку
-        } else {
-          row.style.display = 'none'; // Скрываем строку
-        }
-      });
-    });
-  });
-</script>
 {% endblock %}

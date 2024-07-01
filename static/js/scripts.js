@@ -314,6 +314,185 @@ function initFormsets() {
     });
 }
 
+function setupDeleteFunctionality() {
+    const labels = document.querySelectorAll('.custom-file-label');
+    
+    labels.forEach(label => {
+        label.addEventListener('click', function() {
+            const index = label.getAttribute('data-index');
+            const checkbox = document.getElementById(`id_images-${index}-DELETE`);
+            const preview = document.getElementById(`image-preview-${index}`);
+            if (checkbox) {
+                checkbox.checked = true;
+                label.style.display = 'none';
+                preview.style.display = 'none';
+            }
+        });
+    });
+
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][id^="id_images-"][id$="-DELETE"]');
+    checkboxes.forEach(checkbox => {
+        checkbox.classList.add('hidden-checkbox');
+    });
+
+    const deleteCheckboxes = document.querySelectorAll('input[type="checkbox"][name$="-DELETE"]');
+    deleteCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const descriptionForm = checkbox.closest('.description-form');
+            if (checkbox.checked) {
+                descriptionForm.style.display = 'none';
+            } else {
+                descriptionForm.style.display = 'block';
+            }
+        });
+    });
+}
+
+function setupTableSorting() {
+    const indexHeader = document.getElementById('index-header');
+    const categoryHeader = document.getElementById('category-header');
+    const nameHeader = document.getElementById('name-header');
+    const table = indexHeader ? indexHeader.closest('table') : null;
+    const tbody = table ? table.querySelector('tbody') : null;
+    let isIndexAscending = true;
+    let isCategoryAscending = true;
+    let isNameAscending = true;
+
+    if (indexHeader) {
+        // Устанавливаем начальный порядок сортировки по номеру
+        indexHeader.classList.add('ascending');
+
+        indexHeader.addEventListener('click', function () {
+            sortTable('index');
+        });
+    }
+
+    if (categoryHeader) {
+        categoryHeader.addEventListener('click', function () {
+            sortTable('category');
+        });
+    }
+
+    if (nameHeader) {
+        nameHeader.addEventListener('click', function () {
+            sortTable('name');
+        });
+    }
+
+    function sortTable(type) {
+        if (!tbody) return;
+
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        rows.sort((a, b) => {
+            let aValue, bValue;
+
+            if (type === 'index') {
+                aValue = parseInt(a.children[0].innerText.trim());
+                bValue = parseInt(b.children[0].innerText.trim());
+            } else if (type === 'category') {
+                aValue = a.children[1].innerText.trim().toLowerCase();
+                bValue = b.children[1].innerText.trim().toLowerCase();
+            } else if (type === 'name') {
+                aValue = a.children[2].innerText.trim().toLowerCase();
+                bValue = b.children[2].innerText.trim().toLowerCase();
+            }
+
+            if (type === 'index') {
+                return aValue - bValue;
+            } else {
+                return aValue.localeCompare(bValue);
+            }
+        });
+
+        // Изменяем порядок строк в зависимости от текущего направления сортировки
+        if (type === 'index' && indexHeader) {
+            if (!isIndexAscending) {
+                rows.reverse();
+            }
+            isIndexAscending = !isIndexAscending;
+            indexHeader.classList.toggle('ascending', isIndexAscending);
+            indexHeader.classList.toggle('descending', !isIndexAscending);
+            if (categoryHeader) {
+                categoryHeader.classList.remove('ascending', 'descending');
+            }
+            if (nameHeader) {
+                nameHeader.classList.remove('ascending', 'descending');
+            }
+        } else if (type === 'category' && categoryHeader) {
+            if (!isCategoryAscending) {
+                rows.reverse();
+            }
+            isCategoryAscending = !isCategoryAscending;
+            categoryHeader.classList.toggle('ascending', isCategoryAscending);
+            categoryHeader.classList.toggle('descending', !isCategoryAscending);
+            if (indexHeader) {
+                indexHeader.classList.remove('ascending', 'descending');
+            }
+            if (nameHeader) {
+                nameHeader.classList.remove('ascending', 'descending');
+            }
+        } else if (type === 'name' && nameHeader) {
+            if (!isNameAscending) {
+                rows.reverse();
+            }
+            isNameAscending = !isNameAscending;
+            nameHeader.classList.toggle('ascending', isNameAscending);
+            nameHeader.classList.toggle('descending', !isNameAscending);
+            if (indexHeader) {
+                indexHeader.classList.remove('ascending', 'descending');
+            }
+            if (categoryHeader) {
+                categoryHeader.classList.remove('ascending', 'descending');
+            }
+        }
+
+        // Перерисовываем таблицу с учетом нового порядка строк
+        rows.forEach((row, index) => {
+            tbody.appendChild(row);
+        });
+    }
+}
+
+// Функция для настройки фильтрации по категории
+function setupCategoryFilter() {
+    const categorySelect = document.getElementById('category-select');
+    const productsTable = document.getElementById('products-table');
+    const tbody = productsTable ? productsTable.querySelector('tbody') : null;
+
+    if (categorySelect && productsTable && tbody) {
+        categorySelect.addEventListener('change', function () {
+            const selectedCategoryId = categorySelect.value;
+            const rows = tbody.querySelectorAll('tr');
+
+            rows.forEach(row => {
+                const categoryCell = row.children[1].innerText.trim();
+                if (selectedCategoryId === 'all' || categoryCell === selectedCategoryId) {
+                    row.style.display = ''; // Показываем строку
+                } else {
+                    row.style.display = 'none'; // Скрываем строку
+                }
+            });
+        });
+    }
+}
+
+
+function togglePassword(userId) {
+    var passwordField = document.getElementById(`plain_password_${userId}`);
+    var eyeIcon = document.getElementById(`eyeIcon_${userId}`);
+
+    if (passwordField.textContent === "*******") {
+        passwordField.textContent = document.getElementById(`initial_password_${userId}`).textContent;
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+    } else {
+        passwordField.textContent = "*******";
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+    }
+}
+
 // Initialize all scripts when the document is ready
 $(document).ready(function() {
     initBackToTopButton();
@@ -321,4 +500,7 @@ $(document).ready(function() {
     initFeedbackForm();
     initDropdownMenus();
     initFormsets();
+    setupDeleteFunctionality();
+    setupTableSorting();
+    setupCategoryFilter();
 });
