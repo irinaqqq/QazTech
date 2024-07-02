@@ -299,6 +299,7 @@ class Feedback(models.Model):
     email = models.EmailField()
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.name} - {self.message[:20]}'
@@ -308,7 +309,7 @@ class RegistrationRequest(models.Model):
     last_name = models.CharField(max_length=100)
     organization = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
-    phone_number = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=15)
     status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')], default='pending')
 
     def __str__(self):
@@ -316,7 +317,8 @@ class RegistrationRequest(models.Model):
     
 class Custom(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    organization = models.CharField(max_length=100, blank=True, null=True)
     initial_password = models.CharField(max_length=100, blank=True, null=True, editable=False)
 
     def __str__(self):

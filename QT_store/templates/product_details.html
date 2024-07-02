@@ -214,7 +214,7 @@
                           <tr>
                             <th class="py-2 align-middle">Размер экрана:</th>
                             <td class="py-2 text-break">
-                              {% for screen_size in product.screen_sizes.all %}{{ screen_size.size }}{% if not forloop.last %}/{% endif %}{% endfor %} дюймов
+                              {% for screen_size in product.screen_sizes.all|dictsort:"size" %}{{ screen_size.size }}{% if not forloop.last %}/{% endif %}{% endfor %} дюймов
                             </td>
                         </tr>
                         {% endif %}

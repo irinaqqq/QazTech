@@ -28,13 +28,13 @@
         </div>
         <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center"> 
           {% if user.is_authenticated %}
-          <h style="font-size: 19px;">{{ user.username }}</h>
+          <!-- <h style="font-size: 19px;">{{ user.username }}</h> -->
           {% if user.is_staff %}
           <a href="{% url 'dashboard' %}" style="margin-left:1rem;">Панель управления</a>
           {% endif %}
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
-            <button type="submit" style="border: none; margin-left: 1rem;">Выход</button>
+            <button type="submit" class="exit-bt">Выход</button>
           </form>
           {% endif %}
         </div>

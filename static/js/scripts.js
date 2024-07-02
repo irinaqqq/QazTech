@@ -493,6 +493,37 @@ function togglePassword(userId) {
     }
 }
 
+function updateFeedbacksReadStatus() {
+    // Проверяем, находимся ли мы на странице отзывов
+    if (window.location.pathname === '/myadmin/feedbacks/') {
+        fetch('/myadmin/update_feedbacks_read_status/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()  // Функция для получения CSRF-токена
+            },
+            body: JSON.stringify({}),
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Статусы прочтения отзывов успешно обновлены.');
+                // Дополнительные действия при необходимости
+            } else {
+                console.error('Ошибка при обновлении статусов прочтения отзывов.');
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при отправке запроса:', error);
+        });
+    }
+}
+
+function getCSRFToken() {
+    // Функция для получения CSRF-токена из cookies
+    const csrfToken = document.cookie.match(/csrftoken=([^;]+)/)[1];
+    return csrfToken;
+}
+
 // Initialize all scripts when the document is ready
 $(document).ready(function() {
     initBackToTopButton();
@@ -503,4 +534,5 @@ $(document).ready(function() {
     setupDeleteFunctionality();
     setupTableSorting();
     setupCategoryFilter();
+    updateFeedbacksReadStatus();
 });

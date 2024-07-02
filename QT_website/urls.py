@@ -45,6 +45,7 @@ urlpatterns = [
 
     path('myadmin/dashboard/', views.dashboard, name='dashboard'),
     path('myadmin/feedbacks/', views.feedbacks, name='feedbacks'),
+    path('myadmin/update_feedbacks_read_status/', views.update_feedbacks_read_status, name='update_feedbacks_read_status'),
     path('myadmin/orders/', views.orders, name='orders'),
     path('myadmin/products/', views.products, name='products'),
     path('myadmin/requests/', views.requests, name='requests'),

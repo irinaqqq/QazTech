@@ -8,6 +8,7 @@
     <table class="table text-center" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
         <tr class="products">
             <th>Имя и Фамилия</th>
+            <th>Организация</th>
             <th>Почта</th>
             <th>Телефонный номер</th>
             <th>Действия</th>
@@ -15,6 +16,7 @@
         {% for request in requests %}
         <tr>
             <td class="products-td">{{ request.first_name }} {{ request.last_name }}</td>
+            <td class="products-td">{{ request.organization }}</td>
             <td class="products-td">{{ request.email }}</td>
             <td class="products-td">{{ request.phone_number }}</td>
             <td class="products-td">  

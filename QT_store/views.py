@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from .models import *
 from collections import defaultdict
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import *
@@ -102,10 +102,20 @@ def whowe(request):
     return render(request, 'whowe.html')
 
 def partners_view(request):
-    return render(request, 'partners.html')
+    if request.method == 'POST':
+        form = RegistrationRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = RegistrationRequestForm()
+    return render(request, 'partners.html', {'form': form})
 
 def contactus(request):
     if request.method == 'POST':
+        # Проверка honey pot поля
+        if 'honeypot' in request.POST and request.POST['honeypot']:
+            return HttpResponse(status=403)  # Возвращаем ошибку доступа, если поле honeypot заполнено
+
         form = FeedbackForm(request.POST)
         if form.is_valid():
             form.save()
@@ -120,6 +130,7 @@ def contactus(request):
     else:
         form = FeedbackForm()
     return render(request, 'contactus.html', {'form': form})
+
 
 def faq(request):
     return render(request, 'faq.html')
@@ -198,10 +209,14 @@ def signup_view(request):
 @user_passes_test(is_staff, login_url='/')
 def dashboard(request):
     total_products = Product.objects.count()
-    total_users = User.objects.count()
+    total_users = User.objects.count() - 1
+    pending_requests = RegistrationRequest.objects.filter(status='pending').count()
+    unread_feedbacks_count = Feedback.objects.filter(is_read=False).count()
     context = {
         'total_products': total_products,
         'total_users': total_users,
+        'pending_requests': pending_requests,
+        'unread_feedbacks_count': unread_feedbacks_count,
     }
     return render(request, 'admin_templates/dashboard.html', context)
 
@@ -209,6 +224,14 @@ def dashboard(request):
 def feedbacks(request):
     feedbacks = Feedback.objects.all()
     return render(request, 'admin_templates/feedbacks.html', {'feedbacks': feedbacks})
+
+@staff_member_required
+def update_feedbacks_read_status(request):
+    if request.method == 'POST':
+        Feedback.objects.filter(is_read=False).update(is_read=True)
+        return JsonResponse({'message': 'Статусы прочтения отзывов успешно обновлены.'})
+    else:
+        return JsonResponse({'error': 'Метод запроса не поддерживается.'}, status=405)
 
 @user_passes_test(is_staff, login_url='/')
 def orders(request):
@@ -238,6 +261,7 @@ def users(request):
                 'user': user,
                 'initial_password': custom_data.initial_password,
                 'phone_number': custom_data.phone_number,
+                'organization': custom_data.organization,
             })
         # else:
         #     users_with_data.append({
@@ -373,7 +397,7 @@ def approve_request(request, request_id):
             last_name=registration_request.last_name
         )
         # Создание объекта Custom с номером телефона и начальным паролем
-        Custom.objects.create(user=user, phone_number=registration_request.phone_number, initial_password=password)
+        Custom.objects.create(user=user, phone_number=registration_request.phone_number, organization=registration_request.organization, initial_password=password)
 
         registration_request.status = 'approved'
         registration_request.save()

@@ -16,10 +16,10 @@
         <p>У нас есть несколько удобных способов связи! Вы можете написать нам на электронную почту для получения дополнительной информации или оставить отзыв. Если у вас возникли срочные вопросы или вам нужна быстрая помощь, не стесняйтесь позвонить нам по указанному на сайте номеру телефона. А также вы можете воспользоваться формой обратной связи прямо на нашем сайте. Мы всегда готовы помочь вам!</p>
         <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>+7 747 700 90 49</strong></h4>
         <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>+7 727 221 10 34</strong></h4>
-        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>info@qazaqtechnology.kz</strong></h4>
+        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>info@qt.com.kz</strong></h4>
         <h4 class="py-2">Наш адрес</h4>
         <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>Проспект Райымбека, 519/3</strong></h4>
-        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>Алатауский район, Алматы, 050024</strong></h4>
+        <h4 class="card-phone mbr-fonts-style display-5" style="line-height: 1; font-size: 1rem;"><strong>Алатауский район, Алматы</strong></h4>
     </div>
             <div class="card-wrapper py-2 container" style="flex-direction: column; box-shadow: none; padding: 0;">
                 <form id="feedbackForm" class="mbr-form form-with-styler" data-form-title="Form Name" action="{% url 'contactus' %}" method="POST">
@@ -53,6 +53,10 @@
                         <div data-for="message" class="col-lg-12 col-md-12 col-sm-12 form-group mb-3">
                             <textarea name="message" placeholder="Сообщение" data-form-field="message" class="form-control display-7" id="message-contacts08-a" style="min-height: 180px;"></textarea>
                             <div class="text-danger" id="messageError"></div>
+                        </div>
+                        <div style="display:none;">
+                            <label>Не заполняйте это поле</label>
+                            <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
                         </div>
                         <div class="col-auto"><button type="submit" class="btn btn-lg btn-success">Отправить</button></div>
                     </div>
