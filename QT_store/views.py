@@ -77,6 +77,17 @@ def product_detail(request, product_id):
         max_storage_size = max_storage_size / 1024
         max_storage_unit = "TB"
 
+    if request.method == 'POST':
+        form = AddToCartForm(request.POST, product=product)
+        if form.is_valid():
+            cart, created = Cart.objects.get_or_create(user=request.user)
+            cart_item = form.save(commit=False)
+            cart_item.cart = cart
+            cart_item.save()
+            return redirect('cart')
+    else:
+        form = AddToCartForm(product=product)
+
     context = {
         'product': product,
         'similar_products': similar_products,
@@ -92,6 +103,7 @@ def product_detail(request, product_id):
         'max_storage_unit': max_storage_unit,
         'formatted_storage_by_type': formatted_storage_by_type,
         'motherboards_by_line': motherboards_by_line,
+        'form': form,
     }
     return render(request, 'product_details.html', context)
 
@@ -212,11 +224,14 @@ def dashboard(request):
     total_users = User.objects.count() - 1
     pending_requests = RegistrationRequest.objects.filter(status='pending').count()
     unread_feedbacks_count = Feedback.objects.filter(is_read=False).count()
+    pending_orders_count = Order.objects.filter(status='pending_verification').count()
+
     context = {
         'total_products': total_products,
         'total_users': total_users,
         'pending_requests': pending_requests,
         'unread_feedbacks_count': unread_feedbacks_count,
+        'pending_orders_count': pending_orders_count,
     }
     return render(request, 'admin_templates/dashboard.html', context)
 
@@ -235,7 +250,33 @@ def update_feedbacks_read_status(request):
 
 @user_passes_test(is_staff, login_url='/')
 def orders(request):
-    return render(request, 'admin_templates/orders.html')
+    orders = Order.objects.all()
+    return render(request, 'admin_templates/orders.html', {'orders': orders})
+
+@user_passes_test(is_staff, login_url='/')
+def update_order_status(request):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        order_id = request.POST.get('order_id')
+        status = request.POST.get('status')
+        order = get_object_or_404(Order, id=order_id)
+        order.status = status
+        order.save()
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False})
+    
+@user_passes_test(is_staff, login_url='/')
+def order_details(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(request, 'admin_templates/order_details.html', {'order': order})
+
+def approve_price(request, order_id):
+    if request.method == 'POST':
+        order = get_object_or_404(Order, id=order_id)
+        order.total_price = request.POST.get('approved_price')
+        order.save()
+        return redirect('order_details', order_id=order_id)
+    return redirect('order_details', order_id=order_id)
 
 @user_passes_test(is_staff, login_url='/')
 def products(request):
@@ -451,3 +492,54 @@ def clean_unused_images():
     print(f"Count of unused images deleted: {len(unused_images)}")
 
 
+def cart(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    return render(request, 'cart.html', {'cart_items': cart_items})
+
+def order_create(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    
+    if request.method == 'POST':
+        form = OrderCreateForm(request.POST)
+        if form.is_valid():
+            order = Order.objects.create(
+                user=request.user,
+                delivery_address=form.cleaned_data['delivery_address']
+            )
+            for item in cart_items:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    quantity=item.quantity,
+                    note=item.note,
+                    processor=item.processor,
+                    mother=item.mother,
+                    ram=item.ram,
+                    storage=item.storage,
+                    graphics=item.graphics,
+                    operating_system=item.operating_system,
+                    screen_sizes=item.screen_sizes,
+                    screen_type=item.screen_type,
+                    screen_resolution=item.screen_resolution,
+                    touch_screen_touches=item.touch_screen_touches,
+                    formfactor=item.formfactor,
+                    webcam=item.webcam,
+                    keyset=item.keyset,
+                    keyboard_backlight=item.keyboard_backlight,
+                    power_supplies=item.power_supplies,
+                    sizes=item.sizes,
+                    controllers=item.controllers
+                )
+            # Очистить корзину
+            cart_items.delete()
+            return redirect('user_orders')
+    else:
+        form = OrderCreateForm()
+    
+    return render(request, 'order_create.html', {'cart_items': cart_items, 'form': form})
+
+def user_orders(request):
+    orders = Order.objects.filter(user=request.user)
+    return render(request, 'my_orders.html', {'orders': orders})

@@ -338,6 +338,15 @@
             <!-- Pills content -->
           </div>
         </div>
+
+
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Добавить в корзину</button>
+      </form>
+
+      
         <div class="col-lg-4">
           <div class="px-0 border rounded-2 shadow-0">
             <div class="card no-hover-zoom">

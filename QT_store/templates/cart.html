@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Корзина
+{% endblock %}
+{% block content %}
+<!-- cart.html -->
+<h1>Ваша корзина</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Продукт</th>
+            <th>Количество</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+        <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<form method="post" action="{% url 'order_create' %}">
+    {% csrf_token %}
+    <button type="submit">Оформить заказ</button>
+</form>
+
+{% endblock %}

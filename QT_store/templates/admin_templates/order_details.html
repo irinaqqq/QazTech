@@ -1,0 +1,73 @@
+{% extends 'admin_templates/admin_base.html' %}
+{% load static %}
+{% block title %}
+Детали заказа
+{% endblock %}
+{% block content %}
+<h1>Детали заказа #{{ order.id }}</h1>
+<p><strong>Пользователь:</strong> {{ order.user.username }}</p>
+<p><strong>Статус:</strong>
+    <select name="status" onchange="updateOrderStatus(this.value, {{ order.id }})">
+        {% for status in order.STATUS_CHOICES %}
+        <option value="{{ status.0 }}" {% if order.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
+        {% endfor %}
+    </select>
+</p>
+<p><strong>Дата создания:</strong> {{ order.created_at }}</p>
+<p><strong>Адрес доставки:</strong> {{ order.delivery_address }}</p>
+<p><strong>Цена:</strong>{{ order.total_price }}</p>
+
+<h2>Элементы заказа</h2>
+<ul>
+  {% for item in order.items.all %}
+    <li>
+      <strong>Продукт:</strong> {{ item.product.name }}<br>
+      <strong>Количество:</strong> {{ item.quantity }}<br>
+      <strong>Примечание:</strong> {{ item.note }}<br>
+      <!-- Добавьте детали для каждого компонента продукта -->
+      {% if item.processor %}
+        <strong>Процессор:</strong> {{ item.processor.name }}<br>
+      {% endif %}
+      {% if item.mother %}
+        <strong>Материнская плата:</strong> {{ item.mother.name }}<br>
+      {% endif %}
+      <!-- Добавьте другие компоненты по аналогии -->
+    </li>
+  {% endfor %}
+</ul>
+<!-- Форма для утверждения цены -->
+    <form method="post" action="{% url 'approve_price' order.id %}">
+        {% csrf_token %}
+        <label for="approved_price">Утвердить цену:</label>
+        <input type="text" id="approved_price" name="approved_price">
+        <button type="submit">Утвердить</button>
+    </form>
+
+    <script>
+        // Функция для обновления статуса заказа через AJAX
+        function updateOrderStatus(status, orderId) {
+            $.ajax({
+                url: '{% url 'update_order_status' %}',
+                type: 'POST',
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'order_id': orderId,
+                    'status': status
+                },
+                success: function(data) {
+                    if (data.success) {
+                        // Обновление успешно выполнено
+                        $('#order-row-' + orderId).load(location.href + ' #order-row-' + orderId);
+                    } else {
+                        // Обработка ошибок, если необходимо
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    // Обработка ошибок AJAX запроса
+                }
+            });
+        }
+        
+        </script>
+{% endblock %}

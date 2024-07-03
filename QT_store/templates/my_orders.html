@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Корзина
+{% endblock %}
+{% block content %}
+<!-- user_templates/orders.html -->
+<h1>Мои заказы</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Статус</th>
+            <th>Дата создания</th>
+            <th>Адрес доставки</th>
+            <th>Цена</th>
+            <th>Примечания и количество</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.created_at }}</td>
+            <td>{{ order.delivery_address }}</td>
+            {% if order.total_price == 0 %}
+            <td>Цена не утверждена</td>
+            {% else %}
+            <td>{{ order.total_price }}</td>
+            {% endif %}
+            <td>
+                <ul>
+                    {% for item in order.items.all %}
+                    <li>{{ item.product.name }} - Количество: {{ item.quantity }} - Примечание: {{ item.note }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

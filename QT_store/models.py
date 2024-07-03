@@ -323,3 +323,75 @@ class Custom(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s profile"
+    
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    note = models.TextField(verbose_name="Примечание", blank=True)
+    quantity = models.PositiveIntegerField(default=1)
+    processor = models.ForeignKey(Processor, on_delete=models.SET_NULL, null=True, blank=True)
+    mother = models.ForeignKey(Motherboard, on_delete=models.SET_NULL, null=True, blank=True)
+    ram = models.ForeignKey(RAM, on_delete=models.SET_NULL, null=True, blank=True)
+    storage = models.ForeignKey(Storage, on_delete=models.SET_NULL, null=True, blank=True)
+    graphics = models.ForeignKey(Graphics, on_delete=models.SET_NULL, null=True, blank=True)
+    operating_system = models.ForeignKey(OperatingSystem, on_delete=models.SET_NULL, null=True, blank=True)
+    screen_sizes = models.ForeignKey(ScreenSize, on_delete=models.SET_NULL, null=True, blank=True)
+    screen_type = models.ForeignKey(ScreenType, on_delete=models.SET_NULL, null=True, blank=True)
+    screen_resolution = models.ForeignKey(ScreenResolution, on_delete=models.SET_NULL, null=True, blank=True)
+    touch_screen_touches = models.ForeignKey(TouchST, on_delete=models.SET_NULL, null=True, blank=True)
+    formfactor = models.ForeignKey(FormFactor, on_delete=models.SET_NULL, null=True, blank=True)
+    webcam = models.ForeignKey(WebCam, on_delete=models.SET_NULL, null=True, blank=True)
+    keyset = models.ForeignKey(KeyboardSet, on_delete=models.SET_NULL, null=True, blank=True)
+    keyboard_backlight = models.ForeignKey(KeyboardLight, on_delete=models.SET_NULL, null=True, blank=True)
+    power_supplies = models.ForeignKey(PowerSupply, on_delete=models.SET_NULL, null=True, blank=True)
+    sizes = models.ForeignKey(Size, on_delete=models.SET_NULL, null=True, blank=True)
+    controllers = models.ForeignKey(Controller, on_delete=models.SET_NULL, null=True, blank=True)
+
+class Order(models.Model):
+    STATUS_CHOICES = (
+        ('pending_verification', 'Pending Verification'),
+        ('confirmed', 'Confirmed'),
+        ('being_assembled', 'Being Assembled'),
+        ('dispatched', 'Dispatched'),
+        ('delivered', 'Delivered'),
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending_verification')
+    delivery_address = models.TextField(blank=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f"Order {self.id} - {self.user.username}"
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    note = models.TextField(blank=True)
+    processor = models.ForeignKey(Processor, on_delete=models.SET_NULL, null=True, blank=True)
+    mother = models.ForeignKey(Motherboard, on_delete=models.SET_NULL, null=True, blank=True)
+    ram = models.ForeignKey(RAM, on_delete=models.SET_NULL, null=True, blank=True)
+    storage = models.ForeignKey(Storage, on_delete=models.SET_NULL, null=True, blank=True)
+    graphics = models.ForeignKey(Graphics, on_delete=models.SET_NULL, null=True, blank=True)
+    operating_system = models.ForeignKey(OperatingSystem, on_delete=models.SET_NULL, null=True, blank=True)
+    screen_sizes = models.ForeignKey(ScreenSize, on_delete=models.SET_NULL, null=True, blank=True)
+    screen_type = models.ForeignKey(ScreenType, on_delete=models.SET_NULL, null=True, blank=True)
+    screen_resolution = models.ForeignKey(ScreenResolution, on_delete=models.SET_NULL, null=True, blank=True)
+    touch_screen_touches = models.ForeignKey(TouchST, on_delete=models.SET_NULL, null=True, blank=True)
+    formfactor = models.ForeignKey(FormFactor, on_delete=models.SET_NULL, null=True, blank=True)
+    webcam = models.ForeignKey(WebCam, on_delete=models.SET_NULL, null=True, blank=True)
+    keyset = models.ForeignKey(KeyboardSet, on_delete=models.SET_NULL, null=True, blank=True)
+    keyboard_backlight = models.ForeignKey(KeyboardLight, on_delete=models.SET_NULL, null=True, blank=True)
+    power_supplies = models.ForeignKey(PowerSupply, on_delete=models.SET_NULL, null=True, blank=True)
+    sizes = models.ForeignKey(Size, on_delete=models.SET_NULL, null=True, blank=True)
+    controllers = models.ForeignKey(Controller, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.quantity} x {self.product.name} in Order {self.order.id}"

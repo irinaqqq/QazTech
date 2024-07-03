@@ -4,4 +4,71 @@
 Заказы
 {% endblock %}
 {% block content %}
+<!-- admin_templates/orders.html -->
+<h1>Управление заказами</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Пользователь</th>
+            <th>Статус</th>
+            <th>Дата создания</th>
+            <th>Адрес доставки</th>
+            <th>Цена</th>
+            <th>Детали заказа</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.user.username }}</td>
+            <td>
+                <select name="status" onchange="updateOrderStatus(this.value, {{ order.id }})">
+                    {% for status in order.STATUS_CHOICES %}
+                    <option value="{{ status.0 }}" {% if order.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td>{{ order.created_at }}</td>
+            <td>{{ order.delivery_address }}</td>
+            {% if order.total_price == 0 %}
+            <td>Цена не утверждена</td>
+            {% else %}
+            <td>{{ order.total_price }}</td>
+            {% endif %}
+            <td>
+                <a href="{% url 'order_details' order.id %}">Перейти</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+// Функция для обновления статуса заказа через AJAX
+function updateOrderStatus(status, orderId) {
+    $.ajax({
+        url: '{% url 'update_order_status' %}',
+        type: 'POST',
+        data: {
+            'csrfmiddlewaretoken': '{{ csrf_token }}',
+            'order_id': orderId,
+            'status': status
+        },
+        success: function(data) {
+            if (data.success) {
+                // Обновление успешно выполнено
+                $('#order-row-' + orderId).load(location.href + ' #order-row-' + orderId);
+            } else {
+                // Обработка ошибок, если необходимо
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            // Обработка ошибок AJAX запроса
+        }
+    });
+}
+
+</script>
 {% endblock %}
