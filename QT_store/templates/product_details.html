@@ -339,13 +339,13 @@
           </div>
         </div>
 
-
+        {% if user.is_authenticated %}
         <form method="post">
           {% csrf_token %}
           {{ form.as_p }}
           <button type="submit">Добавить в корзину</button>
       </form>
-
+      {% endif %}
       
         <div class="col-lg-4">
           <div class="px-0 border rounded-2 shadow-0">

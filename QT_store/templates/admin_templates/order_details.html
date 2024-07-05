@@ -19,21 +19,83 @@
 
 <h2>Элементы заказа</h2>
 <ul>
-  {% for item in order.items.all %}
+    {% for item in order.items.all %}
     <li>
-      <strong>Продукт:</strong> {{ item.product.name }}<br>
-      <strong>Количество:</strong> {{ item.quantity }}<br>
-      <strong>Примечание:</strong> {{ item.note }}<br>
-      <!-- Добавьте детали для каждого компонента продукта -->
-      {% if item.processor %}
-        <strong>Процессор:</strong> {{ item.processor.name }}<br>
-      {% endif %}
-      {% if item.mother %}
-        <strong>Материнская плата:</strong> {{ item.mother.name }}<br>
-      {% endif %}
-      <!-- Добавьте другие компоненты по аналогии -->
+        <strong>Продукт:</strong> {{ item.product.name }}<br>
+        <strong>Количество:</strong> {{ item.quantity }}<br>
+        <strong>Примечание:</strong> {{ item.note }}<br>
+        
+        {% if item.processor %}
+            <strong>Процессор:</strong> {{ item.processor }}<br>
+        {% endif %}
+        
+        {% if item.mother %}
+            <strong>Материнская плата:</strong> {{ item.mother }}<br>
+        {% endif %}
+        
+        {% if item.ram %}
+            <strong>Оперативная память:</strong> {{ item.ram }}<br>
+        {% endif %}
+        
+        {% if item.storage %}
+            <strong>Хранилище:</strong> {{ item.storage }}<br>
+        {% endif %}
+        
+        {% if item.graphics %}
+            <strong>Графика:</strong> {{ item.graphics }}<br>
+        {% endif %}
+        
+        {% if item.operating_system %}
+            <strong>Операционная система:</strong> {{ item.operating_system }}<br>
+        {% endif %}
+        
+        {% if item.screen_sizes %}
+            <strong>Размеры экрана:</strong> {{ item.screen_sizes }}<br>
+        {% endif %}
+        
+        {% if item.screen_type %}
+            <strong>Тип экрана:</strong> {{ item.screen_type }}<br>
+        {% endif %}
+        
+        {% if item.screen_resolution %}
+            <strong>Разрешение экрана:</strong> {{ item.screen_resolution }}<br>
+        {% endif %}
+        
+        {% if item.touch_screen_touches %}
+            <strong>Сенсорный экран:</strong> {{ item.touch_screen_touches }}<br>
+        {% endif %}
+        
+        {% if item.formfactor %}
+            <strong>Формфактор:</strong> {{ item.formfactor }}<br>
+        {% endif %}
+        
+        {% if item.webcam %}
+            <strong>Веб-камера:</strong> {{ item.webcam }}<br>
+        {% endif %}
+        
+        {% if item.keyset %}
+            <strong>Клавиатура:</strong> {{ item.keyset }}<br>
+        {% endif %}
+        
+        {% if item.keyboard_backlight %}
+            <strong>Подсветка клавиатуры:</strong> {{ item.keyboard_backlight }}<br>
+        {% endif %}
+        
+        {% if item.power_supplies %}
+            <strong>Блоки питания:</strong> {{ item.power_supplies }}<br>
+        {% endif %}
+        
+        {% if item.sizes %}
+            <strong>Размеры:</strong> {{ item.sizes }}<br>
+        {% endif %}
+        
+        {% if item.controllers %}
+            <strong>Контроллеры:</strong> {{ item.controllers }}<br>
+        {% endif %}
+        
     </li>
-  {% endfor %}
+{% endfor %}
+
 </ul>
 <!-- Форма для утверждения цены -->
     <form method="post" action="{% url 'approve_price' order.id %}">

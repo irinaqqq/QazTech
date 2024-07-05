@@ -72,3 +72,8 @@ class AddToCartForm(forms.ModelForm):
 
 class OrderCreateForm(forms.Form):
     delivery_address = forms.CharField(widget=forms.Textarea, required=True)
+
+class ProductItemForm(forms.ModelForm):
+    class Meta:
+        model = ProductItem
+        fields = '__all__'

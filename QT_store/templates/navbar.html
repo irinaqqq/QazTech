@@ -45,7 +45,10 @@
         <div class="navbar-nav flex-row borderXwidth d-flex flex-wrap" id="myTopnav" style="width: 100%; padding: 1rem;">
           {% for category in categories %}
           <a class="nav-link flex-fill" href="{% url 'category_products' category.id %}" data-category-id="{{ category.id }}">{{ category.name }}</a>
-            {% endfor %}      
+            {% endfor %}   
+            {% if user.is_authenticated %}
+            <a class="nav-link flex-fill" href="{% url 'commercial_offer' %}">Получить КП</a>  
+            {% endif %} 
       </div>
     </div>
       <div id="hoveredCategoryProducts" style="display: none; position: absolute; z-index: 9999; background-color: white; overflow: hidden; width: 100%;">

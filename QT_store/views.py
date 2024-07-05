@@ -9,6 +9,7 @@ from .forms import *
 from django.contrib.auth.decorators import user_passes_test
 import random
 import string
+from django.forms import modelformset_factory
 
 def is_staff(user):
     return user.is_staff
@@ -543,3 +544,16 @@ def order_create(request):
 def user_orders(request):
     orders = Order.objects.filter(user=request.user)
     return render(request, 'my_orders.html', {'orders': orders})
+
+def commercial_offer(request):
+    ProductItemFormSet = modelformset_factory(ProductItem, form=ProductItemForm, extra=1, can_delete=True)
+    
+    if request.method == 'POST':
+        formset = ProductItemFormSet(request.POST)
+        if formset.is_valid():
+            formset.save()
+            return redirect('commercial_offer')
+    else:
+        formset = ProductItemFormSet(queryset=ProductItem.objects.none())
+
+    return render(request, 'commercial_offer.html', {'formset': formset})

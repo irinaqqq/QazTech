@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Коммерческое предложение
+{% endblock %}
+{% block content %}
+<h1>Коммерческое предложение</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% for form in formset %}
+        <div class="product-item">
+            {{ form.as_p }}
+            {% if form.instance.pk %}
+                <button type="submit" name="{{ form.prefix }}-DELETE" value="on">Удалить</button>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <button type="submit">Сохранить</button>
+</form>
+{% endblock %}
