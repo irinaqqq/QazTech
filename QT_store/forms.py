@@ -76,4 +76,9 @@ class OrderCreateForm(forms.Form):
 class ProductItemForm(forms.ModelForm):
     class Meta:
         model = ProductItem
-        fields = '__all__'
+        exclude = ('commercial_request', 'total_price', 'price')
+
+class ProductItemPriceForm(forms.ModelForm):
+    class Meta:
+        model = ProductItem
+        fields = ['price']

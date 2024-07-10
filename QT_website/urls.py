@@ -62,6 +62,13 @@ urlpatterns = [
     path('myadmin/delete/<int:pk>/', views.delete_product, name='delete_product'),
     path('myadmin/approve_request/<int:request_id>/', views.approve_request, name='approve_request'),
     path('myadmin/reject_request/<int:request_id>/', views.reject_request, name='reject_request'),
+
+    path('myadmin/commercial_requests/', views.commercial_requests_list, name='commercial_requests_list'),
+    path('myadmin/commercial_request/<int:commercial_request_id>/', views.commercial_request_detail, name='commercial_request_detail'),
+
+    path('generate_pdf/<int:commercial_request_id>/', views.generate_pdf, name='generate_pdf'),
+
+
     
 ] 
 

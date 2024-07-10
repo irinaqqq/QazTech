@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Документ A4</title>
+    <title>Коммерческое предложение</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <style>
         @page {
@@ -40,13 +40,14 @@
 <body>
     <div class="content d-flex flex-column">
         <div class="row">
-            <div class="col">«QazaQ Technologу» LTD
+            <div class="col">
+                «QazaQ Technologу» LTD
                 Жауапкершілігі шектеулі серіктестігі
                 <hr>
                 050000,Қазақстан Республикасы, Алматы қ.,
                 Мамыр-4 Мкр, 83 «А»
                 тел. +7 (727) 221-10-34 Nztech@mail.ru
-                </div>
+            </div>
             <div class="col" style="padding: 0;">
                 <img src="../../static/images/new-logo.png" alt="Логотип" style="width: 250px;">
             </div>
@@ -66,55 +67,59 @@
         <p>
             В ответ на ваш запрос ТОО “ QazaQ Technology LTD ” сообщает, о возможности поставки необходимого по вашему запросу(согласно по вашему ТЗ).        
         </p>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Товары (работы, услуги)</th>
-                        <th>№ типа</th>
-                        <th>Примечание</th>
-                        <th>Кол-во</th>
-                        <th>Ед.</th>
-                        <th>Цена с НДС за единицу (тенге)</th>
-                        <th>Итого цена с НДС (тенге)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Системный блок</td>
-                        <td>Тип 1</td>
-                        <td>1 Тб</td>
-                        <td>12</td>
-                        <td>шт.</td>
-                        <td>655 500</td>
-                        <td>7 860 000</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h7 class="fw-bold mt-3">Условия Поставки:</h7>
-            <div style="padding-left: 1rem;">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Товары (работы, услуги)</th>
+                    <th>Примечание</th>
+                    <th>Кол-во</th>
+                    <th>Ед.</th>
+                    <th>Цена с НДС за единицу (тенге)</th>
+                    <th>Итого цена с НДС (тенге)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product_item in product_items %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ product_item.category }}</td>
+                    <td>{{ product_item.notes }}</td>
+                    <td>{{ product_item.quantity }}</td>
+                    <td>шт.</td>
+                    <td>{{ product_item.price }}</td>
+                    <td>{{ product_item.total_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h7 class="fw-bold mt-3">Условия Поставки:</h7>
+        <div style="padding-left: 1rem;">
             <p class="m-0">
-                1.	Гарантийный 12 месяцев с даты подписания договора.            </p>
+                1.	Гарантийный 12 месяцев с даты подписания договора.            
+            </p>
             <p class="m-0">
-                2.	Товар будет новым, не восстановленным (ранее не бывшие в эксплуатации), без дефектов.            </p>
+                2.	Товар будет новым, не восстановленным (ранее не бывшие в эксплуатации), без дефектов.            
+            </p>
             <p class="m-0">
-                3.	Условия оплаты предоплата 0% промежуточный платеж 0% окончательный платеж 100%.            </p>
+                3.	Условия оплаты предоплата 0% промежуточный платеж 0% окончательный платеж 100%.            
+            </p>
             <p class="m-0">
-                4.	Условия поставок 60 дней с подписания договора            </p>
+                4.	Условия поставок 60 дней с подписания договора            
+            </p>
+        </div>
+        <div class="row mt-5">
+            <div class="col fw-bold">
+                Директор                                                                                                             
+                ТОО «QazaQ Technologу» LTD
             </div>
-            <div class="row mt-5">
-                <div class="col fw-bold">
-                    Директор                                                                                                             
-                    ТОО «QazaQ Technologу» LTD
-                    </div>
-                <div class="col">
-                    <img src="../../static/images/pech.png" alt="Логотип" style="width: 250px;">
-                </div>
-                <div class="col fw-bold text-end">
-                    Еламанов А.З.
-                </div>
+            <div class="col">
+                <img src="../../static/images/pech.png" alt="Логотип" style="width: 250px;">
             </div>
+            <div class="col fw-bold text-end">
+                Еламанов А.З.
+            </div>
+        </div>
     </div>
 </body>
 </html>

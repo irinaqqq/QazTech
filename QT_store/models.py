@@ -396,10 +396,21 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.quantity} x {self.product.name} in Order {self.order.id}"
     
+  
+class CommercialRequest(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='commercial_requests')
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_processed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Request {self.id} by {self.user.username}"
 
 class ProductItem(models.Model):
+    commercial_request = models.ForeignKey(CommercialRequest, on_delete=models.CASCADE, related_name='product_items')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='product_items')
     quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    total_price = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     processors = models.ManyToManyField(Processor, blank=True)
     processor_notes = models.TextField(blank=True, null=True)
     motherboards = models.ManyToManyField(Motherboard, blank=True)

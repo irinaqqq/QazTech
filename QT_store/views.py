@@ -9,7 +9,10 @@ from .forms import *
 from django.contrib.auth.decorators import user_passes_test
 import random
 import string
-from django.forms import modelformset_factory
+from decimal import Decimal
+
+
+
 
 def is_staff(user):
     return user.is_staff
@@ -546,14 +549,66 @@ def user_orders(request):
     return render(request, 'my_orders.html', {'orders': orders})
 
 def commercial_offer(request):
-    ProductItemFormSet = modelformset_factory(ProductItem, form=ProductItemForm, extra=1, can_delete=True)
+    ProductItemFormSet = inlineformset_factory(
+        CommercialRequest,
+        ProductItem,
+        form=ProductItemForm,  # Замените ProductItemForm на вашу форму продукта
+        fields='__all__',
+        extra=1,
+        can_delete=True,
+    )
     
     if request.method == 'POST':
-        formset = ProductItemFormSet(request.POST)
+        formset = ProductItemFormSet(request.POST, request.FILES, instance=None)
+        
         if formset.is_valid():
-            formset.save()
-            return redirect('commercial_offer')
+            commercial_request = CommercialRequest.objects.create(user=request.user)
+            instances = formset.save(commit=False)
+            
+            for instance in instances:
+                instance.commercial_request = commercial_request
+                instance.save()
+                formset.save_m2m()  # Сохраняем ManyToMany поля после сохранения основной модели
+
+            return redirect('home')
+
     else:
-        formset = ProductItemFormSet(queryset=ProductItem.objects.none())
+        formset = ProductItemFormSet(instance=None)
 
     return render(request, 'commercial_offer.html', {'formset': formset})
+
+
+def commercial_requests_list(request):
+    commercial_requests = CommercialRequest.objects.all()
+    return render(request, 'admin_templates/commercial_requests_list.html', {'commercial_requests': commercial_requests})
+
+def commercial_request_detail(request, commercial_request_id):
+    commercial_request = get_object_or_404(CommercialRequest, pk=commercial_request_id)
+    product_items = commercial_request.product_items.all()
+
+    if request.method == 'POST':
+        for product_item in product_items:
+            product_item_id = request.POST.get(f'product_item_id_{product_item.id}')
+            if product_item_id:
+                price = request.POST.get(f'price_{product_item.id}')
+                product_item.price = Decimal(price)
+                print(product_item.price)
+                print(product_item.quantity)
+                product_item.total_price = product_item.price * product_item.quantity
+                print(product_item.total_price)
+                product_item.save()
+                
+        return redirect('commercial_requests_list')
+
+    context = {
+        'commercial_request': commercial_request,
+        'product_items': product_items,
+    }
+    return render(request, 'admin_templates/commercial_request_detail.html', context)
+
+
+import pdfkit
+config = pdfkit.configuration(wkhtmltopdf=r"C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe")
+
+def generate_pdf(request, commercial_request_id):
+    

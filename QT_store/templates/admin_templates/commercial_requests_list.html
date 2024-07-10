@@ -1,0 +1,8 @@
+<div class="container">
+    <h2>Список коммерческих запросов</h2>
+    <ul>
+        {% for commercial_request in commercial_requests %}
+            <li><a href="{% url 'commercial_request_detail' commercial_request.id %}">Запрос {{ commercial_request.id }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
