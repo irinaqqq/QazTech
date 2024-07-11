@@ -1,0 +1,216 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Коммерческое предложение</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: auto;
+            padding: 0;
+            width: 210mm;
+            /* height: 297mm; */
+            box-sizing: border-box;
+            font-size: 13px;
+            line-height: 1.5;
+            user-select: none; /* Запрещаем выделение текста */
+            -webkit-user-select: none; /* Для старых версий WebKit */
+            -moz-user-select: none; /* Для Firefox */
+            -ms-user-select: none; /* Для IE/Edge */
+                        /* Устанавливаем изображение как фон */
+        }
+        .content {
+            padding: 15mm;
+            position: relative;
+        }
+
+
+        .content:after {
+        content: '';
+        position: absolute; /* Используем absolute вместо fixed */
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: url('{% static 'images/new-logo.png' %}');
+        opacity: 0.1;
+        pointer-events: none;
+    }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            text-align: justify;
+        }
+        hr{
+            margin: 0;
+            opacity: 1;
+        }
+        .row{
+            --bs-gutter-x: 1.5rem;
+            --bs-gutter-y: 0;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: calc(-1* var(--bs-gutter-y));
+            margin-right: calc(-.5* var(--bs-gutter-x));
+            margin-left: calc(-.5* var(--bs-gutter-x));
+        }
+        .col{
+            flex: 1 0 0%;
+        }
+        .row>* {
+            flex-shrink: 0;
+            width: 100%;
+            max-width: 100%;
+            padding-right: calc(var(--bs-gutter-x)* .5);
+            padding-left: calc(var(--bs-gutter-x)* .5);
+            margin-top: var(--bs-gutter-y);
+        }
+        table{
+            width: 100%;
+            margin-bottom: 1rem;
+            vertical-align: top;
+            border: 1px solid #dee2e6;
+            border-collapse: collapse;
+        }
+        th, td{
+            border: 1px solid #dee2e6;
+            border-collapse: collapse;
+        }
+        .table>:not(caption)>*>* {
+            padding: .5rem .5rem
+        }
+        .fw-bold{
+            font-weight: 700
+        }
+        .m-0{
+            margin: 0;
+        }
+        .mt-5{
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <input type="hidden" id="commercial_request_id" value="{{ commercial_request.id }}">
+    <div class="content2">
+    <div class="content" style="display: flex; flex-direction: column;" id="content">
+        <div class="row">
+            <div class="col">
+                «QazaQ Investment Company»
+                Жауапкершілігі шектеулі серіктестігі
+                <hr>
+                050000,Қазақстан Республикасы, Алматы қ.,
+                Райымбека көшесі, 519/3
+                <br>
+                тел. +7 (747) 700-90-49 info@qt.com.kz
+            </div>
+            <div class="col" style="padding: 0;">
+                <img src="{% static 'images/new-logo.png' %}" alt="Логотип" style="width: 250px;">
+            </div>
+            <div class="col">
+                Товарищество с ограниченной ответственностью
+                «QazaQ Investment Company»
+                <hr>
+                050000,  Республика  Казахстан,  г.  Алматы,
+                улица Райымбека, 519/3
+                тел. +7 (747) 700-90-49 info@qt.com.kz
+
+            </div>
+        </div>
+        <hr style="margin-top: 0.5rem;">
+        <p style="margin: 1rem;">Исх.: {{ commercial_request.id }} от {{ commercial_request.created_at }}</p>
+        <h7 style="font-weight: 700; margin-bottom: 1rem; text-align: center;">Коммерческое предложение</h7>
+        <p style="margin-top: 0">
+            В ответ на ваш запрос ТОО «QazaQ Investment Company» сообщает, о возможности поставки необходимого по вашему запросу(согласно по вашему ТЗ).        
+        </p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Товары (работы, услуги)</th>
+                    <th>Примечание</th>
+                    <th>Кол-во</th>
+                    <th>Ед.</th>
+                    <th>Цена с НДС за единицу (тенге)</th>
+                    <th>Итого цена с НДС (тенге)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product_item in product_items %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ product_item.category }}</td>
+                    <td>{{ product_item.notes }}</td>
+                    <td>{{ product_item.quantity }}</td>
+                    <td>шт.</td>
+                    <td>{{ product_item.price }}</td>
+                    <td>{{ product_item.total_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h7 class="fw-bold mt-3">Условия Поставки:</h7>
+        <div style="padding-left: 1rem;">
+            <p class="m-0">
+                1.	Гарантийный 12 месяцев с даты подписания договора.            
+            </p>
+            <p class="m-0">
+                2.	Товар будет новым, не восстановленным (ранее не бывшие в эксплуатации), без дефектов.            
+            </p>
+            <p class="m-0">
+                3.	Условия оплаты предоплата 0% промежуточный платеж 0% окончательный платеж 100%.            
+            </p>
+            <p class="m-0">
+                4.	Условия поставок 60 дней с подписания договора            
+            </p>
+        </div>
+        <div class="row mt-5">
+            <div class="col fw-bold">
+                Директор                                                                                                             
+                ТОО «QazaQ Investment Company»
+            </div>
+            <div class="col" style="display: flex; justify-content: center;">
+                <img src="{% static 'images/pech2.png' %}" alt="Логотип" style="width: 170px;">
+            </div>
+            <div class="col fw-bold text-end" style="text-align: right;">
+                Абишкен М.
+            </div>
+        </div>
+    </div>
+</div>
+    <input type="button" id="rep" value="Print" class="btn btn-info btn_print">
+    <script type="text/javascript">
+        $(document).ready(function($) { 
+            $(document).on('click', '.btn_print', function(event) {
+                event.preventDefault();
+                var commercialRequestId = $('#commercial_request_id').val();
+                var filename = 'commercial_request_' + commercialRequestId + '.pdf';
+                var element = document.getElementById('content'); 
+                var opt = {
+                margin:       0.1,
+                filename:     filename,
+                image:        { type: 'png', quality: 1 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+                html2canvas:  { scale: 2, scrollY: 0 }
+            };
+                html2pdf().from(element).set(opt).save();
+            });
+        });
+    </script>
+    
+</body>
+</html>

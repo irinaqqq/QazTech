@@ -11,9 +11,6 @@ import random
 import string
 from decimal import Decimal
 
-
-
-
 def is_staff(user):
     return user.is_staff
 
@@ -606,9 +603,12 @@ def commercial_request_detail(request, commercial_request_id):
     }
     return render(request, 'admin_templates/commercial_request_detail.html', context)
 
+def commercial_request_document(request, commercial_request_id):
+    commercial_request = get_object_or_404(CommercialRequest, pk=commercial_request_id)
+    product_items = commercial_request.product_items.all()
 
-import pdfkit
-config = pdfkit.configuration(wkhtmltopdf=r"C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe")
-
-def generate_pdf(request, commercial_request_id):
-    
+    context = {
+        'commercial_request': commercial_request,
+        'product_items': product_items,
+    }
+    return render(request, 'admin_templates/commercial_request_document.html', context)

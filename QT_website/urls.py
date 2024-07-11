@@ -65,11 +65,7 @@ urlpatterns = [
 
     path('myadmin/commercial_requests/', views.commercial_requests_list, name='commercial_requests_list'),
     path('myadmin/commercial_request/<int:commercial_request_id>/', views.commercial_request_detail, name='commercial_request_detail'),
-
-    path('generate_pdf/<int:commercial_request_id>/', views.generate_pdf, name='generate_pdf'),
-
-
-    
+    path('myadmin/commercial_request/document/<int:commercial_request_id>/', views.commercial_request_document, name='commercial_request_document'),  
 ] 
 
 # Добавьте обработку медиа-файлов

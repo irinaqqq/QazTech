@@ -11,8 +11,7 @@
 <body>
     <div class="container">
         <h2>Детали коммерческого запроса {{ commercial_request.id }}</h2>
-        <a href="{% url 'generate_pdf' commercial_request_id=commercial_request.id %}" class="btn btn-primary" target="_blank">Загрузить PDF</a>
-
+        <a href="{% url 'commercial_request_document' commercial_request.id %}" class="btn btn-primary">Получить документ</a>
         <form method="POST">
             {% csrf_token %}
             <table class="table">
@@ -21,6 +20,7 @@
                         <th>Товар</th>
                         <th>Категория</th>
                         <th>Количество</th>
+                        
                         <th>Процессоры</th>
                         <th>Материнские платы</th>
                         <!-- Добавьте другие поля модели ProductItem, которые нужно показать -->
