@@ -28,9 +28,6 @@ class ProductDescriptionForm(forms.ModelForm):
         model = ProductDescription
         fields = ['title', 'image', 'text']
 
-ProductImageFormSet = inlineformset_factory(Product, ProductImage, form=ProductImageForm, extra=1, can_delete=True)
-ProductDescriptionFormSet = inlineformset_factory(Product, ProductDescription, form=ProductDescriptionForm, extra=1, can_delete=True)
-
 class RegistrationRequestForm(forms.ModelForm):
     class Meta:
         model = RegistrationRequest

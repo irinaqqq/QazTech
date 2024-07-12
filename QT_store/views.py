@@ -319,21 +319,14 @@ def users(request):
 def add_product(request):
     ImageFormSet = inlineformset_factory(Product, ProductImage, form=ProductImageForm, extra=1, can_delete=True)
     DescriptionFormSet = inlineformset_factory(Product, ProductDescription, form=ProductDescriptionForm, extra=1, can_delete=True)
-
+    
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
         image_formset = ImageFormSet(request.POST, request.FILES, instance=Product())
         description_formset = DescriptionFormSet(request.POST, request.FILES, instance=Product())
 
         if form.is_valid() and image_formset.is_valid() and description_formset.is_valid():
-            product = form.save(commit=False)
-
-            # Проверяем и обрабатываем поля с температурой и влажностью
-            fields_to_check = ['features','operating_temperature', 'storage_temperature', 'operating_humidity', 'storage_humidity']
-            for field_name in fields_to_check:
-                if getattr(product, field_name) is None:
-                    setattr(product, field_name, '')
-
+            product = form.save()
             product.save()
 
             instances = image_formset.save(commit=False)
@@ -370,7 +363,6 @@ def edit_product(request, pk):
     product = get_object_or_404(Product, pk=pk)
     ImageFormSet = inlineformset_factory(Product, ProductImage, form=ProductImageForm, extra=1, can_delete=True)
     DescriptionFormSet = inlineformset_factory(Product, ProductDescription, form=ProductDescriptionForm, extra=1, can_delete=True)
-
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         image_formset = ImageFormSet(request.POST, request.FILES, instance=product)
@@ -378,12 +370,6 @@ def edit_product(request, pk):
 
         if form.is_valid() and image_formset.is_valid() and description_formset.is_valid():
             product = form.save()  # Save the main product form
-            
-            fields_to_check = ['features','operating_temperature', 'storage_temperature', 'operating_humidity', 'storage_humidity']
-            for field_name in fields_to_check:
-                if getattr(product, field_name) is None:
-                    setattr(product, field_name, '')
-
             product.save()
 
             # Сохраняем изображения и обрабатываем удаление
@@ -549,7 +535,7 @@ def commercial_offer(request):
     ProductItemFormSet = inlineformset_factory(
         CommercialRequest,
         ProductItem,
-        form=ProductItemForm,  # Замените ProductItemForm на вашу форму продукта
+        form=ProductItemForm, 
         fields='__all__',
         extra=1,
         can_delete=True,

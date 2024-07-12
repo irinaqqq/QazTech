@@ -2470,7 +2470,7 @@ a{
 .img {
   width: 200px;
   height: 200px;
-  animation: scroll 30s linear infinite;
+  animation: scroll 50s linear infinite;
   object-fit: contain;
 }
 

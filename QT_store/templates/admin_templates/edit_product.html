@@ -23,7 +23,11 @@
           </div>
           <div class="col-12">
             <label for="{{ form.features.id_for_label }}" class="form-label">Особенности (кратко)<span class="text-muted"></span></label>
-            <input type="text" name="features" id="{{ form.features.id_for_label }}" class="form-control" value="{{ product.features }}">
+            <input type="text" name="features" id="{{ form.features.id_for_label }}" class="form-control"
+            {% if product.features %}
+                value="{{ product.features }}"
+            {% endif %}
+            >
         </div>
           <div class="col-12">
             <label for="{{ form.description.id_for_label }}" class="form-label">Описание<span class="text-muted"></span></label>
@@ -80,9 +84,9 @@
                 <option value="" disabled selected>Выберите оперативную память</option>
                 {% for ram in form.ram.field.queryset %}
                     {% if ram in product.ram.all %}
-                        <option value="{{ ram.id }}" selected>{{ ram }}</option>
+                        <option value="{{ ram.id }}" selected>{{ ram.size }} ГБ ({{ ram.type }})</option>
                     {% else %}
-                        <option value="{{ ram.id }}">{{ ram }}</option>
+                        <option value="{{ ram.id }}">{{ ram.size }} ГБ ({{ ram.type }})</option>
                     {% endif %}
                 {% endfor %}
             </select>
@@ -288,21 +292,36 @@
             
             <div class="col-sm-6">
                 <label for="id_operating_temperature" class="form-label">Температура эксплуатации</label>
-                <input type="text" name="operating_temperature" id="id_operating_temperature" class="form-control" placeholder="Введите температуру эксплуатации" value="{{ product.operating_temperature }}">
+                <input type="text" name="operating_temperature" id="id_operating_temperature" class="form-control" placeholder="Введите температуру эксплуатации"
+                    {% if product.operating_temperature %}
+                        value="{{ product.operating_temperature }}"
+                    {% endif %}
+                >
             </div>
             <div class="col-sm-6">
                 <label for="id_storage_temperature" class="form-label">Температура хранения</label>
-                <input type="text" name="storage_temperature" id="id_storage_temperature" class="form-control" placeholder="Введите температуру хранения" value="{{ product.storage_temperature }}">
+                <input type="text" name="storage_temperature" id="id_storage_temperature" class="form-control" placeholder="Введите температуру хранения"
+                    {% if product.storage_temperature %}
+                        value="{{ product.storage_temperature }}"
+                    {% endif %}
+                >
             </div>
             <div class="col-sm-6">
                 <label for="id_operating_humidity" class="form-label">Рабочая влажность</label>
-                <input type="text" name="operating_humidity" id="id_operating_humidity" class="form-control" placeholder="Введите рабочую влажность" value="{{ product.operating_humidity }}">
+                <input type="text" name="operating_humidity" id="id_operating_humidity" class="form-control" placeholder="Введите рабочую влажность"
+                    {% if product.operating_humidity %}
+                        value="{{ product.operating_humidity }}"
+                    {% endif %}
+                >
             </div>
             <div class="col-sm-6">
                 <label for="id_storage_humidity" class="form-label">Влажность хранения</label>
-                <input type="text" name="storage_humidity" id="id_storage_humidity" class="form-control" placeholder="Введите влажность хранения" value="{{ product.storage_humidity }}">
-            </div>
-            
+                <input type="text" name="storage_humidity" id="id_storage_humidity" class="form-control" placeholder="Введите влажность хранения"
+                    {% if product.storage_humidity %}
+                        value="{{ product.storage_humidity }}"
+                    {% endif %}
+                >
+            </div>            
         </div>
           <hr class="my-4">
           <div class="row g-3">
