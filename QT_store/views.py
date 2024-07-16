@@ -10,6 +10,9 @@ from django.contrib.auth.decorators import user_passes_test
 import random
 import string
 from decimal import Decimal
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 
 def is_staff(user):
     return user.is_staff
@@ -115,13 +118,7 @@ def whowe(request):
     return render(request, 'whowe.html')
 
 def partners_view(request):
-    if request.method == 'POST':
-        form = RegistrationRequestForm(request.POST)
-        if form.is_valid():
-            form.save()
-    else:
-        form = RegistrationRequestForm()
-    return render(request, 'partners.html', {'form': form})
+    return render(request, 'partners.html')
 
 def contactus(request):
     if request.method == 'POST':
@@ -213,9 +210,14 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-@user_passes_test(is_staff, login_url='/')
 def signup_view(request):
-    return render(request, 'signup.html')
+    if request.method == 'POST':
+        form = RegistrationRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = RegistrationRequestForm()
+    return render(request, 'signup.html', {'form': form})
 
 
 
@@ -429,8 +431,18 @@ def approve_request(request, request_id):
 
         registration_request.status = 'approved'
         registration_request.save()
-        # Отправка email (позже добавить)
-        # send_mail('Your Account Details', f'Your password is {password}', 'from@example.com', [registration_request.email])
+
+        try:
+            send_mail(
+                'Your Account Details',
+                f'Your password is {password}',
+                'info@qt.com.kz',
+                [registration_request.email],
+                fail_silently=False,
+            )
+        except Exception as e:
+            # Логирование ошибки или выполнение других действий
+            print(f"Error sending email: {e}")
     return redirect('requests')
 
 @staff_member_required
@@ -598,3 +610,14 @@ def commercial_request_document(request, commercial_request_id):
         'product_items': product_items,
     }
     return render(request, 'admin_templates/commercial_request_document.html', context)
+
+@login_required
+def profile_view(request):
+    try:
+        custom_profile = Custom.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        custom_profile = None
+    return render(request, 'profile.html', {
+        'user': request.user,
+        'custom_profile': custom_profile
+    })

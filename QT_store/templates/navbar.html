@@ -4,14 +4,8 @@
       <div class="container-fluid" style="width: 100%; margin: 0;">
         <div class="row" style="width: auto;">
           <div class="col-md-3 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
-            <a href="{% url 'home' %}" class="ms-md-2 d-flex">
-              <img src="{% static 'images/qt3.png' %}" height="50" />
-            <div style="color: #00a2e8; line-height: 1.2rem; padding-top: 0.5rem;" class="my-auto font-inter">
-              <strong style="font-size: 35px;" class="font-inter">QAZAQ</strong> 
-              <br>
-              <p style="font-size: 16px; color: black;"><strong> TECHNOLOGY</strong></p>
-            </div>
-            <!-- <img src="{% static 'images/new-logo.png' %}" height="50" /> -->
+            <a href="{% url 'home' %}" class="d-flex">
+            <img src="{% static 'images/new-logo.png' %}" height="50" />
           </a>
           </div>
           <div class="col-md-5 justify-content-center align-items-center my-auto">
@@ -30,24 +24,27 @@
           {% if user.is_authenticated %}
           <!-- <h style="font-size: 19px;">{{ user.username }}</h> -->
           <a href="{% url 'cart' %}" style="margin-left:1rem;"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
-          <a href="{% url 'user_orders' %}" style="margin-left:1rem;">Мои заказы</a>
           {% if user.is_staff %}
           <a href="{% url 'dashboard' %}" style="margin-left:1rem;">Панель управления</a>
           {% endif %}
+          <a href="{% url 'profile' %}" style="margin-left:1rem;">Профиль</a>
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
             <button type="submit" class="exit-bt">Выход</button>
           </form>
+          {% else %}
+          <a href="{% url 'login' %}" class="text-muted" style="margin-left:1rem; font-size: 16px;">Вход</a>
+          <a href="{% url 'signup' %}" class="text-muted" style="margin-left:1rem; font-size: 16px;">Регистрация</a>
           {% endif %}
+
         </div>
       </div>
     </div>
-        <div class="navbar-nav flex-row borderXwidth d-flex flex-wrap" id="myTopnav" style="width: 100%; padding: 1rem;">
+        <div class="navbar-nav flex-row borderXwidth d-flex flex-wrap" id="myTopnav">
           {% for category in categories %}
           <a class="nav-link flex-fill" href="{% url 'category_products' category.id %}" data-category-id="{{ category.id }}">{{ category.name }}</a>
             {% endfor %}   
-            {% if user.is_authenticated %}
-            <a class="nav-link flex-fill" href="{% url 'commercial_offer' %}">Получить КП</a>  
+            {% if user.is_authenticated %}  
             {% endif %} 
       </div>
     </div>

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Профиль
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>{{ user.username }}'s Profile</h1>
+    <p>First Name: {{ user.first_name }}</p>
+    <p>Last Name: {{ user.last_name }}</p>
+    <p>Email: {{ user.email }}</p>
+    {% if custom_profile %}
+        <p>Phone Number: {{ custom_profile.phone_number }}</p>
+        <p>Organization: {{ custom_profile.organization }}</p>
+    {% else %}
+        <p>Phone Number: Not provided</p>
+        <p>Organization: Not provided</p>
+    {% endif %}
+    <a href="{% url 'commercial_offer' %}" style="margin-left:1rem;">Получить КП</a>
+    <a href="{% url 'user_orders' %}" style="margin-left:1rem;">Мои заказы</a>
+</div>
+{% endblock %}

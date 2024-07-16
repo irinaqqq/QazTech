@@ -42,11 +42,11 @@ urlpatterns = [
     path('get_category_products/', views.get_category_products, name='get_category_products'),
     path('lab/', views.lab, name='lab'),
     path('login/', views.login_view, name='login'),
+    path('signup/', views.signup_view, name='signup'),
+    path('profile/', views.profile_view, name='profile'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('commercial_offer/', views.commercial_offer, name='commercial_offer'),
     
-    path('signup/', views.signup_view, name='signup'),
-
     path('myadmin/dashboard/', views.dashboard, name='dashboard'),
     path('myadmin/feedbacks/', views.feedbacks, name='feedbacks'),
     path('myadmin/update_feedbacks_read_status/', views.update_feedbacks_read_status, name='update_feedbacks_read_status'),
