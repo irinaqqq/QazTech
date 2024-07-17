@@ -2288,6 +2288,12 @@ a{
  .need-pad{
   padding-bottom: 1.5rem;
  }
+ .navs-right{
+  display: none !important;
+ }
+ .container-fluid{
+  padding-bottom: 1.5rem; 
+ }
 }
 
 @media screen and (max-width: 600px) {
@@ -2419,8 +2425,8 @@ a{
   padding: 1rem;
 }
 .navs{
-    display: none;
-  }
+    display: none !important;
+}
 @media screen and (max-width: 600px) {
   .navbar-nav a {display: none;}
   .navbar-nav a.icon {
@@ -2435,7 +2441,7 @@ a{
     padding: 0;
   }
   .navs{
-    display: block;
+    display: flex !important;
   }
   .title{
     padding-top: 1rem;

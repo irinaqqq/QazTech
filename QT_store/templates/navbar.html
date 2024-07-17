@@ -12,25 +12,26 @@
             <form action="{% url 'search' %}" method="GET" class="d-flex input-group w-auto my-auto md-4 rounded">
               <input autocomplete="off" type="search" name="q" class="form-control form-control-lg" placeholder="Что вы ищете сегодня?" style="padding: 24px;"/>
               <button type="submit" class="btn btn-primary d-none d-lg-flex py-auto" style="box-shadow: none; border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;"><i class="fas fa-search" style="margin: auto;"></i></button>
-              <div class="navs" style="margin-left: 1rem;">
+              <div class="navs d-flex align-items-center" style="margin-left: 1rem;">
               <a href="javascript:void(0);" class="icon" onclick="myFunction()" style="color: #00a2e8;">
                 <i class="fa fa-bars fa-3x"></i>
               </a> 
+              <!-- <i class="fa-solid fa-right-to-bracket"></i> -->
               </div>    
           </form>      
 
         </div>
-        <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center"> 
+        <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center navs-right"> 
           {% if user.is_authenticated %}
           <!-- <h style="font-size: 19px;">{{ user.username }}</h> -->
-          <a href="{% url 'cart' %}" style="margin-left:1rem;"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
+          <a href="{% url 'cart' %}" class="" style="margin-left:1rem; color:#00a2e8; margin-right: 1rem;"><i class="fa-solid fa-basket-shopping fa-2x"></i></a>
           {% if user.is_staff %}
-          <a href="{% url 'dashboard' %}" style="margin-left:1rem;">Панель управления</a>
+          <a href="{% url 'dashboard' %}" class="text-muted" style="margin-left:1rem;font-size: 16px;">Панель управления</a>
           {% endif %}
-          <a href="{% url 'profile' %}" style="margin-left:1rem;">Профиль</a>
+          <a href="{% url 'profile' %}" class="text-muted" style="margin-left:1rem; font-size: 16px;">Профиль</a>
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
-            <button type="submit" class="exit-bt">Выход</button>
+            <button type="submit" class="exit-bt text-muted" style="font-size: 16px;">Выход</button>
           </form>
           {% else %}
           <a href="{% url 'login' %}" class="text-muted" style="margin-left:1rem; font-size: 16px;">Вход</a>

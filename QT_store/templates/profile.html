@@ -4,19 +4,151 @@
 Профиль
 {% endblock %}
 {% block content %}
-<div class="container">
-    <h1>{{ user.username }}'s Profile</h1>
-    <p>First Name: {{ user.first_name }}</p>
-    <p>Last Name: {{ user.last_name }}</p>
-    <p>Email: {{ user.email }}</p>
+<div class="container d-flex" style="min-height: 42.5vh">
+    <!-- <div class="row p-5 my-auto w-100">
+        <div class="col-6 card p-3">
+    <p>{{ user.first_name }} {{ user.last_name }}</p>
+    <p>Почта: {{ user.email }}</p>
     {% if custom_profile %}
-        <p>Phone Number: {{ custom_profile.phone_number }}</p>
-        <p>Organization: {{ custom_profile.organization }}</p>
+        <p>Номер телефона: {{ custom_profile.phone_number }}</p>
+        <p>Организация: {{ custom_profile.organization }}</p>
     {% else %}
-        <p>Phone Number: Not provided</p>
-        <p>Organization: Not provided</p>
+        <p>Номер телефона: Не указан</p>
+        <p>Организация: Не указана</p>
     {% endif %}
-    <a href="{% url 'commercial_offer' %}" style="margin-left:1rem;">Получить КП</a>
-    <a href="{% url 'user_orders' %}" style="margin-left:1rem;">Мои заказы</a>
 </div>
+<div class="col-3">
+    <a href="{% url 'commercial_offer' %}" style="margin-left:1rem;">Получить Коммерческое Предложение</a>
+</div>
+<div class="col-3">
+    <a href="{% url 'user_orders' %}" style="margin-left:1rem;">Мои Заказы</a>
+</div>
+    </div> -->
+<!-- </div> -->
+
+<div class="mt-3 d-flex flex-column">
+<div class="px-3 py-2 bg-white">
+    <!-- Pills navs -->
+    <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+      <li class="nav-item d-flex" role="presentation">
+        <a class="nav-link d-flex align-items-center justify-content-center w-100 active h-auto" id="ex1-tab-1" data-mdb-toggle="pill" href="#ex1-pills-1" role="tab" aria-controls="ex1-pills-1" aria-selected="true">Информация об аккаунте</a>
+      </li>
+      <li class="nav-item d-flex" role="presentation">
+        <a class="nav-link d-flex align-items-center justify-content-center w-100 h-auto" id="ex1-tab-2" data-mdb-toggle="pill" href="#ex1-pills-2" role="tab" aria-controls="ex1-pills-2" aria-selected="false">Смена пароля</a>
+      </li>
+      <li class="nav-item d-flex" role="presentation">
+        <a class="nav-link d-flex align-items-center justify-content-center w-100 h-auto" id="ex1-tab-3" data-mdb-toggle="pill" href="#ex1-pills-3" role="tab" aria-controls="ex1-pills-3" aria-selected="false">Мои заказы</a>
+      </li>
+      <li class="nav-item d-flex" role="presentation">
+        <a class="nav-link d-flex align-items-center justify-content-center w-100 h-auto" id="ex1-tab-4" data-mdb-toggle="pill" href="#ex1-pills-4" role="tab" aria-controls="ex1-pills-4" aria-selected="false">Мои Коммерческие Предложения</a>
+      </li>
+    </ul>
+    <!-- Pills navs -->
+
+    <!-- Pills content -->
+    <div class="tab-content" id="ex1-content">
+      <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+        <table class="table border mt-3 mb-2">
+            <tr>
+              <th class="py-2 align-middle">Имя и Фамилиия:</th>
+              <td class="py-2 text-break">
+                {{ user.first_name }} {{ user.last_name }}
+              </td>
+          </tr>
+          <tr>
+            <th class="py-2 align-middle">Почта:</th>
+            <td class="py-2 text-break">
+                {{ user.email }}
+            </td>
+        </tr> 
+        {% if custom_profile %}
+        <tr>
+          <th class="py-2 align-middle">Номер телефона:</th>
+          <td class="py-2 text-break">
+            {{ custom_profile.phone_number }}
+          </td>
+      </tr>
+      <tr>
+        <th class="py-2 align-middle">Организация:</th>
+        <td class="py-2 text-break">
+            {{ custom_profile.organization }}
+        </td>
+    </tr> 
+        {% endif %}
+    </table>
+      </div>
+      <div class="tab-pane fade mb-2" id="ex1-pills-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+      <form method="post" class="password-change-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_old_password">Старый пароль:</label>
+            <input type="password" name="old_password" id="id_old_password" class="form-control" required>
+        </div>
+          
+        <div class="form-group">
+            <label for="id_new_password1">Новый пароль:</label>
+            <input type="password" name="new_password1" id="id_new_password1" class="form-control" required>
+        </div>
+        <small class="form-text text-muted">
+          Пароль не должен быть слишком похож на другую вашу личную информацию.<br>
+          Ваш пароль должен содержать как минимум 8 символов.<br>
+          Пароль не должен быть слишком простым и распространенным.<br>
+          Пароль не может состоять только из цифр.
+        </small>
+        
+        <div class="form-group">
+            <label for="id_new_password2">Подтвердите новый пароль:</label>
+            <input type="password" name="new_password2" id="id_new_password2" class="form-control" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100 mt-3">Сменить пароль</button>
+      </form>
+
+      </div>
+      <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+        <table class="table border mt-3 mb-2">
+          <thead>
+              <tr>
+                  <th>ID</th>
+                  <th>Статус</th>
+                  <th>Дата создания</th>
+                  <th>Адрес доставки</th>
+                  <th>Цена</th>
+                  <th>Примечания и количество</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for order in orders %}
+              <tr>
+                  <td>{{ order.id }}</td>
+                  <td>{{ order.get_status_display }}</td>
+                  <td>{{ order.created_at }}</td>
+                  <td>{{ order.delivery_address }}</td>
+                  {% if order.total_price == 0 %}
+                  <td>Цена не утверждена</td>
+                  {% else %}
+                  <td>{{ order.total_price }}</td>
+                  {% endif %}
+                  <td>
+                      <ul>
+                          {% for item in order.items.all %}
+                          <li>{{ item.product.name }} - Количество: {{ item.quantity }} - Примечание: {{ item.note }}</li>
+                          {% endfor %}
+                      </ul>
+                  </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      </div>
+    </div>
+    <!-- Pills content -->
+  </div>
+  <div class="mx-3 mt-auto">
+  <button class="btn btn-primary shadow-0 w-100 d-block" type="submit">Получить Коммерческое Предложение</button>
+</div>
+  </div>
+</div>
+<script src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Free_6.2.0/js/mdb.min.js"></script>
 {% endblock %}

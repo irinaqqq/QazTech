@@ -13,6 +13,8 @@ from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 def is_staff(user):
     return user.is_staff
@@ -434,8 +436,25 @@ def approve_request(request, request_id):
 
         try:
             send_mail(
-                'Your Account Details',
-                f'Your password is {password}',
+                'Добро пожаловать на qazaqtechnology.kz!',
+                f'''
+                Уважаемый(ая) {registration_request.first_name},
+
+                Благодарим вас за регистрацию на сайте qazaqtechnology.kz. Мы рады приветствовать вас на нашем сайте!
+
+                Ваши учетные данные для входа:
+                Логин: {registration_request.email}
+                Пароль: {password}
+
+                Теперь у вас есть возможность добавлять товары в корзину и совершать покупки, а также запрашивать коммерческие предложения, специально подобранные под ваши нужды.
+
+                Если у вас возникнут какие-либо вопросы или вам потребуется помощь, пожалуйста, не стесняйтесь обращаться в нашу службу поддержки по адресу info@qt.com.kz. Мы всегда готовы помочь вам!
+
+                Спасибо за то, что выбрали qazaqtechnology.kz. Желаем вам приятных покупок!
+
+                С уважением,
+                Команда qazaqtechnology.kz
+                ''',
                 'info@qt.com.kz',
                 [registration_request.email],
                 fail_silently=False,
@@ -492,7 +511,7 @@ def clean_unused_images():
 
 
 def cart(request):
-    cart = get_object_or_404(Cart, user=request.user)
+    cart, created = Cart.objects.get_or_create(user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
     return render(request, 'cart.html', {'cart_items': cart_items})
 
@@ -613,11 +632,24 @@ def commercial_request_document(request, commercial_request_id):
 
 @login_required
 def profile_view(request):
+    orders = Order.objects.filter(user=request.user)
     try:
         custom_profile = Custom.objects.get(user=request.user)
     except ObjectDoesNotExist:
         custom_profile = None
+
+    if request.method == 'POST':
+        password_form = PasswordChangeForm(request.user, request.POST)
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)  # Important!
+            return redirect('profile')  # Redirect to the profile page after password change
+    else:
+        password_form = PasswordChangeForm(request.user)
+
     return render(request, 'profile.html', {
         'user': request.user,
-        'custom_profile': custom_profile
+        'custom_profile': custom_profile,
+        'password_form': password_form,
+        'orders': orders
     })
