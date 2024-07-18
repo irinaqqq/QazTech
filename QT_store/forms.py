@@ -49,6 +49,8 @@ class AddToCartForm(forms.ModelForm):
         super(AddToCartForm, self).__init__(*args, **kwargs)
         if product:
             self.fields['product'].initial = product
+            self.fields['product'].disabled = True
+            self.fields['product'].widget = forms.HiddenInput()
             self.fields['processor'].queryset = product.processor.all()
             self.fields['mother'].queryset = product.mother.all()
             self.fields['ram'].queryset = product.ram.all()

@@ -497,7 +497,7 @@ a.text-black.active {
   background-color: #70c770;
 }
 .alert-info {
-  background-color: #47b5ed;
+  /* background-color: #47b5ed; */
 }
 .alert-warning {
   background-color: #6c758f;
@@ -2051,6 +2051,7 @@ justify-content: center;
 height: 200px;
 }
 .text-container {
+  font-weight: 200;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -2130,6 +2131,7 @@ div.borderXwidth a:hover:before, div.borderXwidth a:hover:after
   height: 100%;
 }
 .text-container3{
+  font-weight: 200;
   position: relative;
   color: white;
   font-size: 2rem;
@@ -2740,9 +2742,67 @@ a{
   color: #00a2e8;
 }
 
+.track{
+  position: relative;
+  background-color: #ddd;
+  height: 7px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 35px;
+  margin-top: 10px;
+}
+.track .active{
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  width: 25%;
+  margin-top: -18px;
+  text-align: center;
+  position: relative;
+}
+.track .step.active .icon{
+  background: #00a2e8;
+  color: #fff;
+}
 
+.track .icon{
+  display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    border-radius: 100%;
+    background: #ddd;
+}
 
+.track .step::before{
+  height: 7px;
+  position: absolute;
+  content: "";
+  width: 100%;
+  left: 0;
+  top: 18px;
+}
+.track .step.active::before{
+  background: #00a2e8;
+}
+.track .step.active .text{
+  font-weight: 400;
+  color: #000;
+}
 
+.track .text{
+  display: block;
+    margin-top: 7px;
+}
 
-
-
+.track .step{
+  -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    width: 25%;
+    margin-top: -18px;
+    text-align: center;
+    position: relative;
+}

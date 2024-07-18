@@ -4,28 +4,45 @@
 Корзина
 {% endblock %}
 {% block content %}
-<h1>Оформление заказа</h1>
+<div class="image-container2" style="background-position: center; background-image: url('{% static 'images/compare-shopping-cart-platforms-scaled.jpeg' %}');">
+    <div class="text-container">
+        Оформление заказа
+    </div>
+</div>
+<div class="container d-flex flex-column" style="min-height: 42.5vh; width: 80%;">
+    {% if cart_items %}
+    <table class="table border mt-3 mb-2">
+        <thead>
+            <tr>
+                <th>Продукт</th>
+                <th>Количество</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Подтвердить заказ</button>
+    <p>
+    <label for="id_delivery_address">Адрес доставки:</label>
+    <textarea name="delivery_address" required="" aria-invalid="true" id="id_delivery_address" class="form-control"></textarea>
+    </p>
+    <button type="submit" class="btn btn-primary shadow-0 w-100 d-block mt-2">Подтвердить заказ</button>
 </form>
+{% else %}
+<div class="alert alert-info mt-3 text-center" role="alert">
+    <strong>Тут пока пусто!</strong> Добавьте товары в корзину для оформления заказа.
+</div>
+{% endif %}
 
-<h2>Ваши товары</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Продукт</th>
-            <th>Количество</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in cart_items %}
-        <tr>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.quantity }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+
+</div>
 {% endblock %}

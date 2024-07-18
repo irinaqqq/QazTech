@@ -4,29 +4,8 @@
 Профиль
 {% endblock %}
 {% block content %}
-<div class="container d-flex" style="min-height: 42.5vh">
-    <!-- <div class="row p-5 my-auto w-100">
-        <div class="col-6 card p-3">
-    <p>{{ user.first_name }} {{ user.last_name }}</p>
-    <p>Почта: {{ user.email }}</p>
-    {% if custom_profile %}
-        <p>Номер телефона: {{ custom_profile.phone_number }}</p>
-        <p>Организация: {{ custom_profile.organization }}</p>
-    {% else %}
-        <p>Номер телефона: Не указан</p>
-        <p>Организация: Не указана</p>
-    {% endif %}
-</div>
-<div class="col-3">
-    <a href="{% url 'commercial_offer' %}" style="margin-left:1rem;">Получить Коммерческое Предложение</a>
-</div>
-<div class="col-3">
-    <a href="{% url 'user_orders' %}" style="margin-left:1rem;">Мои Заказы</a>
-</div>
-    </div> -->
-<!-- </div> -->
-
-<div class="mt-3 d-flex flex-column">
+<div class="container d-flex" style="min-height: 42.5vh; width: 80%;">
+<div class="mt-3 d-flex flex-column w-100">
 <div class="px-3 py-2 bg-white">
     <!-- Pills navs -->
     <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
@@ -44,7 +23,6 @@
       </li>
     </ul>
     <!-- Pills navs -->
-
     <!-- Pills content -->
     <div class="tab-content" id="ex1-content">
       <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
@@ -106,43 +84,44 @@
       </form>
 
       </div>
-      <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">
-        <table class="table border mt-3 mb-2">
-          <thead>
-              <tr>
-                  <th>ID</th>
-                  <th>Статус</th>
-                  <th>Дата создания</th>
-                  <th>Адрес доставки</th>
-                  <th>Цена</th>
-                  <th>Примечания и количество</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for order in orders %}
-              <tr>
-                  <td>{{ order.id }}</td>
-                  <td>{{ order.get_status_display }}</td>
-                  <td>{{ order.created_at }}</td>
-                  <td>{{ order.delivery_address }}</td>
-                  {% if order.total_price == 0 %}
-                  <td>Цена не утверждена</td>
-                  {% else %}
-                  <td>{{ order.total_price }}</td>
-                  {% endif %}
-                  <td>
-                      <ul>
-                          {% for item in order.items.all %}
-                          <li>{{ item.product.name }} - Количество: {{ item.quantity }} - Примечание: {{ item.note }}</li>
-                          {% endfor %}
-                      </ul>
-                  </td>
-              </tr>
-              {% endfor %}
-          </tbody>
-      </table>
+      <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">     
+      {% for order in orders %}
+      <div class="card {% if forloop.first %}mt-2{% else %}mt-4{% endif %}" style="box-shadow: none; border: 1px solid rgba(0, 0, 0, 0.1);">
+        <div class="card-body">
+            <h6>Идентификатор заказа: №{{ order.id }}</h6>
+                <div class="card-body row">
+                    <div class="col"> <strong>Дата создания:</strong> <br>{{ order.created_at }} </div>
+                    <div class="col"> <strong>Адрес доставки:</strong> <br> {{ order.delivery_address }} <br><i class="fa fa-phone"></i>{% if custom_profile %} {{ custom_profile.phone_number }} {% endif %}</div>
+                    <div class="col"> <strong>Статус:</strong> <br> {{ order.get_status_display }}</div>
+                    <div class="col"> <strong>Сумма заказа:</strong> <br> {% if order.total_price == 0 %} Цена не утверждена {% else %} {{ order.total_price }}{% endif %}</div>
+                    <div class="col"> <strong>Детали заказа:</strong> <br> <a href="{% url 'user_order_details'  order.id %}">Перейти</a> </div>
+                </div>  
+                <div class="track">
+                  <div class="step {% if order.status == 'confirmed' or order.status == 'being_assembled' or order.status == 'dispatched' or order.status == 'delivered' %}active{% endif %}"> 
+                      <span class="icon"> <i class="fa fa-check"></i> </span> 
+                      <span class="text">Подтвержден</span> 
+                  </div>
+                  <div class="step {% if order.status == 'being_assembled' or order.status == 'dispatched' or order.status == 'delivered' %}active{% endif %}"> 
+                      <span class="icon"> <i class="fa fa-user"></i> </span> 
+                      <span class="text">Собирается</span> 
+                  </div>
+                  <div class="step {% if order.status == 'dispatched' or order.status == 'delivered' %}active{% endif %}"> 
+                      <span class="icon"> <i class="fa fa-truck"></i> </span> 
+                      <span class="text">Отправлен</span> 
+                  </div>
+                  <div class="step {% if order.status == 'delivered' %}active{% endif %}"> 
+                      <span class="icon"> <i class="fa fa-box"></i> </span> 
+                      <span class="text">Доставлен</span> 
+                  </div>
+              </div>
+              
+        </div>
+      </div>
+      {% endfor %}
+
       </div>
     </div>
+    
     <!-- Pills content -->
   </div>
   <div class="mx-3 mt-auto">

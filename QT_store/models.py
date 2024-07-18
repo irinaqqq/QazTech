@@ -354,11 +354,11 @@ class CartItem(models.Model):
 
 class Order(models.Model):
     STATUS_CHOICES = (
-        ('pending_verification', 'Pending Verification'),
-        ('confirmed', 'Confirmed'),
-        ('being_assembled', 'Being Assembled'),
-        ('dispatched', 'Dispatched'),
-        ('delivered', 'Delivered'),
+        ('pending_verification', 'Ожидает подтверждения'),
+        ('confirmed', 'Подтвержден'),
+        ('being_assembled', 'Собирается'),
+        ('dispatched', 'Отправлен'),
+        ('delivered', 'Доставлен'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

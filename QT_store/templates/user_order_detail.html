@@ -1,16 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Корзина
+Детали заказа №{{ order.id }}
 {% endblock %}
 {% block content %}
-<div class="image-container2" style="background-position: center; background-image: url('{% static 'images/ecommerce_20shopping_20cart.webp' %}');">
-    <div class="text-container">
-        Ваша корзина
+<div class="image-container2" style="background-position: center; background-image: url('{% static 'images/abstract.webp' %}');">
+    <div class="text-container3">
+        Детали заказа №{{ order.id }}
     </div>
 </div>
-<div class="container d-flex flex-column" style="min-height: 42.5vh; width: 80%;">
-    {% if cart_items %}
+<div class="container">
+    <table class="table border mt-3 mb-2">
+        <tbody>
+            <tr>
+                <th>Дата создания</th>
+                <td>{{ order.created_at }}</td>
+            </tr>
+            <tr>
+                <th>Адрес доставки</th>
+                <td>{{ order.delivery_address }}</td>
+            </tr>
+            <tr>
+                <th>Телефон заказчика</th>
+                <td>{% if order.user.custom.phone_number %} {{ order.user.custom.phone_number }} {% else %} Номер не указан {% endif %}</td>
+            </tr>
+            <tr>
+                <th>Статус</th>
+                <td>{{ order.get_status_display }}</td>
+            </tr>
+            <tr>
+                <th>Сумма заказа</th>
+                <td>{% if order.total_price == 0 %} Цена не утверждена {% else %} {{ order.total_price }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
     <table class="table border mt-3 mb-2">
         <thead>
             <tr>
@@ -20,11 +43,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in cart_items %}
+            {% for item in order.items.all %}
             <tr>
                 <td>
                     <a href="{% url 'product_detail' item.product.pk %}">{{ item.product.name }}</a>
-                </td>                
+                </td>
                 <td>{{ item.quantity }}</td>
                 <td>
                     <button id="toggle-button-{{ forloop.counter0 }}" type="button" class="btn btn-primary" onclick="toggleDetails({{ forloop.counter0 }})">Показать</button>
@@ -135,12 +158,6 @@
                             <td>{{ item.controllers }}</td>
                         </tr>
                         {% endif %}
-                        {% if item.controllers %}
-                        <tr>
-                            <th>Контроллеры</th>
-                            <td>{{ item.controllers }}</td>
-                        </tr>
-                        {% endif %}
                         {% if item.note %}
                         <tr>
                             <th>Примечание</th>
@@ -153,32 +170,20 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <form method="post" action="{% url 'order_create' %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary shadow-0 w-100 d-block mt-2">Оформить заказ</button>
-    </form>
-{% else %}
-<div class="alert alert-info mt-3 text-center" role="alert">
-    <strong>Тут пока пусто!</strong> Добавьте товары в корзину для оформления заказа.
 </div>
-{% endif %}
-
-
 <script>
-function toggleDetails(index) {
-    var detailsRow = document.getElementById('details-' + index);
-    var button = document.getElementById('toggle-button-' + index);
-    
-    if (detailsRow.style.display === 'none' || detailsRow.style.display === '') {
-        detailsRow.style.display = 'table-row';
-        button.textContent = 'Скрыть';
-    } else {
-        detailsRow.style.display = 'none';
-        button.textContent = 'Показать';
+    function toggleDetails(index) {
+        var detailsRow = document.getElementById('details-' + index);
+        var button = document.getElementById('toggle-button-' + index);
+        
+        if (detailsRow.style.display === 'none' || detailsRow.style.display === '') {
+            detailsRow.style.display = 'table-row';
+            button.textContent = 'Скрыть';
+        } else {
+            detailsRow.style.display = 'none';
+            button.textContent = 'Показать';
+        }
     }
-}
-
-</script>
-
+    
+    </script>
 {% endblock %}

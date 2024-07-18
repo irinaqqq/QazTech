@@ -4,6 +4,52 @@
 {{ product.name }}
 {% endblock %}
 {% block content %}
+<style>
+  /* Стили для модального окна и затемненного фона */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+}
+
+.modal-content {
+  margin: auto;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+}
+
+</style>
 <section class="py-5 border-bottom">
     <div class="container w-100">
       <div class="row gx-5">
@@ -24,7 +70,268 @@
                 </div>
             {% endfor %}
             </div>
-            <a href="{% url 'map' %}" class="btn btn-primary shadow-0 w-100 d-block"></i>Где купить</a>
+            <!-- Ваш шаблон Django -->
+            {% if user.is_authenticated %}
+            <a href="#" id="addToCartBtn" class="btn btn-primary shadow-0 w-100 d-block">Добавить в корзину</a>
+
+            <div id="addToCartModal" class="modal  h-auto">
+                <i class="fa-solid fa-xmark close"></i>
+                <form method="post">
+                  {% csrf_token %}
+                  {{ form.product }}
+              
+                  <!-- Note field -->
+                  <div class="form-group">
+                      <label for="id_note" class="form-label">Примечание</label>
+                      <textarea name="note" rows="2" id="id_note" class="form-control"></textarea>
+                  </div>
+              
+                  <!-- Quantity field -->
+                  <div class="form-group">
+                      <label for="id_quantity" class="form-label">Количество</label>
+                      <input type="number" name="quantity" id="id_quantity" min="1" required class="form-control">
+                  </div>
+              
+                  <!-- Processor field -->
+                  {% if form.processor.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_processor">Процессор</label>
+                      <select class="ui fluid search dropdown" name="processor" id="id_processor" required>
+                          {% for processor in form.processor.field.queryset %}
+                          <option value="{{ processor.pk }}">{{ processor }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Motherboard field -->
+                  {% if form.mother.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_mother">Материнская плата</label>
+                      <select class="ui fluid search dropdown" name="mother" id="id_mother" required>
+                          {% for motherboard in form.mother.field.queryset %}
+                          <option value="{{ motherboard.pk }}">{{ motherboard }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- RAM field -->
+                  {% if form.ram.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_ram">Оперативная память</label>
+                      <select class="ui fluid search dropdown" name="ram" id="id_ram" required>
+                          {% for ram in form.ram.field.queryset %}
+                          <option value="{{ ram.pk }}">{{ ram }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Storage field -->
+                  {% if form.storage.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_storage">Накопители</label>
+                      <select class="ui fluid search dropdown" name="storage" id="id_storage" required>
+                          {% for storage in form.storage.field.queryset %}
+                          <option value="{{ storage.pk }}">{{ storage }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Graphics field -->
+                  {% if form.graphics.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_graphics">Видеокарта</label>
+                      <select class="ui fluid search dropdown" name="graphics" id="id_graphics" required>
+                          {% for graphics in form.graphics.field.queryset %}
+                          <option value="{{ graphics.pk }}">{{ graphics }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Operating System field -->
+                  {% if form.operating_system.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_operating_system">Операционная система</label>
+                      <select class="ui fluid search dropdown" name="operating_system" id="id_operating_system" required>
+                          {% for os in form.operating_system.field.queryset %}
+                          <option value="{{ os.pk }}">{{ os }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Screen Sizes field -->
+                  {% if form.screen_sizes.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_screen_sizes">Размер экрана</label>
+                      <select class="ui fluid search dropdown" name="screen_sizes" id="id_screen_sizes" required>
+                          {% for size in form.screen_sizes.field.queryset %}
+                          <option value="{{ size.pk }}">{{ size }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Screen Type field -->
+                  {% if form.screen_type.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_screen_type">Тип экрана</label>
+                      <select class="ui fluid search dropdown" name="screen_type" id="id_screen_type" required>
+                          {% for type in form.screen_type.field.queryset %}
+                          <option value="{{ type.pk }}">{{ type }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Screen Resolution field -->
+                  {% if form.screen_resolution.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_screen_resolution">Разрешение экрана</label>
+                      <select class="ui fluid search dropdown" name="screen_resolution" id="id_screen_resolution" required>
+                          {% for resolution in form.screen_resolution.field.queryset %}
+                          <option value="{{ resolution.pk }}">{{ resolution }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Touch Screen Touches field -->
+                  {% if form.touch_screen_touches.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_touch_screen_touches">Количество касаний одновременно</label>
+                      <select class="ui fluid search dropdown" name="touch_screen_touches" id="id_touch_screen_touches" required>
+                          {% for touches in form.touch_screen_touches.field.queryset %}
+                          <option value="{{ touches.pk }}">{{ touches }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Form Factor field -->
+                  {% if form.formfactor.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_formfactor">Форм-фактор</label>
+                      <select class="ui fluid search dropdown" name="formfactor" id="id_formfactor" required>
+                          {% for factor in form.formfactor.field.queryset %}
+                          <option value="{{ factor.pk }}">{{ factor }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Webcam field -->
+                  {% if form.webcam.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_webcam">Веб камера</label>
+                      <select class="ui fluid search dropdown" name="webcam" id="id_webcam" required>
+                          {% for cam in form.webcam.field.queryset %}
+                          <option value="{{ cam.pk }}">{{ cam }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Keyboard Set field -->
+                  {% if form.keyset.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_keyset">Комплект клавиатура и мышь</label>
+                      <select class="ui fluid search dropdown" name="keyset" id="id_keyset" required>
+                          {% for keyset in form.keyset.field.queryset %}
+                          <option value="{{ keyset.pk }}">{{ keyset }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Keyboard Backlight field -->
+                  {% if form.keyboard_backlight.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_keyboard_backlight">Подсветка клавиатуры</label>
+                      <select class="ui fluid search dropdown" name="keyboard_backlight" id="id_keyboard_backlight" required>
+                          {% for backlight in form.keyboard_backlight.field.queryset %}
+                          <option value="{{ backlight.pk }}">{{ backlight }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Power Supplies field -->
+                  {% if form.power_supplies.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_power_supplies">Блоки питания</label>
+                      <select class="ui fluid search dropdown" name="power_supplies" id="id_power_supplies" required>
+                          {% for supply in form.power_supplies.field.queryset %}
+                          <option value="{{ supply.pk }}">{{ supply }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Sizes field -->
+                  {% if form.sizes.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_sizes">Размеры</label>
+                      <select class="ui fluid search dropdown" name="sizes" id="id_sizes" required>
+                          {% for size in form.sizes.field.queryset %}
+                          <option value="{{ size.pk }}">{{ size }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Controllers field -->
+                  {% if form.controllers.field.queryset|length > 1 %}
+                  <div class="form-group">
+                      <label for="id_controllers">Контроллеры</label>
+                      <select class="ui fluid search dropdown" name="controllers" id="id_controllers" required>
+                          {% for controller in form.controllers.field.queryset %}
+                          <option value="{{ controller.pk }}">{{ controller }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  {% endif %}
+              
+                  <!-- Submit button -->
+                  <button type="submit" class="btn btn-primary shadow-0 w-100 d-block mt-2">Добавить в корзину</button>
+              </form>
+            </div>
+            <div id="overlay"></div> <!-- Пустой DIV для затемнения -->
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary shadow-0 w-100 d-block">Добавить в корзину</a>
+            {% endif %}
+
+            <script>
+              // JavaScript для открытия и закрытия модального окна и затемнения фона
+            document.addEventListener('DOMContentLoaded', function() {
+              var modal = document.getElementById('addToCartModal');
+              var btn = document.getElementById('addToCartBtn');
+              var span = document.getElementsByClassName('close')[0];
+              var overlay = document.getElementById('overlay');
+
+              btn.onclick = function() {
+                modal.style.display = 'block';
+                overlay.style.display = 'block'; // Показываем затемнение фона
+              }
+
+              span.onclick = function() {
+                modal.style.display = 'none';
+                overlay.style.display = 'none'; // Скрываем затемнение фона
+              }
+
+              window.onclick = function(event) {
+                if (event.target == overlay) {
+                  modal.style.display = 'none';
+                  overlay.style.display = 'none'; // Скрываем затемнение фона при клике вне модального окна
+                }
+              }
+            });
+
+            </script>
         </aside>
         <main class="col-lg-6">
           <div class="ps-lg-3">
@@ -337,16 +644,7 @@
             </div>
             <!-- Pills content -->
           </div>
-        </div>
-
-        {% if user.is_authenticated %}
-        <form method="post">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit">Добавить в корзину</button>
-      </form>
-      {% endif %}
-      
+        </div>      
         <div class="col-lg-4">
           <div class="px-0 border rounded-2 shadow-0">
             <div class="card no-hover-zoom">

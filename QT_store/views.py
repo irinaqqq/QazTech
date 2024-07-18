@@ -91,8 +91,11 @@ def product_detail(request, product_id):
             cart_item.cart = cart
             cart_item.save()
             return redirect('cart')
+        else:
+            print(form.errors)  # Выводим ошибки формы в консоль для отладки
     else:
         form = AddToCartForm(product=product)
+
 
     context = {
         'product': product,
@@ -552,15 +555,16 @@ def order_create(request):
                 )
             # Очистить корзину
             cart_items.delete()
-            return redirect('user_orders')
+            return redirect('profile')
     else:
         form = OrderCreateForm()
     
     return render(request, 'order_create.html', {'cart_items': cart_items, 'form': form})
 
-def user_orders(request):
-    orders = Order.objects.filter(user=request.user)
-    return render(request, 'my_orders.html', {'orders': orders})
+def user_order_details(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    order_items = OrderItem.objects.filter(order=order)
+    return render(request, 'user_order_detail.html', {'order': order, 'order_items': order_items})
 
 def commercial_offer(request):
     ProductItemFormSet = inlineformset_factory(
