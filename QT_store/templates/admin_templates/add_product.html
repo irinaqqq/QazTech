@@ -73,7 +73,7 @@
           <div class="col-sm-6">
               <label for="id_graphics" class="form-label">Видеокарта</label>
               <select name="graphics" id="id_graphics" class="ui fluid search dropdown" multiple="">
-                  <option value="" disabled selected>Выберите видеокарту</option>
+                  <option value="" disabled selected>Выберите размер памяти видеокарты</option>
                   {% for graphics in form.graphics.field.queryset %}
                       <option value="{{ graphics.id }}">{{ graphics }}</option>
                   {% endfor %}
@@ -140,7 +140,7 @@
             <div class="col-sm-6">
                 <label for="id_touch_screen_touches" class="form-label">Кол-во одновременных касаний</label>
                 <select name="touch_screen_touches" id="id_touch_screen_touches" class="ui fluid search dropdown" multiple="">
-                    <option value="" disabled selected>Выберите кол-во касаний</option>
+                    <option value="" disabled selected>Выберите кол-во одновременных касаний</option>
                     {% for touch in form.touch_screen_touches.field.queryset %}
                         <option value="{{ touch.id }}">{{ touch }}</option>
                     {% endfor %}
@@ -202,7 +202,7 @@
           <div class="col-sm-4">
               <label for="id_sizes" class="form-label">Размеры</label>
               <select name="sizes" id="id_sizes" class="ui fluid search dropdown" multiple="">
-                  <option value="" disabled selected>Выберите размеры</option>
+                  <option value="" disabled selected>Выберите размер</option>
                   {% for size_choice in form.sizes.field.queryset %}
                       <option value="{{ size_choice.id }}">{{ size_choice.name }}</option>
                   {% endfor %}

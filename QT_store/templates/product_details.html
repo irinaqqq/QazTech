@@ -75,28 +75,17 @@
             <a href="#" id="addToCartBtn" class="btn btn-primary shadow-0 w-100 d-block">Добавить в корзину</a>
 
             <div id="addToCartModal" class="modal  h-auto">
-                <i class="fa-solid fa-xmark close"></i>
+                <i class="fa-solid fa-xmark close" style="position: absolute; top: 5px; right: 5px;"></i>
                 <form method="post">
                   {% csrf_token %}
                   {{ form.product }}
-              
-                  <!-- Note field -->
-                  <div class="form-group">
-                      <label for="id_note" class="form-label">Примечание</label>
-                      <textarea name="note" rows="2" id="id_note" class="form-control"></textarea>
-                  </div>
-              
-                  <!-- Quantity field -->
-                  <div class="form-group">
-                      <label for="id_quantity" class="form-label">Количество</label>
-                      <input type="number" name="quantity" id="id_quantity" min="1" required class="form-control">
-                  </div>
-              
+                  <h4 class="mb-0">Выбор Конфигурации</h4>
                   <!-- Processor field -->
                   {% if form.processor.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_processor">Процессор</label>
+                      <label for="id_processor" class="form-label mt-2">Процессор</label>
                       <select class="ui fluid search dropdown" name="processor" id="id_processor" required>
+                        <option value="" disabled selected>Выберите процессор</option>
                           {% for processor in form.processor.field.queryset %}
                           <option value="{{ processor.pk }}">{{ processor }}</option>
                           {% endfor %}
@@ -107,8 +96,9 @@
                   <!-- Motherboard field -->
                   {% if form.mother.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_mother">Материнская плата</label>
+                      <label for="id_mother" class="form-label mt-2">Материнская плата</label>
                       <select class="ui fluid search dropdown" name="mother" id="id_mother" required>
+                        <option value="" disabled selected>Выберите материнскую плату</option>
                           {% for motherboard in form.mother.field.queryset %}
                           <option value="{{ motherboard.pk }}">{{ motherboard }}</option>
                           {% endfor %}
@@ -119,8 +109,9 @@
                   <!-- RAM field -->
                   {% if form.ram.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_ram">Оперативная память</label>
+                      <label for="id_ram" class="form-label mt-2">Оперативная память</label>
                       <select class="ui fluid search dropdown" name="ram" id="id_ram" required>
+                        <option value="" disabled selected>Выберите оперативную память</option>
                           {% for ram in form.ram.field.queryset %}
                           <option value="{{ ram.pk }}">{{ ram }}</option>
                           {% endfor %}
@@ -131,8 +122,9 @@
                   <!-- Storage field -->
                   {% if form.storage.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_storage">Накопители</label>
+                      <label for="id_storage" class="form-label mt-2">Накопители</label>
                       <select class="ui fluid search dropdown" name="storage" id="id_storage" required>
+                        <option value="" disabled selected>Выберите накопители</option>
                           {% for storage in form.storage.field.queryset %}
                           <option value="{{ storage.pk }}">{{ storage }}</option>
                           {% endfor %}
@@ -143,8 +135,9 @@
                   <!-- Graphics field -->
                   {% if form.graphics.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_graphics">Видеокарта</label>
+                      <label for="id_graphics" class="form-label mt-2">Видеокарта</label>
                       <select class="ui fluid search dropdown" name="graphics" id="id_graphics" required>
+                        <option value="" disabled selected>Выберите размер памяти видеокарты</option>
                           {% for graphics in form.graphics.field.queryset %}
                           <option value="{{ graphics.pk }}">{{ graphics }}</option>
                           {% endfor %}
@@ -155,9 +148,10 @@
                   <!-- Operating System field -->
                   {% if form.operating_system.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_operating_system">Операционная система</label>
+                      <label for="id_operating_system" class="form-label mt-2">Операционная система</label>
                       <select class="ui fluid search dropdown" name="operating_system" id="id_operating_system" required>
-                          {% for os in form.operating_system.field.queryset %}
+                        <option value="" disabled selected>Выберите операционную систему</option>  
+                        {% for os in form.operating_system.field.queryset %}
                           <option value="{{ os.pk }}">{{ os }}</option>
                           {% endfor %}
                       </select>
@@ -167,8 +161,9 @@
                   <!-- Screen Sizes field -->
                   {% if form.screen_sizes.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_screen_sizes">Размер экрана</label>
+                      <label for="id_screen_sizes" class="form-label mt-2">Размер экрана</label>
                       <select class="ui fluid search dropdown" name="screen_sizes" id="id_screen_sizes" required>
+                        <option value="" disabled selected>Выберите размер экрана</option>
                           {% for size in form.screen_sizes.field.queryset %}
                           <option value="{{ size.pk }}">{{ size }}</option>
                           {% endfor %}
@@ -179,7 +174,8 @@
                   <!-- Screen Type field -->
                   {% if form.screen_type.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_screen_type">Тип экрана</label>
+                      <label for="id_screen_type" class="form-label mt-2">Тип экрана</label>
+                      <option value="" disabled selected>Выберите тип экрана</option>
                       <select class="ui fluid search dropdown" name="screen_type" id="id_screen_type" required>
                           {% for type in form.screen_type.field.queryset %}
                           <option value="{{ type.pk }}">{{ type }}</option>
@@ -191,9 +187,10 @@
                   <!-- Screen Resolution field -->
                   {% if form.screen_resolution.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_screen_resolution">Разрешение экрана</label>
+                      <label for="id_screen_resolution" class="form-label mt-2">Разрешение экрана</label>
                       <select class="ui fluid search dropdown" name="screen_resolution" id="id_screen_resolution" required>
-                          {% for resolution in form.screen_resolution.field.queryset %}
+                        <option value="" disabled selected>Выберите разрешение экрана</option>  
+                        {% for resolution in form.screen_resolution.field.queryset %}
                           <option value="{{ resolution.pk }}">{{ resolution }}</option>
                           {% endfor %}
                       </select>
@@ -203,9 +200,10 @@
                   <!-- Touch Screen Touches field -->
                   {% if form.touch_screen_touches.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_touch_screen_touches">Количество касаний одновременно</label>
+                      <label for="id_touch_screen_touches" class="form-label mt-2">Количество касаний одновременно</label>
                       <select class="ui fluid search dropdown" name="touch_screen_touches" id="id_touch_screen_touches" required>
-                          {% for touches in form.touch_screen_touches.field.queryset %}
+                        <option value="" disabled selected>Выберите кол-во касаний</option>  
+                        {% for touches in form.touch_screen_touches.field.queryset %}
                           <option value="{{ touches.pk }}">{{ touches }}</option>
                           {% endfor %}
                       </select>
@@ -215,8 +213,9 @@
                   <!-- Form Factor field -->
                   {% if form.formfactor.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_formfactor">Форм-фактор</label>
+                      <label for="id_formfactor" class="form-label mt-2">Форм-фактор</label>
                       <select class="ui fluid search dropdown" name="formfactor" id="id_formfactor" required>
+                        <option value="" disabled selected>Выберите форм-фактор</option>
                           {% for factor in form.formfactor.field.queryset %}
                           <option value="{{ factor.pk }}">{{ factor }}</option>
                           {% endfor %}
@@ -227,8 +226,9 @@
                   <!-- Webcam field -->
                   {% if form.webcam.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_webcam">Веб камера</label>
+                      <label for="id_webcam" class="form-label mt-2">Веб камера</label>
                       <select class="ui fluid search dropdown" name="webcam" id="id_webcam" required>
+                        <option value="" disabled selected>Выберите веб-камеру</option>
                           {% for cam in form.webcam.field.queryset %}
                           <option value="{{ cam.pk }}">{{ cam }}</option>
                           {% endfor %}
@@ -239,8 +239,9 @@
                   <!-- Keyboard Set field -->
                   {% if form.keyset.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_keyset">Комплект клавиатура и мышь</label>
+                      <label for="id_keyset" class="form-label mt-2">Комплект клавиатура и мышь</label>
                       <select class="ui fluid search dropdown" name="keyset" id="id_keyset" required>
+                        <option value="" disabled selected>Выберите тип клавиатуры и мыши</option>
                           {% for keyset in form.keyset.field.queryset %}
                           <option value="{{ keyset.pk }}">{{ keyset }}</option>
                           {% endfor %}
@@ -251,9 +252,10 @@
                   <!-- Keyboard Backlight field -->
                   {% if form.keyboard_backlight.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_keyboard_backlight">Подсветка клавиатуры</label>
+                      <label for="id_keyboard_backlight" class="form-label mt-2">Подсветка клавиатуры</label>
                       <select class="ui fluid search dropdown" name="keyboard_backlight" id="id_keyboard_backlight" required>
-                          {% for backlight in form.keyboard_backlight.field.queryset %}
+                        <option value="" disabled selected>Нужна ли подсветка клавиатуры?</option>  
+                        {% for backlight in form.keyboard_backlight.field.queryset %}
                           <option value="{{ backlight.pk }}">{{ backlight }}</option>
                           {% endfor %}
                       </select>
@@ -263,9 +265,10 @@
                   <!-- Power Supplies field -->
                   {% if form.power_supplies.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_power_supplies">Блоки питания</label>
+                      <label for="id_power_supplies" class="form-label mt-2">Блоки питания</label>
                       <select class="ui fluid search dropdown" name="power_supplies" id="id_power_supplies" required>
-                          {% for supply in form.power_supplies.field.queryset %}
+                        <option value="" disabled selected>Выберите мощность блока питания</option>  
+                        {% for supply in form.power_supplies.field.queryset %}
                           <option value="{{ supply.pk }}">{{ supply }}</option>
                           {% endfor %}
                       </select>
@@ -275,8 +278,9 @@
                   <!-- Sizes field -->
                   {% if form.sizes.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_sizes">Размеры</label>
+                      <label for="id_sizes" class="form-label mt-2">Размеры</label>
                       <select class="ui fluid search dropdown" name="sizes" id="id_sizes" required>
+                        <option value="" disabled selected>Выберите размер</option>
                           {% for size in form.sizes.field.queryset %}
                           <option value="{{ size.pk }}">{{ size }}</option>
                           {% endfor %}
@@ -287,17 +291,31 @@
                   <!-- Controllers field -->
                   {% if form.controllers.field.queryset|length > 1 %}
                   <div class="form-group">
-                      <label for="id_controllers">Контроллеры</label>
+                      <label for="id_controllers" class="form-label mt-2">Контроллеры</label>
                       <select class="ui fluid search dropdown" name="controllers" id="id_controllers" required>
+                        <option value="" disabled selected>Выберите контроллер</option>
                           {% for controller in form.controllers.field.queryset %}
                           <option value="{{ controller.pk }}">{{ controller }}</option>
                           {% endfor %}
                       </select>
                   </div>
                   {% endif %}
-              
+                  
+                  <!-- Quantity field -->
+                  <div class="form-group">
+                    <label for="id_quantity" class="form-label mt-2">Количество</label>
+                    <input type="number" name="quantity" id="id_quantity" min="1" value="1" required class="form-control">
+                  </div>
+
+                  <!-- Note field -->
+                  <div class="form-group">
+                    <label for="id_note" class="form-label mt-2">Примечание</label>
+                    <textarea name="note" rows="2" id="id_note" class="form-control"></textarea>
+                  </div>
+                  
+
                   <!-- Submit button -->
-                  <button type="submit" class="btn btn-primary shadow-0 w-100 d-block mt-2">Добавить в корзину</button>
+                  <button type="submit" class="btn btn-primary shadow-0 w-100 d-block" style="margin-top: 20px;">Добавить в корзину</button>
               </form>
             </div>
             <div id="overlay"></div> <!-- Пустой DIV для затемнения -->
@@ -405,32 +423,25 @@
     </div>
   </section>
   {% endfor %}
-
   <section class="border-top py-4">
     <div class="container w-100">
       <div class="row">
         <div class="col-lg-8 mb-4">
           <div class="border rounded-2 px-3 py-2 bg-white">
             <!-- Pills navs -->
-            <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-              <li class="nav-item d-flex" role="presentation">
-                <a class="nav-link d-flex align-items-center justify-content-center w-100 active h-auto" id="ex1-tab-1" data-mdb-toggle="pill" href="#ex1-pills-1" role="tab" aria-controls="ex1-pills-1" aria-selected="true">Основные Характеристики</a>
-              </li>
-              <li class="nav-item d-flex" role="presentation">
-                <a class="nav-link d-flex align-items-center justify-content-center w-100 h-auto" id="ex1-tab-2" data-mdb-toggle="pill" href="#ex1-pills-2" role="tab" aria-controls="ex1-pills-2" aria-selected="false">Экран и Ввод</a>
-              </li>
-              <li class="nav-item d-flex" role="presentation">
-                <a class="nav-link d-flex align-items-center justify-content-center w-100 h-auto" id="ex1-tab-3" data-mdb-toggle="pill" href="#ex1-pills-3" role="tab" aria-controls="ex1-pills-3" aria-selected="false">Связь и Периферия</a>
-              </li>
-              <li class="nav-item d-flex" role="presentation">
-                <a class="nav-link d-flex align-items-center justify-content-center w-100 h-auto" id="ex1-tab-4" data-mdb-toggle="pill" href="#ex1-pills-4" role="tab" aria-controls="ex1-pills-4" aria-selected="false">Эксплуатация и Габариты</a>
-              </li>
-            </ul>
+            <div class="ui top attached tabular menu">
+            <ul class="nav nav-pills nav-justified mb-3 d-flex" id="ex1" role="tablist">
+              <a class="nav-link item d-flex align-items-center justify-content-center w-100 h-auto active" data-tab="first">Основные Характеристики</a>
+              <a class="nav-link item d-flex align-items-center justify-content-center w-100 h-auto" data-tab="second">Экран и Ввод</a>
+              <a class="nav-link item d-flex align-items-center justify-content-center w-100 h-auto" data-tab="third">Связь и Периферия</a>
+              <a class="nav-link item d-flex align-items-center justify-content-center w-100 h-auto" data-tab="fourth">Эксплуатация и Габариты</a>
+              </ul>
+            </div>
             <!-- Pills navs -->
   
             <!-- Pills content -->
             <div class="tab-content" id="ex1-content">
-              <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+              <div class="ui tab active" data-tab="first">
                 <table class="table border mt-3 mb-2">
                   {% if processors_by_brand %}
                   <tr>
@@ -515,7 +526,7 @@
                 {% endif %}
                 </table>
               </div>
-              <div class="tab-pane fade mb-2" id="ex1-pills-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+              <div class="ui tab" data-tab="second">
                 <table class="table border mt-3 mb-2">
                           {% if product.screen_sizes.all %}
                           <tr>
@@ -551,7 +562,7 @@
                   {% endif %}
                   </table>
               </div>
-              <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+              <div class="ui tab" data-tab="third">
                 <table class="table border mt-3 mb-2">
                   
                   {% if product.webcam.all %}
@@ -580,7 +591,7 @@
                   {% endif %}
                   </table>
               </div>
-              <div class="tab-pane fade mb-2" id="ex1-pills-4" role="tabpanel" aria-labelledby="ex1-tab-4">
+              <div class="ui tab" data-tab="fourth">
                 <table class="table border mt-3 mb-2">
                   {% if product.weight %}
                   <tr>
@@ -675,5 +686,5 @@
       </div>
     </div>
   </section>
-<script src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Free_6.2.0/js/mdb.min.js"></script>
+<!-- <script src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Free_6.2.0/js/mdb.min.js"></script> -->
 {% endblock %}

@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}    
 <div class="container py-3" style="width: 80%;">
-    <h1>Commercial Offer</h1>    
+    <h1 class="text-center text-muted mt-0 mb-0">Заявка на получение коммерческого предложения</h1>    
 <form class="needs-validation" method="post" enctype="multipart/form-data" id="products-container">
     {% csrf_token %}
     {{ formset.management_form }}
@@ -31,195 +31,230 @@
             
             <!-- Processors -->
             <div class="col-sm-6">
-                <label for="id_product_items-0-processors" class="form-label">Процессоры</label>
-                <select name="product_items-0-processors" id="id_product_items-0-processors" class="ui fluid search dropdown" multiple>
+                <label for="id_product_items-0-processors" class="form-label">Процессор</label>
+                <select name="product_items-0-processors" id="id_product_items-0-processors" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите процессор</option>
                 {% for processor in form.processors.field.queryset %}
                     <option value="{{ processor.pk }}">{{ processor.name }}</option>
                 {% endfor %}
                 </select>                
-                <textarea name="product_items-0-processor_notes" class="form-control mt-2" placeholder="Заметки о процессорах" rows="2"></textarea>
+            </div>
+            <div class="col-sm-6 d-flex flex-column justify-content-end">             
+                <textarea name="product_items-0-processor_notes" class="form-control mt-2" placeholder="Примечание о процессорe" rows="2"></textarea>
             </div>
 
             <!-- Motherboards -->
             <div class="col-sm-6">
-                <label for="id_product_items-0-motherboards" class="form-label">Материнские платы</label>
-                <select name="product_items-0-motherboards" id="id_product_items-0-motherboards" class="ui fluid search dropdown" multiple>
+                <label for="id_product_items-0-motherboards" class="form-label">Материнская плата</label>
+                <select name="product_items-0-motherboards" id="id_product_items-0-motherboards" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите материнскую плату</option>
                     {% for motherboard in form.motherboards.field.queryset %}
                         <option value="{{ motherboard.id }}">{{ motherboard.name }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-motherboard_notes" class="form-control mt-2" placeholder="Заметки о материнских платах" rows="2"></textarea>
             </div>
-
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                <textarea name="product_items-0-motherboard_notes" class="form-control mt-2" placeholder="Примечание о материнской плате" rows="2"></textarea>
+            </div>
             <!-- RAM -->
             <div class="col-sm-6">
                 <label for="id_product_items-0-rams" class="form-label">Оперативная память</label>
-                <select name="product_items-0-rams" id="id_product_items-0-rams" class="ui fluid search dropdown" multiple>
+                <select name="product_items-0-rams" id="id_product_items-0-rams" class="ui fluid search dropdown">\
+                    <option value="" disabled selected>Выберите оперативную память</option>
                     {% for ram in form.rams.field.queryset %}
                         <option value="{{ ram.id }}">{{ ram.size }} ГБ ({{ ram.type }})</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-ram_notes" class="form-control mt-2" placeholder="Заметки о памяти" rows="2"></textarea>
             </div>
-
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                <textarea name="product_items-0-ram_notes" class="form-control mt-2" placeholder="Примечание об оперативной памяти" rows="2"></textarea>        
+            </div>
             <!-- Storage -->
             <div class="col-sm-6">
                 <label for="id_product_items-0-storages" class="form-label">Накопители</label>
                 <select name="product_items-0-storages" id="id_product_items-0-storages" class="ui fluid search dropdown" multiple>
+                    <option value="" disabled selected>Выберите накопители</option>
                     {% for storage in form.storages.field.queryset %}
                         <option value="{{ storage.id }}">{{ storage }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-storage_notes" class="form-control mt-2" placeholder="Заметки о накопителях" rows="2"></textarea>
             </div>
-
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                <textarea name="product_items-0-storage_notes" class="form-control mt-2" placeholder="Примечание о накопителях" rows="2"></textarea>           
+            </div>
             <!-- Graphics -->
             <div class="col-sm-6">
-                <label for="id_product_items-0-graphics" class="form-label">Графика</label>
-                <select name="product_items-0-graphics" id="id_product_items-0-graphics" class="ui fluid search dropdown" multiple>
+                <label for="id_product_items-0-graphics" class="form-label">Видеокарта</label>
+                <select name="product_items-0-graphics" id="id_product_items-0-graphics" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите размер памяти видеокарты</option>
                     {% for graphic in form.graphics.field.queryset %}
                         <option value="{{ graphic.id }}">{{ graphic }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-graphics_notes" class="form-control mt-2" placeholder="Заметки о графике" rows="2"></textarea>
             </div>
-
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                <textarea name="product_items-0-graphics_notes" class="form-control mt-2" placeholder="Примечание о графике" rows="2"></textarea>           
+            </div>
             <!-- Operating Systems -->
             <div class="col-sm-6">
-                <label for="id_product_items-0-operating_systems" class="form-label">Операционные системы</label>
-                <select name="product_items-0-operating_systems" id="id_product_items-0-operating_systems" class="ui fluid search dropdown" multiple>
+                <label for="id_product_items-0-operating_systems" class="form-label">Операционная система</label>
+                <select name="product_items-0-operating_systems" id="id_product_items-0-operating_systems" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите операционную систему</option>
                     {% for operating_system in form.operating_systems.field.queryset %}
                         <option value="{{ operating_system.id }}">{{ operating_system }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-operating_system_notes" class="form-control mt-2" placeholder="Заметки о системах" rows="2"></textarea>
             </div>
-
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                <textarea name="product_items-0-operating_system_notes" class="form-control mt-2" placeholder="Примечание об операционной системе" rows="2"></textarea>         
+            </div>
             <!-- Screen Sizes -->
             <div class="col-sm-6">
-                <label for="id_product_items-0-screen_sizes" class="form-label">Размеры экранов</label>
-                <select name="product_items-0-screen_sizes" id="id_product_items-0-screen_sizes" class="ui fluid search dropdown" multiple>
+                <label for="id_product_items-0-screen_sizes" class="form-label">Размер экрана</label>
+                <select name="product_items-0-screen_sizes" id="id_product_items-0-screen_sizes" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите размер экрана</option>
                     {% for screen_size in form.screen_sizes.field.queryset %}
                         <option value="{{ screen_size.id }}">{{ screen_size }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-screen_size_notes" class="form-control mt-2" placeholder="Заметки о размерах экранов" rows="2"></textarea>
             </div>
-
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                <textarea name="product_items-0-screen_size_notes" class="form-control mt-2" placeholder="Примечание о размере экрана" rows="2"></textarea>        
+            </div>
             <!-- Screen Types -->
             <div class="col-sm-6">
-                <label for="id_product_items-0-screen_types" class="form-label">Типы экранов</label>
-                <select name="product_items-0-screen_types" id="id_product_items-0-screen_types" class="ui fluid search dropdown" multiple>
+                <label for="id_product_items-0-screen_types" class="form-label">Тип экрана</label>
+                <select name="product_items-0-screen_types" id="id_product_items-0-screen_types" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите тип экрана</option>
                     {% for screen_type in form.screen_types.field.queryset %}
                         <option value="{{ screen_type.id }}">{{ screen_type }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-screen_type_notes" class="form-control mt-2" placeholder="Заметки о типах экранов" rows="2"></textarea>
             </div>
-
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                <textarea name="product_items-0-screen_type_notes" class="form-control mt-2" placeholder="Примечание о типе экрана" rows="2"></textarea>           
+            </div>
             <!-- Screen Resolutions -->
             <div class="col-sm-6">
-                <label for="id_product_items-0-screen_resolutions" class="form-label">Разрешения экранов</label>
-                <select name="product_items-0-screen_resolutions" id="id_product_items-0-screen_resolutions" class="ui fluid search dropdown" multiple>
+                <label for="id_product_items-0-screen_resolutions" class="form-label">Разрешение экрана</label>
+                <select name="product_items-0-screen_resolutions" id="id_product_items-0-screen_resolutions" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите разрешение экрана</option>
                     {% for screen_resolution in form.screen_resolutions.field.queryset %}
                         <option value="{{ screen_resolution.id }}">{{ screen_resolution }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-screen_resolution_notes" class="form-control mt-2" placeholder="Заметки о разрешениях экранов" rows="2"></textarea>
             </div>
-
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                <textarea name="product_items-0-screen_resolution_notes" class="form-control mt-2" placeholder="Примечание о разрешении экрана" rows="2"></textarea>        
+            </div>
             <!-- Touch Screens -->
             <div class="col-sm-6">
-                <label for="id_product_items-0-touch_screens" class="form-label">Сенсорные экраны</label>
-                <select name="product_items-0-touch_screens" id="id_product_items-0-touch_screens" class="ui fluid search dropdown" multiple>
+                <label for="id_product_items-0-touch_screens" class="form-label">Сенсорный экран</label>
+                <select name="product_items-0-touch_screens" id="id_product_items-0-touch_screens" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите кол-во одновременных касаний</option>
                     {% for touch_screen in form.touch_screens.field.queryset %}
                         <option value="{{ touch_screen.id }}">{{ touch_screen }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-touch_screen_notes" class="form-control mt-2" placeholder="Заметки о сенсорных экранах" rows="2"></textarea>
             </div>
-
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                <textarea name="product_items-0-touch_screen_notes" class="form-control mt-2" placeholder="Примечание о сенсорном экране" rows="2"></textarea>     
+            </div>
             <!-- Form Factors -->
             <div class="col-sm-6">
-                <label for="id_product_items-0-form_factors" class="form-label">Форм-факторы</label>
-                <select name="product_items-0-form_factors" id="id_product_items-0-form_factors" class="ui fluid search dropdown" multiple>
+                <label for="id_product_items-0-form_factors" class="form-label">Форм-фактор</label>
+                <select name="product_items-0-form_factors" id="id_product_items-0-form_factors" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите форм-фактор</option>
                     {% for form_factor in form.form_factors.field.queryset %}
                         <option value="{{ form_factor.id }}">{{ form_factor }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-form_factor_notes" class="form-control mt-2" placeholder="Заметки о форм-факторах" rows="2"></textarea>
             </div>
-
+            <div class="col-sm-6 d-flex flex-column justify-content-end">
+                <textarea name="product_items-0-form_factor_notes" class="form-control mt-2" placeholder="Примечание о форм-факторе" rows="2"></textarea>       
+            </div>
             <!-- Webcams -->
             <div class="col-sm-6">
-                <label for="id_product_items-0-webcams" class="form-label">Веб-камеры</label>
-                <select name="product_items-0-webcams" id="id_product_items-0-webcams" class="ui fluid search dropdown" multiple>
+                <label for="id_product_items-0-webcams" class="form-label">Веб-камера</label>
+                <select name="product_items-0-webcams" id="id_product_items-0-webcams" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите веб-камеру</option>
                     {% for webcam in form.webcams.field.queryset %}
                         <option value="{{ webcam.id }}">{{ webcam }}</option>
                     {% endfor %}
                 </select>
-                <textarea name="product_items-0-webcam_notes" class="form-control mt-2" placeholder="Заметки о веб-камерах" rows="2"></textarea>
                 </div>
-                
+                <div class="col-sm-6 d-flex flex-column justify-content-end">
+                    <textarea name="product_items-0-webcam_notes" class="form-control mt-2" placeholder="Примечание о веб-камере" rows="2"></textarea>      
+                </div>
                 <!-- Keyboard Sets -->
                 <div class="col-sm-6">
-                    <label for="id_product_items-0-keyboard_sets" class="form-label">Комплекты клавиатуры</label>
-                    <select name="product_items-0-keyboard_sets" id="id_product_items-0-keyboard_sets" class="ui fluid search dropdown" multiple>
+                    <label for="id_product_items-0-keyboard_sets" class="form-label">Комплект клавиатуры и мыши</label>
+                    <select name="product_items-0-keyboard_sets" id="id_product_items-0-keyboard_sets" class="ui fluid search dropdown">
+                        <option value="" disabled selected>Выберите тип клавиатуры и мыши</option>
                         {% for keyboard_set in form.keyboard_sets.field.queryset %}
                             <option value="{{ keyboard_set.id }}">{{ keyboard_set }}</option>
                         {% endfor %}
                     </select>
-                    <textarea name="product_items-0-keyboard_set_notes" class="form-control mt-2" placeholder="Заметки о комплектах клавиатуры" rows="2"></textarea>
                 </div>
-                
+                <div class="col-sm-6 d-flex flex-column justify-content-end">
+                    <textarea name="product_items-0-keyboard_set_notes" class="form-control mt-2" placeholder="Примечание о комплекте клавиатуры и мыши" rows="2"></textarea>
+                </div>
                 <!-- Keyboard Backlights -->
                 <div class="col-sm-6">
                     <label for="id_product_items-0-keyboard_backlights" class="form-label">Подсветка клавиатуры</label>
-                    <select name="product_items-0-keyboard_backlights" id="id_product_items-0-keyboard_backlights" class="ui fluid search dropdown" multiple>
+                    <select name="product_items-0-keyboard_backlights" id="id_product_items-0-keyboard_backlights" class="ui fluid search dropdown">
+                        <option value="" disabled selected>Нужна ли подсветка клавиатуры?</option>
                         {% for keyboard_backlight in form.keyboard_backlights.field.queryset %}
                             <option value="{{ keyboard_backlight.id }}">{{ keyboard_backlight }}</option>
                         {% endfor %}
                     </select>
-                    <textarea name="product_items-0-keyboard_backlight_notes" class="form-control mt-2" placeholder="Заметки о подсветке клавиатуры" rows="2"></textarea>
                 </div>
-                
+                <div class="col-sm-6 d-flex flex-column justify-content-end">
+                    <textarea name="product_items-0-keyboard_backlight_notes" class="form-control mt-2" placeholder="Примечание о подсветке клавиатуры" rows="2"></textarea> 
+                </div>
                 <!-- Power Supplies -->
                 <div class="col-sm-6">
-                    <label for="id_product_items-0-power_supplies" class="form-label">Блоки питания</label>
-                    <select name="product_items-0-power_supplies" id="id_product_items-0-power_supplies" class="ui fluid search dropdown" multiple>
+                    <label for="id_product_items-0-power_supplies" class="form-label">Блок питания</label>
+                    <select name="product_items-0-power_supplies" id="id_product_items-0-power_supplies" class="ui fluid search dropdown">
+                        <option value="" disabled selected>Выберите мощность блока питания</option>
                         {% for power_supply in form.power_supplies.field.queryset %}
                             <option value="{{ power_supply.id }}">{{ power_supply }}</option>
                         {% endfor %}
                     </select>
-                    <textarea name="product_items-0-power_supply_notes" class="form-control mt-2" placeholder="Заметки о блоках питания" rows="2"></textarea>
                 </div>
-                
+                <div class="col-sm-6 d-flex flex-column justify-content-end">
+                    <textarea name="product_items-0-power_supply_notes" class="form-control mt-2" placeholder="Примечание о блоке питания" rows="2"></textarea>       
+                </div>
                 <!-- Sizes -->
                 <div class="col-sm-6">
-                    <label for="id_product_items-0-sizes" class="form-label">Размеры</label>
-                    <select name="product_items-0-sizes" id="id_product_items-0-sizes" class="ui fluid search dropdown" multiple>
+                    <label for="id_product_items-0-sizes" class="form-label">Размер</label>
+                    <select name="product_items-0-sizes" id="id_product_items-0-sizes" class="ui fluid search dropdown">
+                        <option value="" disabled selected>Выберите размер</option>
                         {% for size in form.sizes.field.queryset %}
                             <option value="{{ size.id }}">{{ size }}</option>
                         {% endfor %}
                     </select>
-                    <textarea name="product_items-0-size_notes" class="form-control mt-2" placeholder="Заметки о размерах" rows="2"></textarea>
                 </div>
-                
+                <div class="col-sm-6 d-flex flex-column justify-content-end">
+                    <textarea name="product_items-0-size_notes" class="form-control mt-2" placeholder="Примечание о размере" rows="2"></textarea>  
+                </div>
                 <!-- Controllers -->
                 <div class="col-sm-6">
                     <label for="id_product_items-0-controllers" class="form-label">Контроллеры</label>
                     <select name="product_items-0-controllers" id="id_product_items-0-controllers" class="ui fluid search dropdown" multiple>
+                        <option value="" disabled selected>Выберите контроллеры</option>
                         {% for controller in form.controllers.field.queryset %}
                             <option value="{{ controller.id }}">{{ controller    }}</option>
                         {% endfor %}
                     </select>
-                    <textarea name="product_items-0-controller_notes" class="form-control mt-2" placeholder="Заметки о контроллерах" rows="2"></textarea>
                 </div>
-                
+                <div class="col-sm-6 d-flex flex-column justify-content-end">
+                    <textarea name="product_items-0-controller_notes" class="form-control mt-2" placeholder="Примечание о контроллерах" rows="2"></textarea>        
+                </div>
                 <!-- Additional Notes -->
                 <div class="col-sm-12">
-                    <label for="id_product_items-0-notes" class="form-label">Дополнительные заметки</label>
-                    <textarea name="product_items-0-notes" id="id_product_items-0-notes" class="form-control" placeholder="Введите дополнительные заметки" rows="4"></textarea>
+                    <label for="id_product_items-0-notes" class="form-label">Дополнительные примечания</label>
+                    <textarea name="product_items-0-notes" id="id_product_items-0-notes" class="form-control" placeholder="Напишите дополнительные примечания" rows="4"></textarea>
                 </div>
                 </div>
                 

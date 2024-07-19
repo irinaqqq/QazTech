@@ -548,7 +548,7 @@ a:hover {
   display: none;
 }
 .form-control {
-  line-height: 1.5;
+  /* line-height: 1.5; */
   font-weight: 400;
 }
 .form-control > .mbr-iconfont {
@@ -2685,7 +2685,8 @@ a{
   width: 100%;
   border: 1px solid rgba(34, 36, 38, .15);
   height: 38px;
-
+  min-height: auto !important;
+  
   }
 
 .custom-select:focus-visible{
@@ -2805,4 +2806,7 @@ a{
     margin-top: -18px;
     text-align: center;
     position: relative;
+}
+.form-label{
+  margin-bottom: 0 !important;
 }
