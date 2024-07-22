@@ -518,6 +518,12 @@ def cart(request):
     cart_items = CartItem.objects.filter(cart=cart)
     return render(request, 'cart.html', {'cart_items': cart_items})
 
+@login_required
+def delete_cart_item(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+    cart_item.delete()
+    return redirect('cart') 
+
 def order_create(request):
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
@@ -616,7 +622,7 @@ def commercial_request_detail(request, commercial_request_id):
                 print(product_item.total_price)
                 product_item.save()
                 
-        return redirect('commercial_requests_list')
+        return redirect('commercial_requests_detail')
 
     context = {
         'commercial_request': commercial_request,
@@ -646,8 +652,8 @@ def profile_view(request):
         password_form = PasswordChangeForm(request.user, request.POST)
         if password_form.is_valid():
             user = password_form.save()
-            update_session_auth_hash(request, user)  # Important!
-            return redirect('profile')  # Redirect to the profile page after password change
+            update_session_auth_hash(request, user) 
+            return redirect('profile') 
     else:
         password_form = PasswordChangeForm(request.user)
 

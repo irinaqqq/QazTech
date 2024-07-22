@@ -86,7 +86,7 @@
       </div>
       <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3"> 
 
-        <h3 class="text-center text-muted my-4">В процессе</h3>
+        <h3 class="text-center text-muted my-4 fw-light">В процессе</h3>
         {% for order in orders %}
             {% if order.status != 'delivered' %}
                 <div class="card {% if forloop.first %}mt-2{% else %}mt-4{% endif %}" style="box-shadow: none; border: 1px solid rgba(0, 0, 0, 0.1);">
@@ -122,7 +122,7 @@
             {% endif %}
         {% endfor %}
         
-        <h3 class="text-center text-muted mt-4 mb-0">Доставлено</h3>
+        <h3 class="text-center text-muted mt-4 mb-0 fw-light">Доставлено</h3>
         {% for order in orders %}
             {% if order.status == 'delivered' %}
                 <div class="card {% if forloop.first %}mt-2{% else %}mt-4{% endif %}" style="box-shadow: none; border: 1px solid rgba(0, 0, 0, 0.1);">

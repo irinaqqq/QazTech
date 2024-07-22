@@ -15,23 +15,30 @@
         <thead>
             <tr>
                 <th>Продукт</th>
-                <th>Количество</th>
-                <th>Детали</th>
+                <th class="text-center">Количество</th>
+                <th class="text-center">Детали</th>
+                <th class="text-center">Удалить</th>
             </tr>
         </thead>
         <tbody>
             {% for item in cart_items %}
             <tr>
-                <td>
+                <td class="products-td" >
                     <a href="{% url 'product_detail' item.product.pk %}">{{ item.product.name }}</a>
                 </td>                
-                <td>{{ item.quantity }}</td>
-                <td>
-                    <button id="toggle-button-{{ forloop.counter0 }}" type="button" class="btn btn-primary" onclick="toggleDetails({{ forloop.counter0 }})">Показать</button>
+                <td class="products-td text-center">{{ item.quantity }}</td>
+                <td class="text-center align-middle">
+                    <button id="toggle-button-{{ forloop.counter0 }}" type="button" class="btn btn-primary" style="width: 100px;" onclick="toggleDetails({{ forloop.counter0 }})">Показать</button>
+                </td>
+                <td class="text-center">
+                    <form method="post" action="{% url 'delete_cart_item' item.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="" style="border: none; background-color: transparent;"><i class="fa-solid fa-trash fa-3x" style="color: red;"></i></button>
+                    </form>
                 </td>
             </tr>
             <tr id="details-{{ forloop.counter0 }}" style="display: none;">
-                <td colspan="3">
+                <td colspan="4">
                     <table class="table table-bordered">
                         {% if item.processor %}
                         <tr>

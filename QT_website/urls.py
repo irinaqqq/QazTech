@@ -37,6 +37,7 @@ urlpatterns = [
     path('support/', views.support, name='support'),
     path('product/<int:product_id>/', views.product_detail, name='product_detail'),
     path('cart/', views.cart, name='cart'),
+    path('cart/delete/<int:item_id>/', views.delete_cart_item, name='delete_cart_item'),
     path('order/create/', views.order_create, name='order_create'),
     path('order/<int:order_id>/', views.user_order_details, name='user_order_details'),
     path('get_category_products/', views.get_category_products, name='get_category_products'),
