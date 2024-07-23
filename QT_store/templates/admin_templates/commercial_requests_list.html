@@ -1,8 +1,15 @@
+{% extends 'admin_templates/admin_base.html' %}
+{% load static %}
+{% block title %}
+Запросы
+{% endblock %}
+{% block content %}
 <div class="container">
     <h2>Список коммерческих запросов</h2>
     <ul>
         {% for commercial_request in commercial_requests %}
-            <li><a href="{% url 'commercial_request_detail' commercial_request.id %}">Запрос {{ commercial_request.id }}</a></li>
+            <a href="{% url 'commercial_request_detail' commercial_request.id %}">Коммерческий запрос {{ commercial_request.id }} от {{ commercial_request.user.first_name }} {{ commercial_request.user.last_name }} из {{ commercial_request.user.custom.organization }}</a>
         {% endfor %}
     </ul>
 </div>
+{% endblock %}

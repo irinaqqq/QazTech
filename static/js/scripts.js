@@ -524,6 +524,36 @@ function getCSRFToken() {
     return csrfToken;
 }
 
+function setupCategoryDropdown() {
+    const fields = {
+        1: ['processor', 'motherboard', 'ram', 'storage', 'power-supply', 'operating-system', 'screen-size', 'screen-resolution', 'keyboard-backlight'],
+        2: ['processor', 'motherboard', 'ram', 'storage', 'power-supply', 'operating-system', 'screen-size', 'form-factor', 'keyboard-set'],
+        3: ['processor', 'motherboard', 'ram', 'storage', 'power-supply', 'operating-system', 'screen-size', 'keyboard-set'],
+        4: ['processor', 'motherboard', 'ram', 'storage', 'power-supply', 'operating-system', 'screen-size', 'touch-screen', 'screen-type', 'webcam'],
+        5: ['processor', 'motherboard', 'ram', 'storage', 'power-supply', 'operating-system', 'graphics', 'screen-size', 'keyboard-set'],
+        6: ['processor', 'motherboard', 'ram', 'storage', 'power-supply', 'operating-system',],
+        7: ['processor', 'motherboard', 'ram', 'storage', 'power-supply', 'operating-system', 'controller', 'size']
+    };
+
+    $('#id_product_items-0-category').change(function() {
+        var selectedValue = $(this).val();
+
+        // Hide all specific fields first
+        $('.specific-field').hide();
+        
+        $('#quantity-field, #more-notes, #add-product, #send-button').css('display', 'flex');
+        $('#category-container').removeClass('col-sm-12').addClass('col-sm-6');
+
+        // Show fields based on the selected category
+        if (fields[selectedValue]) {
+            fields[selectedValue].forEach(function(field) {
+                $('#' + field + '-field, #' + field + '-notes-field').css('display', 'flex');
+            });
+        }
+    });
+}
+
+
 // Initialize all scripts when the document is ready
 $(document).ready(function() {
     initBackToTopButton();
@@ -535,4 +565,5 @@ $(document).ready(function() {
     setupTableSorting();
     setupCategoryFilter();
     updateFeedbacksReadStatus();
+    setupCategoryDropdown();
 });

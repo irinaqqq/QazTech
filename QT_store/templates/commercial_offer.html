@@ -14,7 +14,7 @@
         <!-- Пример одного продукта -->
         <div class="row g-3" id="product-item-0">
             <!-- Category -->
-            <div class="col-sm-6">
+            <div class="col-sm-12" id="category-container">
                 <label for="id_product_items-0-category" class="form-label">Категория</label>
                 <select name="product_items-0-category" id="id_product_items-0-category" class="ui fluid search dropdown" required>
                     <option value="" disabled selected>Выберите категорию</option>
@@ -24,13 +24,13 @@
                 </select>
             </div>
             <!-- Quantity -->
-            <div class="col-sm-6">
+            <div class="col-sm-6 flex-column specific-field" id="quantity-field">
                 <label for="id_product_items-0-quantity" class="form-label">Количество</label>
                 <input type="number" name="product_items-0-quantity" required id="id_product_items-0-quantity" class="form-control" placeholder="Введите количество">
             </div>
             
             <!-- Processors -->
-            <div class="col-sm-6 specific-field" id="processor-field">
+            <div class="col-sm-6 flex-column specific-field" id="processor-field">
                 <label for="id_product_items-0-processors" class="form-label">Процессор</label>
                 <select name="product_items-0-processors" id="id_product_items-0-processors" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите процессор</option>
@@ -39,13 +39,13 @@
                     {% endfor %}
                 </select>                
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="processor-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="processor-notes-field">
                 <textarea name="product_items-0-processor_notes" class="form-control mt-2" placeholder="Примечание о процессорe" rows="2"></textarea>
             </div>
             
 
             <!-- Motherboards -->
-            <div class="col-sm-6 specific-field" id="motherboard-field">
+            <div class="col-sm-6 flex-column specific-field" id="motherboard-field">
                 <label for="id_product_items-0-motherboards" class="form-label">Материнская плата</label>
                 <select name="product_items-0-motherboards" id="id_product_items-0-motherboards" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите материнскую плату</option>
@@ -54,12 +54,12 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="motherboard-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="motherboard-notes-field">
                 <textarea name="product_items-0-motherboard_notes" class="form-control mt-2" placeholder="Примечание о материнской плате" rows="2"></textarea>
             </div>
             
             <!-- RAM -->
-            <div class="col-sm-6 specific-field" id="ram-field">
+            <div class="col-sm-6 flex-column specific-field" id="ram-field">
                 <label for="id_product_items-0-rams" class="form-label">Оперативная память</label>
                 <select name="product_items-0-rams" id="id_product_items-0-rams" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите оперативную память</option>
@@ -68,12 +68,12 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="ram-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="ram-notes-field">
                 <textarea name="product_items-0-ram_notes" class="form-control mt-2" placeholder="Примечание об оперативной памяти" rows="2"></textarea>        
             </div>
             
             <!-- Storage -->
-            <div class="col-sm-6 specific-field" id="storage-field">
+            <div class="col-sm-6 flex-column specific-field" id="storage-field">
                 <label for="id_product_items-0-storages" class="form-label">Накопители</label>
                 <select name="product_items-0-storages" id="id_product_items-0-storages" class="ui fluid search dropdown" multiple>
                     <option value="" disabled selected>Выберите накопители</option>
@@ -82,11 +82,11 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="storage-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="storage-notes-field">
                 <textarea name="product_items-0-storage_notes" class="form-control mt-2" placeholder="Примечание о накопителях" rows="2"></textarea>           
             </div>            
             <!-- Graphics -->
-            <div class="col-sm-6 specific-field" id="graphics-field">
+            <div class="col-sm-6 flex-column specific-field" id="graphics-field">
                 <label for="id_product_items-0-graphics" class="form-label">Видеокарта</label>
                 <select name="product_items-0-graphics" id="id_product_items-0-graphics" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите размер памяти видеокарты</option>
@@ -95,12 +95,12 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="graphics-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="graphics-notes-field">
                 <textarea name="product_items-0-graphics_notes" class="form-control mt-2" placeholder="Примечание о графике" rows="2"></textarea>           
             </div>
             
             <!-- Operating Systems -->
-            <div class="col-sm-6 specific-field" id="operating-systems-field">
+            <div class="col-sm-6 flex-column specific-field" id="operating-system-field">
                 <label for="id_product_items-0-operating_systems" class="form-label">Операционная система</label>
                 <select name="product_items-0-operating_systems" id="id_product_items-0-operating_systems" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите операционную систему</option>
@@ -109,12 +109,12 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="operating-systems-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="operating-system-notes-field">
                 <textarea name="product_items-0-operating_system_notes" class="form-control mt-2" placeholder="Примечание об операционной системе" rows="2"></textarea>         
             </div>
             
             <!-- Screen Sizes -->
-            <div class="col-sm-6 specific-field" id="screen-sizes-field">
+            <div class="col-sm-6 flex-column specific-field" id="screen-size-field">
                 <label for="id_product_items-0-screen_sizes" class="form-label">Размер экрана</label>
                 <select name="product_items-0-screen_sizes" id="id_product_items-0-screen_sizes" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите размер экрана</option>
@@ -123,12 +123,12 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="screen-size-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="screen-size-notes-field">
                 <textarea name="product_items-0-screen_size_notes" class="form-control mt-2" placeholder="Примечание о размере экрана" rows="2"></textarea>        
             </div>
             
             <!-- Screen Types -->
-            <div class="col-sm-6 specific-field" id="screen-types-field">
+            <div class="col-sm-6 flex-column specific-field" id="screen-type-field">
                 <label for="id_product_items-0-screen_types" class="form-label">Тип экрана</label>
                 <select name="product_items-0-screen_types" id="id_product_items-0-screen_types" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите тип экрана</option>
@@ -137,12 +137,12 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="screen-type-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="screen-type-notes-field">
                 <textarea name="product_items-0-screen_type_notes" class="form-control mt-2" placeholder="Примечание о типе экрана" rows="2"></textarea>           
             </div>
             
             <!-- Screen Resolutions -->
-            <div class="col-sm-6 specific-field" id="screen-resolutions-field">
+            <div class="col-sm-6 flex-column specific-field" id="screen-resolution-field">
                 <label for="id_product_items-0-screen_resolutions" class="form-label">Разрешение экрана</label>
                 <select name="product_items-0-screen_resolutions" id="id_product_items-0-screen_resolutions" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите разрешение экрана</option>
@@ -151,12 +151,12 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="screen-resolution-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="screen-resolution-notes-field">
                 <textarea name="product_items-0-screen_resolution_notes" class="form-control mt-2" placeholder="Примечание о разрешении экрана" rows="2"></textarea>        
             </div>
             
             <!-- Touch Screens -->
-            <div class="col-sm-6 specific-field" id="touch-screens-field">
+            <div class="col-sm-6 flex-column specific-field" id="touch-screen-field">
                 <label for="id_product_items-0-touch_screens" class="form-label">Сенсорный экран</label>
                 <select name="product_items-0-touch_screens" id="id_product_items-0-touch_screens" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите кол-во одновременных касаний</option>
@@ -165,12 +165,12 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="touch-screen-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="touch-screen-notes-field">
                 <textarea name="product_items-0-touch_screen_notes" class="form-control mt-2" placeholder="Примечание о сенсорном экране" rows="2"></textarea>     
             </div>
             
             <!-- Form Factors -->
-            <div class="col-sm-6 specific-field" id="form-factors-field">
+            <div class="col-sm-6 flex-column specific-field" id="form-factor-field">
                 <label for="id_product_items-0-form_factors" class="form-label">Форм-фактор</label>
                 <select name="product_items-0-form_factors" id="id_product_items-0-form_factors" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите форм-фактор</option>
@@ -179,12 +179,12 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="form-factor-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="form-factor-notes-field">
                 <textarea name="product_items-0-form_factor_notes" class="form-control mt-2" placeholder="Примечание о форм-факторе" rows="2"></textarea>       
             </div>
             
             <!-- Webcams -->
-            <div class="col-sm-6 specific-field" id="webcams-field">
+            <div class="col-sm-6 flex-column specific-field" id="webcam-field">
                 <label for="id_product_items-0-webcams" class="form-label">Веб-камера</label>
                 <select name="product_items-0-webcams" id="id_product_items-0-webcams" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите веб-камеру</option>
@@ -193,12 +193,12 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="webcam-notes-field">
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="webcam-notes-field">
                 <textarea name="product_items-0-webcam_notes" class="form-control mt-2" placeholder="Примечание о веб-камере" rows="2"></textarea>      
             </div>
             
                 <!-- Keyboard Sets -->
-                <div class="col-sm-6 specific-field" id="keyboard-sets-field">
+                <div class="col-sm-6 flex-column specific-field" id="keyboard-set-field">
                     <label for="id_product_items-0-keyboard_sets" class="form-label">Комплект клавиатуры и мыши</label>
                     <select name="product_items-0-keyboard_sets" id="id_product_items-0-keyboard_sets" class="ui fluid search dropdown">
                         <option value="" disabled selected>Выберите тип клавиатуры и мыши</option>
@@ -207,12 +207,12 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="keyboard-set-notes-field">
+                <div class="col-sm-6 flex-column justify-content-end specific-field" id="keyboard-set-notes-field">
                     <textarea name="product_items-0-keyboard_set_notes" class="form-control mt-2" placeholder="Примечание о комплекте клавиатуры и мыши" rows="2"></textarea>
                 </div>
                 
                 <!-- Keyboard Backlights -->
-                <div class="col-sm-6 specific-field" id="keyboard-backlights-field">
+                <div class="col-sm-6 flex-column specific-field" id="keyboard-backlight-field">
                     <label for="id_product_items-0-keyboard_backlights" class="form-label">Подсветка клавиатуры</label>
                     <select name="product_items-0-keyboard_backlights" id="id_product_items-0-keyboard_backlights" class="ui fluid search dropdown">
                         <option value="" disabled selected>Нужна ли подсветка клавиатуры?</option>
@@ -221,12 +221,12 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="keyboard-backlight-notes-field">
+                <div class="col-sm-6 flex-column justify-content-end specific-field" id="keyboard-backlight-notes-field">
                     <textarea name="product_items-0-keyboard_backlight_notes" class="form-control mt-2" placeholder="Примечание о подсветке клавиатуры" rows="2"></textarea>
                 </div>
                 
                 <!-- Power Supplies -->
-                <div class="col-sm-6 specific-field" id="power-supplies-field">
+                <div class="col-sm-6 flex-column specific-field" id="power-supply-field">
                     <label for="id_product_items-0-power_supplies" class="form-label">Блок питания</label>
                     <select name="product_items-0-power_supplies" id="id_product_items-0-power_supplies" class="ui fluid search dropdown">
                         <option value="" disabled selected>Выберите мощность блока питания</option>
@@ -235,12 +235,12 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="power-supply-notes-field">
+                <div class="col-sm-6 flex-column justify-content-end specific-field" id="power-supply-notes-field">
                     <textarea name="product_items-0-power_supply_notes" class="form-control mt-2" placeholder="Примечание о блоке питания" rows="2"></textarea>       
                 </div>
                 
                 <!-- Sizes -->
-                <div class="col-sm-6 specific-field" id="sizes-field">
+                <div class="col-sm-6 flex-column specific-field" id="size-field">
                     <label for="id_product_items-0-sizes" class="form-label">Размер</label>
                     <select name="product_items-0-sizes" id="id_product_items-0-sizes" class="ui fluid search dropdown">
                         <option value="" disabled selected>Выберите размер</option>
@@ -249,12 +249,12 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="size-notes-field">
+                <div class="col-sm-6 flex-column justify-content-end specific-field" id="size-notes-field">
                     <textarea name="product_items-0-size_notes" class="form-control mt-2" placeholder="Примечание о размере" rows="2"></textarea>  
                 </div>
                 
                 <!-- Controllers -->
-                <div class="col-sm-6 specific-field" id="controllers-field">
+                <div class="col-sm-6 flex-column specific-field" id="controller-field">
                     <label for="id_product_items-0-controllers" class="form-label">Контроллеры</label>
                     <select name="product_items-0-controllers" id="id_product_items-0-controllers" class="ui fluid search dropdown" multiple>
                         <option value="" disabled selected>Выберите контроллеры</option>
@@ -263,24 +263,23 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-sm-6 d-flex flex-column justify-content-end specific-field" id="controller-notes-field">
+                <div class="col-sm-6 flex-column justify-content-end specific-field" id="controller-notes-field">
                     <textarea name="product_items-0-controller_notes" class="form-control mt-2" placeholder="Примечание о контроллерах" rows="2"></textarea>        
                 </div>
                 
                 <!-- Additional Notes -->
-                <div class="col-sm-12">
+                <div class="col-sm-12 flex-column specific-field" id="more-notes">
                     <label for="id_product_items-0-notes" class="form-label">Дополнительные примечания</label>
                     <textarea name="product_items-0-notes" id="id_product_items-0-notes" class="form-control" placeholder="Напишите дополнительные примечания" rows="4"></textarea>
                 </div>
-                </div>
                 
                 <!-- Кнопка для добавления новых продуктов -->
-                <div class="col-sm-12 mt-3">
+                <div class="col-sm-12 flex-column mt-3 specific-field" id="add-product">
                     <button type="button" class="btn btn-primary" id="add-product-item">Добавить продукт</button>
                 </div>
                 
                 <!-- Кнопка отправки формы -->
-                <div class="col-sm-12 mt-3">
+                <div class="col-sm-12 flex-column mt-3 specific-field" id="send-button">
                     <button type="submit" class="btn btn-primary">Отправить</button>
                 </div>
             </div>
@@ -290,16 +289,6 @@
 
 
 <script>
-    // Найти активный элемент
-    var activeItem = document.querySelector('.menu .item.active');
-
-    // Получить значение data-value активного элемента
-    if (activeItem) {
-        var dataValue = activeItem.getAttribute('data-value');
-        console.log(dataValue); // Выводит значение data-value активного элемента
-    } else {
-        console.log('Активный элемент не найден');
-    }
 
     </script>
     

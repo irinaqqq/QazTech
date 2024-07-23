@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
 <!-- admin_templates/orders.html -->
+<div class="container">
 <h1>Управление заказами</h1>
 <table>
     <thead>
@@ -44,6 +45,7 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
 <script>
 // Функция для обновления статуса заказа через AJAX
 function updateOrderStatus(status, orderId) {
