@@ -24569,6 +24569,7 @@
   }
   
   .ui.selection.dropdown {
+    width: 100%;
     cursor: pointer;
     word-wrap: break-word;
     line-height: 1em;

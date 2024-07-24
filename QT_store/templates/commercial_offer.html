@@ -6,11 +6,11 @@
 {% block content %}    
 <div class="container py-3" style="width: 80%;">
     <h1 class="text-center text-muted mt-0 mb-0 fw-light">Заявка на получение коммерческого предложения</h1>    
-<form class="needs-validation" method="post" enctype="multipart/form-data" id="products-container">
+<form method="post" enctype="multipart/form-data" id="products-form">
     {% csrf_token %}
     {{ formset.management_form }}
     {% for form in formset.forms %}
-    <div id="product-items-formset">
+    <div id="product-items-formset" class="needs-validation">
         <!-- Пример одного продукта -->
         <div class="row g-3" id="product-item-0">
             <!-- Category -->
@@ -272,7 +272,9 @@
                     <label for="id_product_items-0-notes" class="form-label">Дополнительные примечания</label>
                     <textarea name="product_items-0-notes" id="id_product_items-0-notes" class="form-control" placeholder="Напишите дополнительные примечания" rows="4"></textarea>
                 </div>
-                
+            </div>
+                {% endfor %}
+            </div>
                 <!-- Кнопка для добавления новых продуктов -->
                 <div class="col-sm-12 flex-column mt-3 specific-field" id="add-product">
                     <button type="button" class="btn btn-primary" id="add-product-item">Добавить продукт</button>
@@ -282,9 +284,9 @@
                 <div class="col-sm-12 flex-column mt-3 specific-field" id="send-button">
                     <button type="submit" class="btn btn-primary">Отправить</button>
                 </div>
-            </div>
-                {% endfor %}
     </form>
+    <!-- <button type="button" class="btn btn-primary" onclick="document.getElementById('products-form').submit();">Отправить</button> -->
+
 </div>  
 
 
