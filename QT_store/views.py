@@ -258,8 +258,15 @@ def update_feedbacks_read_status(request):
 
 @user_passes_test(is_staff, login_url='/')
 def orders(request):
-    orders = Order.objects.all()
-    return render(request, 'admin_templates/orders.html', {'orders': orders})
+    delivered_orders = Order.objects.filter(status='delivered').order_by('-created_at')
+    other_orders = Order.objects.exclude(status='delivered').order_by('-created_at')
+    
+    context = {
+        'delivered_orders': delivered_orders,
+        'other_orders': other_orders
+    }
+    
+    return render(request, 'admin_templates/orders.html', context)
 
 @user_passes_test(is_staff, login_url='/')
 def update_order_status(request):
@@ -281,10 +288,17 @@ def order_details(request, order_id):
 def approve_price(request, order_id):
     if request.method == 'POST':
         order = get_object_or_404(Order, id=order_id)
-        order.total_price = request.POST.get('approved_price')
-        order.save()
+        for item in order.items.all():
+            price = request.POST.get(f'price_{item.id}')
+            print(f'Item ID: {item.id}, Posted price: {price}')
+            if price:
+                item.price = float(price)
+                item.save()
         return redirect('order_details', order_id=order_id)
-    return redirect('order_details', order_id=order_id)
+    else:
+        return redirect('order_details', order_id=order_id)
+
+
 
 @user_passes_test(is_staff, login_url='/')
 def products(request):
@@ -622,7 +636,7 @@ def commercial_request_detail(request, commercial_request_id):
                 print(product_item.total_price)
                 product_item.save()
                 
-        return redirect('commercial_requests_detail')
+        return redirect('commercial_request_detail', commercial_request_id=commercial_request_id)
 
     context = {
         'commercial_request': commercial_request,

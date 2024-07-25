@@ -38,23 +38,31 @@
         <thead>
             <tr>
                 <th>Продукт</th>
-                <th>Количество</th>
-                <th>Детали</th>
+                <th class="text-center">Количество</th>
+                <th class="text-center">Детали</th>
+                <th class="text-center">Цена</th>
             </tr>
         </thead>
         <tbody>
             {% for item in order.items.all %}
             <tr>
-                <td>
+                <td class="align-middle">
                     <a href="{% url 'product_detail' item.product.pk %}">{{ item.product.name }}</a>
                 </td>
-                <td>{{ item.quantity }}</td>
-                <td>
-                    <button id="toggle-button-{{ forloop.counter0 }}" type="button" class="btn btn-primary" onclick="toggleDetails({{ forloop.counter0 }})">Показать</button>
+                <td class="text-center align-middle">{{ item.quantity }}</td>
+                <td class="text-center align-middle">
+                    <button id="toggle-button-{{ forloop.counter0 }}" type="button" class="btn btn-primary" style="width: 100px;" onclick="toggleDetails({{ forloop.counter0 }})">Показать</button>
+                </td>
+                <td class="text-center align-middle">
+                    {% if item.price == 0 %}
+                    Цена не утверждена 
+                    {% else %}
+                    {{ item.price }}
+                    {% endif %}
                 </td>
             </tr>
             <tr id="details-{{ forloop.counter0 }}" style="display: none;">
-                <td colspan="3">
+                <td colspan="4">
                     <table class="table table-bordered">
                         {% if item.processor %}
                         <tr>
@@ -172,18 +180,6 @@
     </table>
 </div>
 <script>
-    function toggleDetails(index) {
-        var detailsRow = document.getElementById('details-' + index);
-        var button = document.getElementById('toggle-button-' + index);
-        
-        if (detailsRow.style.display === 'none' || detailsRow.style.display === '') {
-            detailsRow.style.display = 'table-row';
-            button.textContent = 'Скрыть';
-        } else {
-            detailsRow.style.display = 'none';
-            button.textContent = 'Показать';
-        }
-    }
-    
+
     </script>
 {% endblock %}

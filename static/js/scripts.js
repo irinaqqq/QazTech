@@ -554,6 +554,12 @@ function setupCategoryDropdown() {
 }
 
 
+
+
+
+
+
+
 // Initialize all scripts when the document is ready
 $(document).ready(function() {
     initBackToTopButton();
@@ -567,3 +573,18 @@ $(document).ready(function() {
     updateFeedbacksReadStatus();
     setupCategoryDropdown();
 });
+
+
+
+function toggleDetails(index) {
+    var detailsRow = document.getElementById('details-' + index);
+    var button = document.getElementById('toggle-button-' + index);
+    
+    if (detailsRow.style.display === 'none' || detailsRow.style.display === '') {
+        detailsRow.style.display = 'table-row';
+        button.textContent = 'Скрыть';
+    } else {
+        detailsRow.style.display = 'none';
+        button.textContent = 'Показать';
+    }
+}

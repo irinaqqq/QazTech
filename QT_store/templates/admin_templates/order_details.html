@@ -6,80 +6,189 @@
 {% block content %}
 <div class="container" style="width: 80%;">
 <h1 class="text-center text-muted my-4 fw-light">Детали заказа №{{ order.id }}</h1>
-<p><strong>От:</strong> {{ order.user.first_name }} {{ order.user.last_name }}, {{ order.user.custom.organization }}</p>
-<p><strong>Статус:</strong>
-    <select name="status" onchange="updateOrderStatus(this.value, {{ order.id }})">
-        {% for status in order.STATUS_CHOICES %}
-        <option value="{{ status.0 }}" {% if order.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
-        {% endfor %}
-    </select>
-</p>
-<p><strong>Дата создания:</strong> {{ order.created_at }}</p>
-<p><strong>Адрес доставки:</strong> {{ order.delivery_address }}</p>
-<p><strong>Цена:</strong>{{ order.total_price }}</p>
-
 <table class="table border mt-3 mb-2">
+    <tbody>
+        <tr>
+            <th>От</th>
+            <td>{{ order.user.first_name }} {{ order.user.last_name }}, {{ order.user.custom.organization }}</td>
+        </tr>
+        <tr>
+            <th>Статус</th>
+            <td>
+                <select name="status" onchange="updateOrderStatus(this.value, {{ order.id }})" class="ui fluid dropdown">
+                    {% for status in order.STATUS_CHOICES %}
+                    <option value="{{ status.0 }}" {% if order.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Дата создания</th>
+            <td>{{ order.created_at }}</td>
+        </tr>
+        <tr>
+            <th>Адрес доставки</th>
+            <td>{{ order.delivery_address }}</td>
+        </tr>
+        <tr>
+            <th>Телефон заказчика</th>
+            <td>{% if order.user.custom.phone_number %} {{ order.user.custom.phone_number }} {% else %} Номер не указан {% endif %}</td>
+        </tr>
+        <tr>
+            <th>Сумма заказа</th>
+            <td>{% if order.total_price == 0 %} Цена не утверждена {% else %} {{ order.total_price }}{% endif %}</td>
+        </tr>
+    </tbody>
+</table>
+<table class="table border mt-3 mb-5">
     <thead>
         <tr>
             <th>Продукт</th>
-            <th>Количество</th>
-            <th>Примечание</th>
-            {% if order.items.all|length > 0 and order.items.all.0.processor %}<th>Процессор</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.mother %}<th>Материнская плата</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.ram %}<th>Оперативная память</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.storage %}<th>Хранилище</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.graphics %}<th>Графика</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.operating_system %}<th>Операционная система</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.screen_sizes %}<th>Размеры экрана</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.screen_type %}<th>Тип экрана</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.screen_resolution %}<th>Разрешение экрана</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.touch_screen_touches %}<th>Сенсорный экран</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.formfactor %}<th>Формфактор</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.webcam %}<th>Веб-камера</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.keyset %}<th>Клавиатура</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.keyboard_backlight %}<th>Подсветка клавиатуры</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.power_supplies %}<th>Блоки питания</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.sizes %}<th>Размеры</th>{% endif %}
-            {% if order.items.all|length > 0 and order.items.all.0.controllers %}<th>Контроллеры</th>{% endif %}
+            <th class="text-center">Количество</th>
+            <th class="text-center">Детали</th>
+            <th class="text-center">Цена</th>
         </tr>
     </thead>
     <tbody>
-        {% for item in order.items.all %}
-        <tr>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.note }}</td>
-            {% if item.processor %}<td>{{ item.processor }}</td>{% endif %}
-            {% if item.mother %}<td>{{ item.mother }}</td>{% endif %}
-            {% if item.ram %}<td>{{ item.ram }}</td>{% endif %}
-            {% if item.storage %}<td>{{ item.storage }}</td>{% endif %}
-            {% if item.graphics %}<td>{{ item.graphics }}</td>{% endif %}
-            {% if item.operating_system %}<td>{{ item.operating_system }}</td>{% endif %}
-            {% if item.screen_sizes %}<td>{{ item.screen_sizes }}</td>{% endif %}
-            {% if item.screen_type %}<td>{{ item.screen_type }}</td>{% endif %}
-            {% if item.screen_resolution %}<td>{{ item.screen_resolution }}</td>{% endif %}
-            {% if item.touch_screen_touches %}<td>{{ item.touch_screen_touches }}</td>{% endif %}
-            {% if item.formfactor %}<td>{{ item.formfactor }}</td>{% endif %}
-            {% if item.webcam %}<td>{{ item.webcam }}</td>{% endif %}
-            {% if item.keyset %}<td>{{ item.keyset }}</td>{% endif %}
-            {% if item.keyboard_backlight %}<td>{{ item.keyboard_backlight }}</td>{% endif %}
-            {% if item.power_supplies %}<td>{{ item.power_supplies }}</td>{% endif %}
-            {% if item.sizes %}<td>{{ item.sizes }}</td>{% endif %}
-            {% if item.controllers %}<td>{{ item.controllers }}</td>{% endif %}
-        </tr>
-        {% endfor %}
+        <form method="post" action="{% url 'approve_price' order.id %}">
+            {% csrf_token %}
+            {% for item in order.items.all %}
+            <tr>
+                <td class="products-td" >
+                    <a href="{% url 'product_detail' item.product.pk %}">{{ item.product.name }}</a>
+                </td>
+                <td class="products-td text-center">{{ item.quantity }}</td>
+                <td class="text-center align-middle">
+                    <button id="toggle-button-{{ forloop.counter0 }}" type="button" class="btn btn-primary" style="width: 100px;" onclick="toggleDetails({{ forloop.counter0 }})">Показать</button>
+                </td>
+                <td class="text-center">
+                    <input type="number" step="0.01" name="price_{{ item.id }}" value="{{ item.price }}" class="form-control" required>
+                </td>
+            </tr>
+            <tr id="details-{{ forloop.counter0 }}" style="display: none;">
+                <td colspan="4">
+                    <table class="table table-bordered">
+                        {% if item.processor %}
+                        <tr>
+                            <th>Процессор</th>
+                            <td>{{ item.processor }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.mother %}
+                        <tr>
+                            <th>Материнская плата</th>
+                            <td>{{ item.mother }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.ram %}
+                        <tr>
+                            <th>ОЗУ</th>
+                            <td>{{ item.ram }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.storage %}
+                        <tr>
+                            <th>Накопитель</th>
+                            <td>{{ item.storage }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.graphics %}
+                        <tr>
+                            <th>Память графического процессора</th>
+                            <td>{{ item.graphics }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.operating_system %}
+                        <tr>
+                            <th>Операционная система</th>
+                            <td>{{ item.operating_system }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.screen_sizes %}
+                        <tr>
+                            <th>Размер экрана</th>
+                            <td>{{ item.screen_sizes }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.screen_type %}
+                        <tr>
+                            <th>Тип экрана</th>
+                            <td>{{ item.screen_type }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.screen_resolution %}
+                        <tr>
+                            <th>Разрешение экрана</th>
+                            <td>{{ item.screen_resolution }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.touch_screen_touches %}
+                        <tr>
+                            <th>Сенсорный экран количество одновременных касаний</th>
+                            <td>{{ item.touch_screen_touches }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.formfactor %}
+                        <tr>
+                            <th>Форм-фактор</th>
+                            <td>{{ item.formfactor }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.webcam %}
+                        <tr>
+                            <th>Веб-камера</th>
+                            <td>{{ item.webcam }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.keyset %}
+                        <tr>
+                            <th>Набор клавиатуры мыши</th>
+                            <td>{{ item.keyset }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.keyboard_backlight %}
+                        <tr>
+                            <th>Подсветка клавиатуры</th>
+                            <td>{{ item.keyboard_backlight }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.power_supplies %}
+                        <tr>
+                            <th>Блок питания</th>
+                            <td>{{ item.power_supplies }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.sizes %}
+                        <tr>
+                            <th>Размеры</th>
+                            <td>{{ item.sizes }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.controllers %}
+                        <tr>
+                            <th>Контроллеры</th>
+                            <td>{{ item.controllers }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if item.note %}
+                        <tr>
+                            <th>Примечание</th>
+                            <td>{{ item.note }}</td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                </td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4" class="text-center">
+                    <button type="submit" class="btn btn-primary">Сохранить цены</button>
+                </td>
+            </tr>
+        </form>
     </tbody>
 </table>
 
-
-</ul>
-<!-- Форма для утверждения цены -->
-    <form method="post" action="{% url 'approve_price' order.id %}">
-        {% csrf_token %}
-        <label for="approved_price">Утвердить цену:</label>
-        <input type="text" id="approved_price" name="approved_price">
-        <button type="submit">Утвердить</button>
-    </form>
 </div>
     <script>
         // Функция для обновления статуса заказа через AJAX

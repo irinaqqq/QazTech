@@ -365,16 +365,19 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending_verification')
     delivery_address = models.TextField(blank=True)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    # total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
         return f"Order {self.id} - {self.user.username}"
+    def total_price(self):
+        return sum(item.price * item.quantity for item in self.items.all())
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     note = models.TextField(blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     processor = models.ForeignKey(Processor, on_delete=models.SET_NULL, null=True, blank=True)
     mother = models.ForeignKey(Motherboard, on_delete=models.SET_NULL, null=True, blank=True)
     ram = models.ForeignKey(RAM, on_delete=models.SET_NULL, null=True, blank=True)

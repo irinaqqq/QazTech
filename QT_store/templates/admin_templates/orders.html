@@ -6,7 +6,8 @@
 {% block content %}
 <!-- admin_templates/orders.html -->
 <div class="container2 mx-auto" style="width: 80%;">
-<h1 class="text-center text-muted my-4 fw-light">Управление заказами</h1>
+<!-- <h1 class="text-center text-muted my-4 fw-light">Управление заказами</h1> -->
+<h2 class="text-center text-muted my-4 fw-light">Заказы в процессе</h2>
 <table class="table border mt-3 mb-2">
     <thead>
         <tr>
@@ -21,7 +22,50 @@
         </tr>
     </thead>
     <tbody>
-        {% for order in orders %}
+        {% for order in other_orders %}
+        <tr>
+            <td class="text-center align-middle">{{ order.id }}</td>
+            <td class="text-center align-middle">{{ order.user.first_name }} {{ order.user.last_name }}</td>
+            <td class="text-center align-middle">{{ order.user.custom.organization }}</td>
+            <td class="text-center align-middle">
+                <select name="status" onchange="updateOrderStatus(this.value, {{ order.id }})" class="ui selection dropdown">
+                    {% for status in order.STATUS_CHOICES %}
+                    <option value="{{ status.0 }}" {% if order.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td class="text-center align-middle">{{ order.created_at }}</td>
+            <td class="text-center align-middle">{{ order.delivery_address }}</td>
+            {% if order.total_price == 0 %}
+            <td class="text-center align-middle">Цена не утверждена</td>
+            {% else %}
+            <td class="text-center align-middle">{{ order.total_price }}</td>
+            {% endif %}
+            <td class="text-center align-middle">
+                <div style="display: grid;">
+                <a href="{% url 'order_details' order.id %}" style="color: #00a2e8; justify-self: center;">Перейти</a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h2 class="text-center text-muted my-4 fw-light">Доставленные заказы</h2>
+<table class="table border mt-3 mb-5">
+    <thead>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">Пользователь</th>
+            <th class="text-center">Организация</th>
+            <th class="text-center">Статус</th>
+            <th class="text-center">Дата создания</th>
+            <th class="text-center">Адрес доставки</th>
+            <th class="text-center">Цена</th>
+            <th class="text-center">Детали заказа</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in delivered_orders %}
         <tr>
             <td class="text-center align-middle">{{ order.id }}</td>
             <td class="text-center align-middle">{{ order.user.first_name }} {{ order.user.last_name }}</td>
