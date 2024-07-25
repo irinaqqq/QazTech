@@ -43,9 +43,13 @@
         right: 0;
         bottom: 0;
         left: 0;
-        background: url('{% static 'images/new-logo.png' %}');
+        background: url('{% static 'images/new-logo.png' %}'), url('{% static 'images/new-logo.png' %}');
         opacity: 0.1;
         pointer-events: none;
+        /* background-repeat: repeat-x, repeat-x; */
+        /* background-position-y: -60px, 400px; */
+        /* background-position-x: -150px, -270px; */
+        background-size: 100%;
     }
 
         h1 {
