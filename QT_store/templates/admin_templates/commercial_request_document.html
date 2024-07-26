@@ -43,7 +43,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        background: url('{% static 'images/new-logo.png' %}'), url('{% static 'images/new-logo.png' %}');
+        /* background: url('{% static 'images/new-logo.png' %}'), url('{% static 'images/new-logo.png' %}'); */
         opacity: 0.1;
         pointer-events: none;
         /* background-repeat: repeat-x, repeat-x; */
@@ -161,8 +161,9 @@
                     <td>{{ product_item.notes }}</td>
                     <td>{{ product_item.quantity }}</td>
                     <td>шт.</td>
-                    <td>{{ product_item.price }}</td>
-                    <td>{{ product_item.total_price }}</td>
+                    <td>{% if product_item.price %}{{ product_item.price }}{% endif %}</td>
+                    <td>{% if product_item.total_price %}{{ product_item.total_price }}{% endif %}</td>
+                    
                 </tr>
                 {% endfor %}
             </tbody>
@@ -196,7 +197,7 @@
         </div>
     </div>
 </div>
-    <input type="button" id="rep" value="Print" class="btn btn-info btn_print">
+    <input type="button" id="rep" value="Скачать как PDF" class="btn btn-info btn_print" style="border: 1px solid rgba(34, 36, 38, .15); float:right;">
     <script type="text/javascript">
         $(document).ready(function($) { 
             $(document).on('click', '.btn_print', function(event) {

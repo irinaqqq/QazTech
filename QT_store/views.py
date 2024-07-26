@@ -600,15 +600,21 @@ def commercial_offer(request):
         formset = ProductItemFormSet(request.POST, request.FILES, instance=None)
         
         if formset.is_valid():
+            # Создание объекта CommercialRequest
             commercial_request = CommercialRequest.objects.create(user=request.user)
+            
+            # Сохранение всех объектов ProductItem
             instances = formset.save(commit=False)
             
+            # Установка связи и сохранение
             for instance in instances:
                 instance.commercial_request = commercial_request
                 instance.save()
-                formset.save_m2m()  # Сохраняем ManyToMany поля после сохранения основной модели
 
-            return redirect('home')
+            # Сохранение ManyToMany полей после всех сохранений
+            formset.save_m2m()
+            
+            return redirect('profile')
 
     else:
         formset = ProductItemFormSet(instance=None)
