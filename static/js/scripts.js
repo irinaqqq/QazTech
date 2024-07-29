@@ -559,7 +559,29 @@ function setupCategoryDropdown() {
 
 
 
-
+function updateOrderStatus(status, orderId) {
+    $.ajax({
+        url: updateOrderStatusUrl,
+        type: 'POST',
+        data: {
+            'csrfmiddlewaretoken': getCSRFToken(),
+            'order_id': orderId,
+            'status': status
+        },
+        success: function(data) {
+            if (data.success) {
+                // Обновление успешно выполнено
+                $('#order-row-' + orderId).load(location.href + ' #order-row-' + orderId);
+            } else {
+                // Обработка ошибок, если необходимо
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            // Обработка ошибок AJAX запроса
+        }
+    });
+}
 
 
 

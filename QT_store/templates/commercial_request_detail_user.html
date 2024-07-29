@@ -1,0 +1,326 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Детали коммерческого запроса
+{% endblock %}
+{% block content %}
+<div class="container" style="width: 80%;">
+    <h2 class="text-center text-muted my-4 fw-light">Детали коммерческого запроса {{ commercial_request.id }}</h2>
+        <table class="table border mt-3 mb-2">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Категория</th>
+                    <th class="text-center">Количество</th>
+                    <th class="text-center">Детали</th>
+                    <th class="text-center">Цена</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product_item in product_items %}
+                <tr>
+                    <td class="align-middle">{{ product_item.id }}</td>
+                    <td class="align-middle">{{ product_item.category }}</td>
+                    <td class="text-center align-middle">{{ product_item.quantity }}</td>
+                    <td class="text-center align-middle">
+                        <button id="toggle-button-{{ forloop.counter0 }}" type="button" class="btn btn-primary" style="width: 100px;" onclick="toggleDetails({{ forloop.counter0 }})">Показать</button>
+                    </td>
+                    <td class="text-center align-middle">
+                        {% if product_item.price %}
+                            {{ product_item.price }}
+                        {% else %}
+                            Цена не утверждена
+                        {% endif %}
+                    </td>
+                    
+                </tr>
+                <tr id="details-{{ forloop.counter0 }}" style="display: none;">
+                    <td colspan="5">
+                        <table class="table table-bordered">
+                            {% if product_item.processors.all %}
+                            <tr>
+                                <th>Процессоры</th>
+                                <td>
+                                    {% for processor in product_item.processors.all %}
+                                        {{ processor.name }}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.processor_notes %}
+                            <tr>
+                                <th>Заметки по процессорам</th>
+                                <td>{{ product_item.processor_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.motherboards.all %}
+                            <tr>
+                                <th>Материнские платы</th>
+                                <td>
+                                    {% for motherboard in product_item.motherboards.all %}
+                                        {{ motherboard.name }}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.motherboard_notes %}
+                            <tr>
+                                <th>Заметки по материнским платам</th>
+                                <td>{{ product_item.motherboard_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.rams.all %}
+                            <tr>
+                                <th>ОЗУ</th>
+                                <td>
+                                    {% for ram in product_item.rams.all %}
+                                    {{ ram.size }} ГБ ({{ ram.type }})
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.ram_notes %}
+                            <tr>
+                                <th>Заметки по ОЗУ</th>
+                                <td>{{ product_item.ram_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.storages.all %}
+                            <tr>
+                                <th>Накопители</th>
+                                <td>
+                                    {% for storage in product_item.storages.all %}
+                                        {{ storage }}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.storage_notes %}
+                            <tr>
+                                <th>Заметки по накопителям</th>
+                                <td>{{ product_item.storage_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.graphics.all %}
+                            <tr>
+                                <th>Графические процессоры</th>
+                                <td>
+                                    {% for graphic in product_item.graphics.all %}
+                                        {{ graphic }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.graphics_notes %}
+                            <tr>
+                                <th>Заметки по графическим процессорам</th>
+                                <td>{{ product_item.graphics_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.operating_systems.all %}
+                            <tr>
+                                <th>Операционные системы</th>
+                                <td>
+                                    {% for os in product_item.operating_systems.all %}
+                                        {{ os.name }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.operating_system_notes %}
+                            <tr>
+                                <th>Заметки по операционным системам</th>
+                                <td>{{ product_item.operating_system_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.screen_sizes.all %}
+                            <tr>
+                                <th>Размеры экранов</th>
+                                <td>
+                                    {% for size in product_item.screen_sizes.all %}
+                                        {{ size }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.screen_size_notes %}
+                            <tr>
+                                <th>Заметки по размерам экранов</th>
+                                <td>{{ product_item.screen_size_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.screen_types.all %}
+                            <tr>
+                                <th>Типы экранов</th>
+                                <td>
+                                    {% for type in product_item.screen_types.all %}
+                                        {{ type }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.screen_type_notes %}
+                            <tr>
+                                <th>Заметки по типам экранов</th>
+                                <td>{{ product_item.screen_type_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.screen_resolutions.all %}
+                            <tr>
+                                <th>Разрешения экранов</th>
+                                <td>
+                                    {% for resolution in product_item.screen_resolutions.all %}
+                                        {{ resolution }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.screen_resolution_notes %}
+                            <tr>
+                                <th>Заметки по разрешениям экранов</th>
+                                <td>{{ product_item.screen_resolution_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.touch_screens.all %}
+                            <tr>
+                                <th>Сенсорные экраны</th>
+                                <td>
+                                    {% for touch in product_item.touch_screens.all %}
+                                        {{ touch }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.touch_screen_notes %}
+                            <tr>
+                                <th>Заметки по сенсорным экранам</th>
+                                <td>{{ product_item.touch_screen_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.form_factors.all %}
+                            <tr>
+                                <th>Форм-факторы</th>
+                                <td>
+                                    {% for form in product_item.form_factors.all %}
+                                        {{ form }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.form_factor_notes %}
+                            <tr>
+                                <th>Заметки по форм-факторам</th>
+                                <td>{{ product_item.form_factor_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.webcams.all %}
+                            <tr>
+                                <th>Веб-камеры</th>
+                                <td>
+                                    {% for webcam in product_item.webcams.all %}
+                                        {{ webcam }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.webcam_notes %}
+                            <tr>
+                                <th>Заметки по веб-камерам</th>
+                                <td>{{ product_item.webcam_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.keyboard_sets.all %}
+                            <tr>
+                                <th>Наборы клавиатур и мышей</th>
+                                <td>
+                                    {% for set in product_item.keyboard_sets.all %}
+                                        {{ set }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.keyboard_set_notes %}
+                            <tr>
+                                <th>Заметки по наборам клавиатур и мышей</th>
+                                <td>{{ product_item.keyboard_set_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.keyboard_backlights.all %}
+                            <tr>
+                                <th>Подсветка клавиатур</th>
+                                <td>
+                                    {% for backlight in product_item.keyboard_backlights.all %}
+                                        {{ backlight }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.keyboard_backlight_notes %}
+                            <tr>
+                                <th>Заметки по подсветке клавиатур</th>
+                                <td>{{ product_item.keyboard_backlight_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.power_supplies.all %}
+                            <tr>
+                                <th>Блоки питания</th>
+                                <td>
+                                    {% for psu in product_item.power_supplies.all %}
+                                        {{ psu }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.power_supply_notes %}
+                            <tr>
+                                <th>Заметки по блокам питания</th>
+                                <td>{{ product_item.power_supply_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.sizes.all %}
+                            <tr>
+                                <th>Размеры</th>
+                                <td>
+                                    {% for size in product_item.sizes.all %}
+                                        {{ size }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.size_notes %}
+                            <tr>
+                                <th>Заметки по размерам</th>
+                                <td>{{ product_item.size_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.controllers.all %}
+                            <tr>
+                                <th>Контроллеры</th>
+                                <td>
+                                    {% for controller in product_item.controllers.all %}
+                                        {{ controller }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.controller_notes %}
+                            <tr>
+                                <th>Заметки по контроллерам</th>
+                                <td>{{ product_item.controller_notes }}</td>
+                            </tr>
+                            {% endif %}
+                            {% if product_item.notes %}
+                            <tr>
+                                <th>Примечания</th>
+                                <td>{{ product_item.notes }}</td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'commercial_request_document' commercial_request.id %}" class="btn btn-primary">Получить документ</a>
+</div>
+{% endblock %}

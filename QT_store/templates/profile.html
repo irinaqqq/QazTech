@@ -158,9 +158,40 @@
         {% endfor %}
           {% else %}
           <div class="alert alert-info mt-3 text-center" role="alert">
-            <strong>Тут пока пусто!</strong> Сделайте заказ чтобы отслеживать его статус
+            <strong>Тут пока пусто!</strong> Сделайте заказ чтобы отслеживать его статус  
         </div>
         {% endif %}
+    </div>
+    <div class="tab-pane fade" id="ex1-pills-4" role="tabpanel" aria-labelledby="ex1-tab-4">
+      <table class="table border mt-3 mb-2">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>От</th>
+                <!-- <th>Организация</th> -->
+                <th class="text-center">Детали</th>
+                <th class="text-center">Документ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commercial_request in commercial_requests %}
+                <tr>
+                    <td class="align-middle">{{ commercial_request.id }}</td>
+                    <td class="align-middle">{{ commercial_request.created_at }}</td>
+                    <!-- <td class="align-middle">{{ commercial_request.user.custom.organization }}</td> -->
+                    <td class="text-center align-middle">
+                        <div class="d-grid">
+                        <a href="{% url 'commercial_request_detail_user' commercial_request.id %}" style="justify-self: center;">Просмотр</a>
+                        </div>
+                    </td>
+                    <td> <div class="d-grid">
+                        <a href="{% url 'commercial_request_document' commercial_request.id %}" class="btn btn-primary">Получить документ</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     </div>
     
     </div>

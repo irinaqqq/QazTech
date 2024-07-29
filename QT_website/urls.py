@@ -47,7 +47,8 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('commercial_offer/', views.commercial_offer, name='commercial_offer'),
-    
+    path('commercial_request/<int:commercial_request_id>/', views.commercial_request_detail_user, name='commercial_request_detail_user'),
+
     path('myadmin/dashboard/', views.dashboard, name='dashboard'),
     path('myadmin/feedbacks/', views.feedbacks, name='feedbacks'),
     path('myadmin/update_feedbacks_read_status/', views.update_feedbacks_read_status, name='update_feedbacks_read_status'),
@@ -66,7 +67,7 @@ urlpatterns = [
 
     path('myadmin/commercial_requests/', views.commercial_requests_list, name='commercial_requests_list'),
     path('myadmin/commercial_request/<int:commercial_request_id>/', views.commercial_request_detail, name='commercial_request_detail'),
-    path('myadmin/commercial_request/document/<int:commercial_request_id>/', views.commercial_request_document, name='commercial_request_document'),  
+    path('commercial_request/document/<int:commercial_request_id>/', views.commercial_request_document, name='commercial_request_document'),  
 ] 
 
 # Добавьте обработку медиа-файлов

@@ -15,6 +15,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from django.core.exceptions import PermissionDenied
+from django.conf import settings
+import os
 
 def is_staff(user):
     return user.is_staff
@@ -226,7 +229,7 @@ def signup_view(request):
 
 
 
-@user_passes_test(is_staff, login_url='/')
+@user_passes_test(is_staff, login_url='/login')
 def dashboard(request):
     total_products = Product.objects.count()
     total_users = User.objects.count() - 1
@@ -285,6 +288,7 @@ def order_details(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     return render(request, 'admin_templates/order_details.html', {'order': order})
 
+@user_passes_test(is_staff, login_url='/')
 def approve_price(request, order_id):
     if request.method == 'POST':
         order = get_object_or_404(Order, id=order_id)
@@ -411,14 +415,6 @@ def edit_product(request, pk):
             description_formset.save()
 
             return redirect('products')
-        else:
-            # Отображаем ошибки форм и формсетов для отладки
-            print("form bug")
-            print(form.errors)
-            print("image bug")
-            print(image_formset.errors)
-            print("desc bug")
-            print(description_formset.errors)
     else:
         form = ProductForm(instance=product)
         image_formset = ImageFormSet(instance=product)
@@ -490,12 +486,6 @@ def reject_request(request, request_id):
     return redirect('requests')
 
 
-
-from django.db.models.signals import post_delete
-from django.dispatch import receiver
-from django.conf import settings
-import os
-
 def clean_unused_images():
     """
     Deletes unused image files that are no longer associated with any `ProductImage` objects in the database,
@@ -527,6 +517,7 @@ def clean_unused_images():
     print(f"Count of unused images deleted: {len(unused_images)}")
 
 
+@login_required
 def cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
@@ -538,6 +529,7 @@ def delete_cart_item(request, item_id):
     cart_item.delete()
     return redirect('cart') 
 
+@login_required
 def order_create(request):
     cart = get_object_or_404(Cart, user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
@@ -581,11 +573,13 @@ def order_create(request):
     
     return render(request, 'order_create.html', {'cart_items': cart_items, 'form': form})
 
+@login_required
 def user_order_details(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user)
     order_items = OrderItem.objects.filter(order=order)
     return render(request, 'user_order_detail.html', {'order': order, 'order_items': order_items})
 
+@login_required
 def commercial_offer(request):
     ProductItemFormSet = inlineformset_factory(
         CommercialRequest,
@@ -621,11 +615,12 @@ def commercial_offer(request):
 
     return render(request, 'commercial_offer.html', {'formset': formset})
 
-
+@staff_member_required
 def commercial_requests_list(request):
     commercial_requests = CommercialRequest.objects.all()
     return render(request, 'admin_templates/commercial_requests_list.html', {'commercial_requests': commercial_requests})
 
+@staff_member_required
 def commercial_request_detail(request, commercial_request_id):
     commercial_request = get_object_or_404(CommercialRequest, pk=commercial_request_id)
     product_items = commercial_request.product_items.all()
@@ -650,9 +645,13 @@ def commercial_request_detail(request, commercial_request_id):
     }
     return render(request, 'admin_templates/commercial_request_detail.html', context)
 
+
+@login_required
 def commercial_request_document(request, commercial_request_id):
     commercial_request = get_object_or_404(CommercialRequest, pk=commercial_request_id)
     product_items = commercial_request.product_items.all()
+    if commercial_request.user != request.user and not request.user.is_staff:
+        raise PermissionDenied("У вас нет доступа к этому документу.")
 
     context = {
         'commercial_request': commercial_request,
@@ -663,6 +662,7 @@ def commercial_request_document(request, commercial_request_id):
 @login_required
 def profile_view(request):
     orders = Order.objects.filter(user=request.user)
+    commercial_requests = CommercialRequest.objects.filter(user=request.user).order_by('-created_at')
     try:
         custom_profile = Custom.objects.get(user=request.user)
     except ObjectDoesNotExist:
@@ -681,5 +681,18 @@ def profile_view(request):
         'user': request.user,
         'custom_profile': custom_profile,
         'password_form': password_form,
-        'orders': orders
+        'orders': orders,
+        'commercial_requests': commercial_requests
     })
+
+@login_required
+def commercial_request_detail_user(request, commercial_request_id):
+    commercial_request = get_object_or_404(CommercialRequest, pk=commercial_request_id)
+    product_items = commercial_request.product_items.all()
+    if commercial_request.user != request.user:
+        raise PermissionDenied("Вы не имеете доступа к этому запросу.")
+    context = {
+        'commercial_request': commercial_request,
+        'product_items': product_items,
+    }
+    return render(request, 'commercial_request_detail_user.html', context)
