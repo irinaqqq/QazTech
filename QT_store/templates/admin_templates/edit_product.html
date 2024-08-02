@@ -334,7 +334,7 @@
                 <div class="image-form" id="image-form-{{ forloop.counter0 }}">
                 <div class="d-flex flex-column">
                     <img id="image-preview-{{ forloop.counter0 }}" src="{{ form.image.value.url }}" alt="Preview" style="max-height: 100px; align-self: center; margin-bottom: 10px;">
-                    <label class="custom-select custom-file-label" data-index="{{ forloop.counter0 }}" style="background-color: #FF2400;">{{ form.instance.image.name }}</label>
+                    <label class="custom-select custom-file-label btn btn-danger" data-index="{{ forloop.counter0 }}">{{ form.instance.image.name }}</label>
                     {{ form.DELETE }}
                     {{ form.product }}
                     {{ form.id }}

@@ -10,6 +10,7 @@
     {% csrf_token %}
     {{ formset.management_form }}
     {% for form in formset.forms %}
+    <!-- {{ form }} -->
     <div id="product-items-formset">
         <!-- Пример одного продукта -->
         <div class="row g-3 needs-validation" id="product-item-0">
@@ -562,6 +563,9 @@
                     <label for="id_product_items-${productItemCounter}-notes" class="form-label">Примечания</label>
                     <textarea name="product_items-${productItemCounter}-notes" id="id_product_items-${productItemCounter}-notes" class="form-control mt-2" rows="3"></textarea>        
                 </div>
+                <div class="col-sm-12 mt-3">
+                <button type="button" class="btn btn-danger" onclick="deleteProductItem('product-item-${productItemCounter}')">Удалить продукт</button>
+                </div>
             </div>
         </div>
     </div>
@@ -574,10 +578,12 @@ $('.ui.dropdown').dropdown();
 
 // Function to delete a product item
 function deleteProductItem(itemID) {
-let itemToDelete = document.getElementById(itemID);
-if (itemToDelete) {
-itemToDelete.remove();
-}
+    let itemToDelete = document.getElementById(itemID);
+            if (itemToDelete) {
+                itemToDelete.remove();
+                productItemCounter--;
+                productTotalForms.setAttribute('value', productItemCounter + 1);
+            }
 }
 });
 </script>
