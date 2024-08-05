@@ -27,8 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
-DEBUG = True
+DEBUG = False
+# DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '192.168.0.114', 'node52038-env-2926384.jcloud.kz', 'qazaqtechnology.kz']
 
@@ -135,8 +135,8 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Медиа-файлы (загружаемые пользователями файлы)
 MEDIA_URL = '/media/'
@@ -154,3 +154,11 @@ EMAIL_HOST_USER = 'info@qt.com.kz'
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
 LOGIN_URL = '/login/'
+
+SESSION_COOKIE_SECURE = True  # Только через HTTPS
+CSRF_COOKIE_SECURE = True     # Только через HTTPS
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Завершение сессии при закрытии браузера
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'

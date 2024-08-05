@@ -173,25 +173,29 @@
                 <th class="text-center">Документ</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="requestsTableBody">
             {% for commercial_request in commercial_requests %}
-                <tr>
+                <tr class="request-row{% if forloop.counter > 5 %} d-none{% endif %}">
                     <td class="align-middle">{{ commercial_request.id }}</td>
                     <td class="align-middle">{{ commercial_request.created_at }}</td>
                     <!-- <td class="align-middle">{{ commercial_request.user.custom.organization }}</td> -->
                     <td class="text-center align-middle">
                         <div class="d-grid">
-                        <a href="{% url 'commercial_request_detail_user' commercial_request.id %}" style="justify-self: center;">Просмотр</a>
+                            <a href="{% url 'commercial_request_detail_user' commercial_request.id %}" style="justify-self: center;">Просмотр</a>
                         </div>
                     </td>
-                    <td> <div class="d-grid">
-                        <a href="{% url 'commercial_request_document' commercial_request.id %}" class="btn btn-primary">Получить документ</a>
+                    <td>
+                        <div class="d-grid">
+                            <a href="{% url 'commercial_request_document' commercial_request.id %}" class="btn btn-primary">Получить документ</a>
                         </div>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <button id="showMoreButton" class="showmore" style="background-color: transparent; border: none;">Показать все</button>
+    
+    
     </div>
     
     </div>
@@ -203,5 +207,27 @@
 </div>
   </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const showMoreButton = document.getElementById('showMoreButton');
+    const rows = document.querySelectorAll('#requestsTableBody .request-row');
+    
+    let allShown = false;
+
+    showMoreButton.addEventListener('click', function() {
+        if (allShown) {
+            rows.forEach((row, index) => {
+                if (index >= 5) row.classList.add('d-none');
+            });
+            showMoreButton.textContent = 'Показать все';
+        } else {
+            rows.forEach(row => row.classList.remove('d-none'));
+            showMoreButton.textContent = 'Скрыть';
+        }
+        allShown = !allShown;
+    });
+});
+
+</script>
 <script src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Free_6.2.0/js/mdb.min.js"></script>
 {% endblock %}

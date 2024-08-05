@@ -2814,3 +2814,10 @@ a{
 .specific-field {
   display: none;
 }
+
+.showmore{
+  transition: color 0.6s;
+}
+.showmore:hover{
+color: #00a2e8;
+}

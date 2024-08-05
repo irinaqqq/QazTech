@@ -315,34 +315,43 @@ function initFormsets() {
 }
 
 function setupDeleteFunctionality() {
+    // Обработка кликов по меткам
     const labels = document.querySelectorAll('.custom-file-label');
     
     labels.forEach(label => {
         label.addEventListener('click', function() {
             const index = label.getAttribute('data-index');
-            const checkbox = document.getElementById(`id_images-${index}-DELETE`);
+            const relatedCheckbox = document.querySelector(`input[id$="-${index}-DELETE"]`);
             const preview = document.getElementById(`image-preview-${index}`);
-            if (checkbox) {
-                checkbox.checked = true;
+            if (relatedCheckbox) {
+                relatedCheckbox.checked = true;
                 label.style.display = 'none';
-                preview.style.display = 'none';
+                if (preview) {
+                    preview.style.display = 'none';
+                }
             }
         });
     });
 
-    const checkboxes = document.querySelectorAll('input[type="checkbox"][id^="id_images-"][id$="-DELETE"]');
+    // Скрыть все DELETE чекбоксы
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][id*="-DELETE"]');
     checkboxes.forEach(checkbox => {
         checkbox.classList.add('hidden-checkbox');
     });
 
-    const deleteCheckboxes = document.querySelectorAll('input[type="checkbox"][name$="-DELETE"]');
+    // Обработка изменений состояния DELETE чекбоксов
+    const deleteCheckboxes = document.querySelectorAll('input[type="checkbox"][name*="-DELETE"]');
     deleteCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             const descriptionForm = checkbox.closest('.description-form');
             if (checkbox.checked) {
-                descriptionForm.style.display = 'none';
+                if (descriptionForm) {
+                    descriptionForm.style.display = 'none';
+                }
             } else {
-                descriptionForm.style.display = 'block';
+                if (descriptionForm) {
+                    descriptionForm.style.display = 'block';
+                }
             }
         });
     });
@@ -583,7 +592,365 @@ function updateOrderStatus(status, orderId) {
     });
 }
 
+function addProductItem(){
+    let productItemCounter = 0;
+    const productTotalForms = document.getElementById('id_product_items-TOTAL_FORMS');
+    const productItemsContainer = document.getElementById('product-items-formset');
 
+    const categoryDataElement = document.getElementById('category-container');
+    const categories = JSON.parse(categoryDataElement.getAttribute('data-categories'));
+
+    const processorField = document.getElementById('processor-field');
+    const processors = JSON.parse(processorField.getAttribute('data-processors'));
+
+    const motherboardField = document.getElementById('motherboard-field');
+    const motherboards = JSON.parse(motherboardField.getAttribute('data-motherboards'));
+
+    const ramField = document.getElementById('ram-field');
+    const rams = JSON.parse(ramField.getAttribute('data-rams'));
+
+    const storageField = document.getElementById('storage-field');
+    const storages = JSON.parse(storageField.getAttribute('data-storages'));
+
+    const graphicsField = document.getElementById('graphics-field');
+    const graphics = JSON.parse(graphicsField.getAttribute('data-graphics'));
+
+    const operatingSystemField = document.getElementById('operating-system-field');
+    const operatingSystems = JSON.parse(operatingSystemField.getAttribute('data-operating-systems'));
+
+    const screenSizeField = document.getElementById('screen-size-field');
+    const screenSizes = JSON.parse(screenSizeField.getAttribute('data-screen-sizes'));
+
+    const screenTypeField = document.getElementById('screen-type-field');
+    const screenTypes = JSON.parse(screenTypeField.getAttribute('data-screen-types'));
+
+    const screenResolutionField = document.getElementById('screen-resolution-field');
+    const screenResolutions = JSON.parse(screenResolutionField.getAttribute('data-screen-resolutions'));
+    
+    const touchScreenField = document.getElementById('touch-screen-field');
+    const touchScreens = JSON.parse(touchScreenField.getAttribute('data-touch-screens'));
+    
+    const formFactorField = document.getElementById('form-factor-field');
+    const formFactors = JSON.parse(formFactorField.getAttribute('data-form-factors'));
+
+    const webcamField = document.getElementById('webcam-field');
+    const webcams = JSON.parse(webcamField.getAttribute('data-webcams'));
+
+    const keyboardSetField = document.getElementById('keyboard-set-field');
+    const keyboardSets = JSON.parse(keyboardSetField.getAttribute('data-keyboard-sets'));
+
+    const keyboardBacklightField = document.getElementById('keyboard-backlight-field');
+    const keyboardBacklights = JSON.parse(keyboardBacklightField.getAttribute('data-keyboard-backlights'));
+
+    const powerSupplyField = document.getElementById('power-supply-field');
+    const powerSupplies = JSON.parse(powerSupplyField.getAttribute('data-power-supplies'));
+
+    const sizeField = document.getElementById('size-field');
+    const sizes = JSON.parse(sizeField.getAttribute('data-sizes'));
+
+    const controllerField = document.getElementById('controller-field');
+    const controllers = JSON.parse(controllerField.getAttribute('data-controllers'));
+
+    document.getElementById('add-product-item').addEventListener('click', function () {
+        productItemCounter++;
+
+        // Создание контейнера для нового продукта
+        let newProductItem = document.createElement('div');
+        newProductItem.classList.add('row', 'g-3', 'needs-validation');
+        newProductItem.id = 'product-item-' + productItemCounter;
+
+        newProductItem.innerHTML = `
+            <!-- Category -->
+            <input type="checkbox" name="product_items-${productItemCounter}-DELETE" id="id_product_items-${productItemCounter}-DELETE" class="hidden-checkbox">
+            <div class="col-sm-12" id="category-container">
+                <label for="id_product_items-${productItemCounter}-category" class="form-label">Категория</label>
+                <select name="product_items-${productItemCounter}-category" id="id_product_items-${productItemCounter}-category" class="ui fluid search dropdown" required>
+                    <option value="" disabled selected>Выберите категорию</option>
+                    ${categories.map(category => `
+                        <option value="${category.id}">${category.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <!-- Quantity -->
+            <div class="col-sm-6 flex-column specific-field" id="quantity-field">
+                <label for="id_product_items-${productItemCounter}-quantity" class="form-label">Количество</label>
+                <input type="number" name="product_items-${productItemCounter}-quantity" required id="id_product_items-${productItemCounter}-quantity" class="form-control" placeholder="Введите количество">
+            </div>
+            
+            <!-- Processors -->
+            <div class="col-sm-6 flex-column specific-field" id="processor-field">
+                <label for="id_product_items-${productItemCounter}-processors" class="form-label">Процессор</label>
+                <select name="product_items-${productItemCounter}-processors" id="id_product_items-${productItemCounter}-processors" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите процессор</option>
+                        <option value="" disabled selected>Выберите процессор</option>
+                        ${processors.map(processor => `
+                            <option value="${processor.id}">${processor.name}</option>
+                        `).join('')}
+                </select>                
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="processor-notes-field">
+                <textarea name="product_items-${productItemCounter}-processor_notes" class="form-control mt-2" placeholder="Примечание о процессорe" rows="2"></textarea>
+            </div>
+            
+            <!-- Motherboards -->
+            <div class="col-sm-6 flex-column specific-field" id="motherboard-field">
+                <label for="id_product_items-${productItemCounter}-motherboards" class="form-label">Материнская плата</label>
+                <select name="product_items-${productItemCounter}-motherboards" id="id_product_items-${productItemCounter}-motherboards" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите материнскую плату</option>
+                        ${motherboards.map(motherboard => `
+                            <option value="${motherboard.id}">${motherboard.name}</option>
+                        `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="motherboard-notes-field">
+                <textarea name="product_items-${productItemCounter}-motherboard_notes" class="form-control mt-2" placeholder="Примечание о материнской плате" rows="2"></textarea>
+            </div>
+            
+            <!-- RAM -->
+            <div class="col-sm-6 flex-column specific-field" id="ram-field">
+                <label for="id_product_items-${productItemCounter}-rams" class="form-label">Оперативная память</label>
+                <select name="product_items-${productItemCounter}-rams" id="id_product_items-${productItemCounter}-rams" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите оперативную память</option>
+                    ${rams.map(ram => `
+                        <option value="${ram.id}">${ram.size} ГБ (${ram.type})</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="ram-notes-field">
+                <textarea name="product_items-${productItemCounter}-ram_notes" class="form-control mt-2" placeholder="Примечание об оперативной памяти" rows="2"></textarea>        
+            </div>
+            
+            <!-- Storage -->
+            <div class="col-sm-6 flex-column specific-field" id="storage-field">
+                <label for="id_product_items-${productItemCounter}-storages" class="form-label">Накопители</label>
+                <select name="product_items-${productItemCounter}-storages" id="id_product_items-${productItemCounter}-storages" class="ui fluid search dropdown" multiple>
+                    <option value="" disabled selected>Выберите накопители</option>
+                    ${storages.map(storage => `
+                        <option value="${storage.id}">${storage.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="storage-notes-field">
+                <textarea name="product_items-${productItemCounter}-storage_notes" class="form-control mt-2" placeholder="Примечание о накопителях" rows="2"></textarea>           
+            </div>            
+            <!-- Graphics -->
+            <div class="col-sm-6 flex-column specific-field" id="graphics-field">
+                <label for="id_product_items-${productItemCounter}-graphics" class="form-label">Видеокарта</label>
+                <select name="product_items-${productItemCounter}-graphics" id="id_product_items-${productItemCounter}-graphics" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите размер памяти видеокарты</option>
+                    ${graphics.map(graphic => `
+                        <option value="${graphic.id}">${graphic.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="graphics-notes-field">
+                <textarea name="product_items-${productItemCounter}-graphics_notes" class="form-control mt-2" placeholder="Примечание о графике" rows="2"></textarea>           
+            </div>
+            
+            <!-- Operating Systems -->
+            <div class="col-sm-6 flex-column specific-field" id="operating-system-field">
+                <label for="id_product_items-${productItemCounter}-operating_systems" class="form-label">Операционная система</label>
+                <select name="product_items-${productItemCounter}-operating_systems" id="id_product_items-${productItemCounter}-operating_systems" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите операционную систему</option>
+                    ${operatingSystems.map(operatingSystem => `
+                        <option value="${operatingSystem.id}">${operatingSystem.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="operating-system-notes-field">
+                <textarea name="product_items-${productItemCounter}-operating_system_notes" class="form-control mt-2" placeholder="Примечание об операционной системе" rows="2"></textarea>         
+            </div>
+            
+            <!-- Screen Sizes -->
+            <div class="col-sm-6 flex-column specific-field" id="screen-size-field">
+                <label for="id_product_items-${productItemCounter}-screen_sizes" class="form-label">Размер экрана</label>
+                <select name="product_items-${productItemCounter}-screen_sizes" id="id_product_items-${productItemCounter}-screen_sizes" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите размер экрана</option>
+                    ${screenSizes.map(screenSize => `
+                        <option value="${screenSize.id}">${screenSize.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="screen-size-notes-field">
+                <textarea name="product_items-${productItemCounter}-screen_size_notes" class="form-control mt-2" placeholder="Примечание о размере экрана" rows="2"></textarea>        
+            </div>
+            
+            <!-- Screen Types -->
+            <div class="col-sm-6 flex-column specific-field" id="screen-type-field">
+                <label for="id_product_items-${productItemCounter}-screen_types" class="form-label">Тип экрана</label>
+                <select name="product_items-${productItemCounter}-screen_types" id="id_product_items-${productItemCounter}-screen_types" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите тип экрана</option>
+                    ${screenTypes.map(screenType => `
+                        <option value="${screenType.id}">${screenType.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="screen-type-notes-field">
+                <textarea name="product_items-${productItemCounter}-screen_type_notes" class="form-control mt-2" placeholder="Примечание о типе экрана" rows="2"></textarea>       
+            </div>
+            
+            <!-- Screen Resolutions -->
+            <div class="col-sm-6 flex-column specific-field" id="screen-resolution-field">
+                <label for="id_product_items-${productItemCounter}-screen_resolutions" class="form-label">Разрешение экрана</label>
+                <select name="product_items-${productItemCounter}-screen_resolutions" id="id_product_items-${productItemCounter}-screen_resolutions" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите разрешение экрана</option>
+                    ${screenResolutions.map(screenResolution => `
+                        <option value="${screenResolution.id}">${screenResolution.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="screen-resolution-notes-field">
+                <textarea name="product_items-${productItemCounter}-screen_resolution_notes" class="form-control mt-2" placeholder="Примечание о разрешении экрана" rows="2"></textarea>      
+            </div>
+            
+            <!-- Touch Screens -->
+            <div class="col-sm-6 flex-column specific-field" id="touch-screen-field">
+                <label for="id_product_items-${productItemCounter}-touch_screens" class="form-label">Тачскрин</label>
+                <select name="product_items-${productItemCounter}-touch_screens" id="id_product_items-${productItemCounter}-touch_screens" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите тачскрин</option>
+                    ${touchScreens.map(touchScreen => `
+                        <option value="${touchScreen.id}">${touchScreen.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="touch-screen-notes-field">
+                <textarea name="product_items-${productItemCounter}-touch_screen_notes" class="form-control mt-2" placeholder="Примечание о тачскрине" rows="2"></textarea>         
+            </div>
+            
+            <!-- Form Factors -->
+            <div class="col-sm-6 flex-column specific-field" id="form-factor-field">
+                <label for="id_product_items-${productItemCounter}-form_factors" class="form-label">Форм-фактор</label>
+                <select name="product_items-${productItemCounter}-form_factors" id="id_product_items-${productItemCounter}-form_factors" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите форм-фактор</option>
+                    ${formFactors.map(formFactor => `
+                        <option value="${formFactor.id}">${formFactor.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="form-factor-notes-field">
+                <textarea name="product_items-${productItemCounter}-form_factor_notes" class="form-control mt-2" placeholder="Примечание о форм-факторе" rows="2"></textarea>         
+            </div>
+            
+            <!-- Webcams -->
+            <div class="col-sm-6 flex-column specific-field" id="webcam-field">
+                <label for="id_product_items-${productItemCounter}-webcams" class="form-label">Веб-камера</label>
+                <select name="product_items-${productItemCounter}-webcams" id="id_product_items-${productItemCounter}-webcams" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите веб-камеру</option>
+                    ${webcams.map(webcam => `
+                        <option value="${webcam.id}">${webcam.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="webcam-notes-field">
+                <textarea name="product_items-${productItemCounter}-webcam_notes" class="form-control mt-2" placeholder="Примечание о веб-камере" rows="2"></textarea>          
+            </div>
+            
+            <!-- Keyboard Sets -->
+            <div class="col-sm-6 flex-column specific-field" id="keyboard-set-field">
+                <label for="id_product_items-${productItemCounter}-keyboard_sets" class="form-label">Клавиатурный набор</label>
+                <select name="product_items-${productItemCounter}-keyboard_sets" id="id_product_items-${productItemCounter}-keyboard_sets" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите клавиатурный набор</option>
+                    ${keyboardSets.map(keyboardSet => `
+                        <option value="${keyboardSet.id}">${keyboardSet.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="keyboard-set-notes-field">
+                <textarea name="product_items-${productItemCounter}-keyboard_set_notes" class="form-control mt-2" placeholder="Примечание о клавиатурном наборе" rows="2"></textarea>           
+            </div>
+            
+            <!-- Keyboard Backlights -->
+            <div class="col-sm-6 flex-column specific-field" id="keyboard-backlight-field">
+                <label for="id_product_items-${productItemCounter}-keyboard_backlights" class="form-label">Подсветка клавиатуры</label>
+                <select name="product_items-${productItemCounter}-keyboard_backlights" id="id_product_items-${productItemCounter}-keyboard_backlights" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите подсветку клавиатуры</option>
+                    ${keyboardBacklights.map(keyboardBacklight => `
+                        <option value="${keyboardBacklight.id}">${keyboardBacklight.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="keyboard-backlight-notes-field">
+                <textarea name="product_items-${productItemCounter}-keyboard_backlight_notes" class="form-control mt-2" placeholder="Примечание о подсветке клавиатуры" rows="2"></textarea>         
+            </div>
+            
+            <!-- Power Supplies -->
+            <div class="col-sm-6 flex-column specific-field" id="power-supply-field">
+                <label for="id_product_items-${productItemCounter}-power_supplies" class="form-label">Блок питания</label>
+                <select name="product_items-${productItemCounter}-power_supplies" id="id_product_items-${productItemCounter}-power_supplies" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите блок питания</option>
+                    ${powerSupplies.map(powerSupply => `
+                        <option value="${powerSupply.id}">${powerSupply.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="power-supply-notes-field">
+                <textarea name="product_items-${productItemCounter}-power_supply_notes" class="form-control mt-2" placeholder="Примечание о блоке питания" rows="2"></textarea>         
+            </div>
+            
+            <!-- Sizes -->
+            <div class="col-sm-6 flex-column specific-field" id="size-field">
+                <label for="id_product_items-${productItemCounter}-sizes" class="form-label">Размеры</label>
+                <select name="product_items-${productItemCounter}-sizes" id="id_product_items-${productItemCounter}-sizes" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите размер</option>
+                    ${sizes.map(size => `
+                        <option value="${size.id}">${size.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="size-notes-field">
+                <textarea name="product_items-${productItemCounter}-size_notes" class="form-control mt-2" placeholder="Примечание о размерах" rows="2"></textarea>        
+            </div>
+            
+            <!-- Controllers -->
+            <div class="col-sm-6 flex-column specific-field" id="controller-field">
+                <label for="id_product_items-${productItemCounter}-controllers" class="form-label">Контроллеры</label>
+                <select name="product_items-${productItemCounter}-controllers" id="id_product_items-${productItemCounter}-controllers" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите контроллер</option>
+                    ${controllers.map(controller => `
+                        <option value="${controller.id}">${controller.name}</option>
+                    `).join('')}
+                </select>
+            </div>
+            <div class="col-sm-6 flex-column justify-content-end specific-field" id="controller-notes-field">
+                <textarea name="product_items-${productItemCounter}-controller_notes" class="form-control mt-2" placeholder="Примечание о контроллерах" rows="2"></textarea>        
+            </div>
+            
+            <!-- Notes -->
+                <div class="col-sm-12 flex-column specific-field" id="more-notes">
+                    <label for="id_product_items-0-notes" class="form-label">Дополнительные примечания</label>
+                    <textarea name="product_items-0-notes" id="id_product_items-0-notes" class="form-control" placeholder="Напишите дополнительные примечания" rows="4"></textarea>
+                </div>
+            <div class="col-sm-12 mt-3">
+            <label class="custom-select custom-file-label btn btn-danger" data-index="${productItemCounter}" id="delete-product-item-${productItemCounter}">Удалить</label>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>`;
+document.getElementById('product-items-formset').appendChild(newProductItem);
+
+productItemsContainer.addEventListener('click', function (event) {
+    if (event.target && event.target.matches('.custom-select.custom-file-label.btn.btn-danger')) {
+        const index = event.target.getAttribute('data-index');
+        handleDeleteProductItem(index);
+    }
+});
+
+productTotalForms.setAttribute('value', productItemCounter + 1)
+$('.ui.dropdown').dropdown();
+});
+}
+
+function handleDeleteProductItem(index) {
+    const checkbox = document.getElementById(`id_product_items-${index}-DELETE`);
+    const productItem = document.getElementById(`product-item-${index}`);
+    
+    if (checkbox && productItem) {
+        checkbox.checked = true;
+        productItem.remove();
+    }
+}
 
 // Initialize all scripts when the document is ready
 $(document).ready(function() {
@@ -592,6 +959,7 @@ $(document).ready(function() {
     initFeedbackForm();
     initDropdownMenus();
     initFormsets();
+    addProductItem();
     setupDeleteFunctionality();
     setupTableSorting();
     setupCategoryFilter();
