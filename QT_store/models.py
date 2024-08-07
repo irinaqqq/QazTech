@@ -17,6 +17,25 @@ class Category(models.Model):
     class Meta:
         ordering = ['name']
 
+class Motherboard(models.Model):
+    
+    TYPE_CHOICES = [
+        ('Socket', 'Socket'),
+        ('FCBGA', 'FCBGA'),
+    ]
+    line = models.CharField(max_length=50, verbose_name="Линейка", choices=TYPE_CHOICES, default='Socket')
+    type = models.CharField(max_length=50, verbose_name="Тип разъема", unique=True)
+    name = models.CharField(max_length=100, verbose_name="Название", editable=False)
+
+    def save(self, *args, **kwargs):
+        self.name = f"{self.line} {self.type}"
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+    class Meta:
+        ordering = ['name']
+
 class ProcBrand(models.Model):
     name = models.CharField(max_length=50, verbose_name="Бренд", null=True, unique=True)
 
@@ -30,11 +49,12 @@ class ProcLine(models.Model):
     def __str__(self):
         return self.name
 
-class Processor(models.Model):
+class Processor(models.Model): 
     brand = models.ForeignKey(ProcBrand, on_delete=models.CASCADE, verbose_name="Бренд", null=True)
     line = models.ForeignKey(ProcLine, on_delete=models.CASCADE, verbose_name="Линейка", null=True)
     series = models.CharField(max_length=50, verbose_name="Серия", default='', null=True, blank=True, unique=True)
     name = models.CharField(max_length=255, verbose_name="Процессор", editable=False)
+    compatible_motherboards = models.ManyToManyField(Motherboard, related_name='compatible_processors', blank=True)
 
     def save(self, *args, **kwargs):
         if self.series:
@@ -129,26 +149,6 @@ class Storage(models.Model):
             return f"{self.size_tb:.1f} ТБ ({self.get_type_display()})"
         else:
             return f"({self.get_type_display()})"
-
-
-class Motherboard(models.Model):
-    
-    TYPE_CHOICES = [
-        ('Socket', 'Socket'),
-        ('FCBGA', 'FCBGA'),
-    ]
-    line = models.CharField(max_length=50, verbose_name="Линейка", choices=TYPE_CHOICES, default='Socket')
-    type = models.CharField(max_length=50, verbose_name="Тип разъема", unique=True)
-    name = models.CharField(max_length=100, verbose_name="Название", editable=False)
-
-    def save(self, *args, **kwargs):
-        self.name = f"{self.line} {self.type}"
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-    class Meta:
-        ordering = ['name']
 
 class Port(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название порта", unique=True)

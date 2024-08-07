@@ -36,7 +36,7 @@
       <label for="id_last_name" class="form-label">Фамилия:</label>
       <input type="text" id="id_last_name" name="last_name" required class="form-control">
   </div>
-  <div class="col-sm-12">
+  <div class="col-sm-6">
       <label for="id_organization" class="form-label">Организация:</label>
       <input type="text" id="id_organization" name="organization" required class="form-control">
   </div>
@@ -48,6 +48,11 @@
       <label for="id_phone_number" class="form-label">Номер телефона:</label>
       <input type="text" id="id_phone_number" name="phone_number" required class="form-control" pattern="(\+7|8)7\d{9}">
   </div>
+
+  <div class="col-sm-6">
+    {{ form.captcha }}
+</div>
+
   <div class="col-sm-12">
   <button type="submit" class="w-100 btn btn-primary btn-lg">Отправить запрос</button>
 </div>

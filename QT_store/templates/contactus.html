@@ -58,7 +58,9 @@
                             <label>Не заполняйте это поле</label>
                             <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
                         </div>
-                        <div class="col-auto"><button type="submit" class="btn btn-lg btn-success">Отправить</button></div>
+                        {{ form.captcha }}
+                        <div class="text-danger" id="captchaError"></div>
+                        <div class="col-auto mt-3"><button type="submit" class="btn btn-lg btn-success">Отправить</button></div>
                     </div>
                 </form>
             </div>

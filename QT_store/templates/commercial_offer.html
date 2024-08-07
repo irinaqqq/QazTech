@@ -36,9 +36,13 @@
             <!-- Processors -->
             <!-- Изначальная форма с данными процессоров -->
             <div class="col-sm-6 flex-column specific-field" id="processor-field" data-processors='[
-                {% for processor in form.processors.field.queryset %}
-                { "id": "{{ processor.pk }}", "name": "{{ processor.name }}" }{% if not forloop.last %},{% endif %}
+            {% for processor in form.processors.field.queryset %}
+            { "id": "{{ processor.pk }}", "name": "{{ processor.name }}", "compatible_motherboards": [
+                {% for motherboard in processor.compatible_motherboards.all %}
+                { "id": "{{ motherboard.pk }}", "name": "{{ motherboard.name }}" }{% if not forloop.last %},{% endif %}
                 {% endfor %}
+            ]}{% if not forloop.last %},{% endif %}
+            {% endfor %}
             ]'>
                 <label for="id_product_items-0-processors" class="form-label">Процессор</label>
                 <select name="product_items-0-processors" id="id_product_items-0-processors" class="ui fluid search dropdown">
@@ -55,19 +59,12 @@
             
 
             <!-- Motherboards -->
-            <div class="col-sm-6 flex-column specific-field" id="motherboard-field" data-motherboards='[
-            {% for motherboard in form.motherboards.field.queryset %}
-            { "id": "{{ motherboard.id }}", "name": "{{ motherboard.name }}" }{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ]'>
-            <label for="id_product_items-0-motherboards" class="form-label">Материнская плата</label>
-            <select name="product_items-0-motherboards" id="id_product_items-0-motherboards" class="ui fluid search dropdown">
-                <option value="" disabled selected>Выберите материнскую плату</option>
-                {% for motherboard in form.motherboards.field.queryset %}
-                    <option value="{{ motherboard.id }}">{{ motherboard.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
+            <div class="col-sm-6 flex-column specific-field" id="motherboard-field">
+                <label for="id_product_items-0-motherboards" class="form-label">Материнская плата</label>
+                <select name="product_items-0-motherboards" id="id_product_items-0-motherboards" class="ui fluid search dropdown">
+                    <option value="" disabled selected>Выберите материнскую плату</option>
+                </select>
+            </div>
             <div class="col-sm-6 flex-column justify-content-end specific-field" id="motherboard-notes-field">
                 <textarea name="product_items-0-motherboard_notes" class="form-control mt-2" placeholder="Примечание о материнской плате" rows="2"></textarea>
             </div>
@@ -373,5 +370,5 @@
     </form>
     <!-- <button type="button" class="btn btn-primary" onclick="document.getElementById('products-form').submit();">Отправить</button> -->
 
-</div>  
+</div>
 {% endblock %}

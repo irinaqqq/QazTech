@@ -3,12 +3,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from django.forms import inlineformset_factory
+from django_recaptcha.fields import ReCaptchaField
 
 class FeedbackForm(forms.ModelForm):
     name = forms.CharField(label='Имя', max_length=100, error_messages={'required': 'Это поле обязательно для заполнения'})
     email = forms.EmailField(label='Email', error_messages={'required': 'Это поле обязательно для заполнения'})
     phone = forms.CharField(label='Телефон', max_length=15, error_messages={'required': 'Это поле обязательно для заполнения'})
     message = forms.CharField(label='Сообщение', widget=forms.Textarea, error_messages={'required': 'Это поле обязательно для заполнения'})
+    captcha = ReCaptchaField(error_messages={'required': 'Это поле обязательно для заполнения'})
     class Meta:
         model = Feedback
         fields = ['name', 'phone', 'email', 'message']
@@ -29,6 +31,7 @@ class ProductDescriptionForm(forms.ModelForm):
         fields = ['title', 'image', 'text']
 
 class RegistrationRequestForm(forms.ModelForm):
+    captcha = ReCaptchaField(error_messages={'required': 'Это поле обязательно для заполнения'})
     class Meta:
         model = RegistrationRequest
         fields = ['first_name', 'last_name', 'organization', 'email', 'phone_number']

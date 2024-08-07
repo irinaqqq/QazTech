@@ -166,6 +166,11 @@ function initFeedbackForm() {
                         } else {
                             $('#messageError').text('');
                         }
+                        if(response.errors.captcha){
+                            $('#captchaError').text(response.errors.captcha);
+                        } else {
+                            $('#captchaError').text('');
+                        }
                     }
                 }
             },
@@ -592,67 +597,66 @@ function updateOrderStatus(status, orderId) {
     });
 }
 
-function addProductItem(){
+function addProductItem() {
     let productItemCounter = 0;
     const productTotalForms = document.getElementById('id_product_items-TOTAL_FORMS');
     const productItemsContainer = document.getElementById('product-items-formset');
 
     const categoryDataElement = document.getElementById('category-container');
-    const categories = JSON.parse(categoryDataElement.getAttribute('data-categories'));
+    const categories = categoryDataElement ? JSON.parse(categoryDataElement.getAttribute('data-categories')) : [];
 
     const processorField = document.getElementById('processor-field');
-    const processors = JSON.parse(processorField.getAttribute('data-processors'));
-
-    const motherboardField = document.getElementById('motherboard-field');
-    const motherboards = JSON.parse(motherboardField.getAttribute('data-motherboards'));
+    const processors = processorField ? JSON.parse(processorField.getAttribute('data-processors')) : [];
 
     const ramField = document.getElementById('ram-field');
-    const rams = JSON.parse(ramField.getAttribute('data-rams'));
+    const rams = ramField ? JSON.parse(ramField.getAttribute('data-rams')) : [];
 
     const storageField = document.getElementById('storage-field');
-    const storages = JSON.parse(storageField.getAttribute('data-storages'));
+    const storages = storageField ? JSON.parse(storageField.getAttribute('data-storages')) : [];
 
     const graphicsField = document.getElementById('graphics-field');
-    const graphics = JSON.parse(graphicsField.getAttribute('data-graphics'));
+    const graphics = graphicsField ? JSON.parse(graphicsField.getAttribute('data-graphics')) : [];
 
     const operatingSystemField = document.getElementById('operating-system-field');
-    const operatingSystems = JSON.parse(operatingSystemField.getAttribute('data-operating-systems'));
+    const operatingSystems = operatingSystemField ? JSON.parse(operatingSystemField.getAttribute('data-operating-systems')) : [];
 
     const screenSizeField = document.getElementById('screen-size-field');
-    const screenSizes = JSON.parse(screenSizeField.getAttribute('data-screen-sizes'));
+    const screenSizes = screenSizeField ? JSON.parse(screenSizeField.getAttribute('data-screen-sizes')) : [];
 
     const screenTypeField = document.getElementById('screen-type-field');
-    const screenTypes = JSON.parse(screenTypeField.getAttribute('data-screen-types'));
+    const screenTypes = screenTypeField ? JSON.parse(screenTypeField.getAttribute('data-screen-types')) : [];
 
     const screenResolutionField = document.getElementById('screen-resolution-field');
-    const screenResolutions = JSON.parse(screenResolutionField.getAttribute('data-screen-resolutions'));
+    const screenResolutions = screenResolutionField ? JSON.parse(screenResolutionField.getAttribute('data-screen-resolutions')) : [];
     
     const touchScreenField = document.getElementById('touch-screen-field');
-    const touchScreens = JSON.parse(touchScreenField.getAttribute('data-touch-screens'));
+    const touchScreens = touchScreenField ? JSON.parse(touchScreenField.getAttribute('data-touch-screens')) : [];
     
     const formFactorField = document.getElementById('form-factor-field');
-    const formFactors = JSON.parse(formFactorField.getAttribute('data-form-factors'));
+    const formFactors = formFactorField ? JSON.parse(formFactorField.getAttribute('data-form-factors')) : [];
 
     const webcamField = document.getElementById('webcam-field');
-    const webcams = JSON.parse(webcamField.getAttribute('data-webcams'));
+    const webcams = webcamField ? JSON.parse(webcamField.getAttribute('data-webcams')) : [];
 
     const keyboardSetField = document.getElementById('keyboard-set-field');
-    const keyboardSets = JSON.parse(keyboardSetField.getAttribute('data-keyboard-sets'));
+    const keyboardSets = keyboardSetField ? JSON.parse(keyboardSetField.getAttribute('data-keyboard-sets')) : [];
 
     const keyboardBacklightField = document.getElementById('keyboard-backlight-field');
-    const keyboardBacklights = JSON.parse(keyboardBacklightField.getAttribute('data-keyboard-backlights'));
+    const keyboardBacklights = keyboardBacklightField ? JSON.parse(keyboardBacklightField.getAttribute('data-keyboard-backlights')) : [];
 
     const powerSupplyField = document.getElementById('power-supply-field');
-    const powerSupplies = JSON.parse(powerSupplyField.getAttribute('data-power-supplies'));
+    const powerSupplies = powerSupplyField ? JSON.parse(powerSupplyField.getAttribute('data-power-supplies')) : [];
 
     const sizeField = document.getElementById('size-field');
-    const sizes = JSON.parse(sizeField.getAttribute('data-sizes'));
+    const sizes = sizeField ? JSON.parse(sizeField.getAttribute('data-sizes')) : [];
 
     const controllerField = document.getElementById('controller-field');
-    const controllers = JSON.parse(controllerField.getAttribute('data-controllers'));
+    const controllers = controllerField ? JSON.parse(controllerField.getAttribute('data-controllers')) : [];
 
-    document.getElementById('add-product-item').addEventListener('click', function () {
-        productItemCounter++;
+    const addProductButton = document.getElementById('add-product-item');
+    if (addProductButton) {
+        addProductButton.addEventListener('click', function () {
+            productItemCounter++;
 
         // Создание контейнера для нового продукта
         let newProductItem = document.createElement('div');
@@ -697,9 +701,6 @@ function addProductItem(){
                 <label for="id_product_items-${productItemCounter}-motherboards" class="form-label">Материнская плата</label>
                 <select name="product_items-${productItemCounter}-motherboards" id="id_product_items-${productItemCounter}-motherboards" class="ui fluid search dropdown">
                     <option value="" disabled selected>Выберите материнскую плату</option>
-                        ${motherboards.map(motherboard => `
-                            <option value="${motherboard.id}">${motherboard.name}</option>
-                        `).join('')}
                 </select>
             </div>
             <div class="col-sm-6 flex-column justify-content-end specific-field" id="motherboard-notes-field">
@@ -930,6 +931,10 @@ function addProductItem(){
 </div>`;
 document.getElementById('product-items-formset').appendChild(newProductItem);
 
+$('#id_product_items-' + productItemCounter + '-processors').on('change', function() {
+    updateMotherboards($(this), productItemCounter);
+});
+      
 productItemsContainer.addEventListener('click', function (event) {
     if (event.target && event.target.matches('.custom-select.custom-file-label.btn.btn-danger')) {
         const index = event.target.getAttribute('data-index');
@@ -939,7 +944,9 @@ productItemsContainer.addEventListener('click', function (event) {
 
 productTotalForms.setAttribute('value', productItemCounter + 1)
 $('.ui.dropdown').dropdown();
+
 });
+}
 }
 
 function handleDeleteProductItem(index) {
@@ -981,3 +988,45 @@ function toggleDetails(index) {
         button.textContent = 'Показать';
     }
 }
+
+function updateMotherboards(processorSelect, productItemCounter) {
+    var selectedProcessorId = processorSelect.val();
+    var processorsData = $('#processor-field').data('processors');
+    
+    if (!processorsData) {
+        console.error('Processors data is undefined or not available for product item:', productItemCounter);
+        return;
+    }
+
+    var compatibleMotherboards = [];
+
+    // Проверка, что processorsData является массивом
+    if (Array.isArray(processorsData)) {
+        // Найти материнские платы, совместимые с выбранным процессором
+        processorsData.forEach(function(processor) {
+            if (processor.id == selectedProcessorId) {
+                compatibleMotherboards = processor.compatible_motherboards || [];
+            }
+        });
+    } else {
+        console.error('Processors data is not an array. It is:', processorsData);
+        return;
+    }
+
+    // Очистить и заполнить поле материнских плат
+    var motherboardsSelect = $('#id_product_items-' + productItemCounter + '-motherboards');
+    motherboardsSelect.empty();
+    motherboardsSelect.append('<option value="" disabled selected>Выберите материнскую плату</option>');
+
+    compatibleMotherboards.forEach(function(motherboard) {
+        motherboardsSelect.append('<option value="' + motherboard.id + '">' + motherboard.name + '</option>');
+    });
+
+    // Обновить Semantic UI dropdown
+    motherboardsSelect.dropdown('clear');
+    motherboardsSelect.dropdown('refresh');
+}
+
+$('#id_product_items-0-processors').on('change', function() {
+    updateMotherboards($(this), 0);
+});
