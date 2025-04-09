@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-4@#8^&*g3!$@1v2j0z5q3x@6b1c7!9h3r4f3g5$%&*j1@#k1j1
 # DEBUG = False
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'node52038-env-2926384.jcloud.kz', 'mytechnology.kz']
+ALLOWED_HOSTS = ['20.121.43.134', '127.0.0.1', 'node52038-env-2926384.jcloud.kz', 'mytechnology.kz']
 
 
 # Application definition
