@@ -13,5 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Открываем порт, который будет использоваться вашим приложением  
 EXPOSE 8000  
   
-# Команда для выполнения миграций и запуска приложения  
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]  
+# Копируем и устанавливаем права на скрипт  
+COPY entrypoint.sh /entrypoint.sh  
+RUN chmod +x /entrypoint.sh  
+  
+# Используем скрипт в качестве точки входа  
+CMD ["/entrypoint.sh"]  
