@@ -1,0 +1,10 @@
+version: '3.8'  
+  
+services:  
+  mytech-service:  
+    build:  
+      context: .  
+    ports:  
+      - "8000:8000"  
+    env_file:  
+      - .env
