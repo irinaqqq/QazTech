@@ -449,11 +449,11 @@ def approve_request(request, request_id):
 
         try:
             send_mail(
-                'Добро пожаловать на qazaqtechnology.kz!',
+                'Добро пожаловать на mytechnology.kz!',
                 f'''
                 Уважаемый(ая) {registration_request.first_name},
 
-                Благодарим вас за регистрацию на сайте qazaqtechnology.kz. Мы рады приветствовать вас на нашем сайте!
+                Благодарим вас за регистрацию на сайте mytechnology.kz. Мы рады приветствовать вас на нашем сайте!
 
                 Ваши учетные данные для входа:
                 Логин: {registration_request.email}
@@ -463,10 +463,10 @@ def approve_request(request, request_id):
 
                 Если у вас возникнут какие-либо вопросы или вам потребуется помощь, пожалуйста, не стесняйтесь обращаться в нашу службу поддержки по адресу info@qt.com.kz. Мы всегда готовы помочь вам!
 
-                Спасибо за то, что выбрали qazaqtechnology.kz. Желаем вам приятных покупок!
+                Спасибо за то, что выбрали mytechnology.kz. Желаем вам приятных покупок!
 
                 С уважением,
-                Команда qazaqtechnology.kz
+                Команда mytechnology.kz
                 ''',
                 'info@qt.com.kz',
                 [registration_request.email],
@@ -696,3 +696,109 @@ def commercial_request_detail_user(request, commercial_request_id):
         'product_items': product_items,
     }
     return render(request, 'commercial_request_detail_user.html', context)
+
+from rest_framework import viewsets  
+from .models import (  
+    Motherboard, ProcBrand, ProcLine, Processor, OperatingSystem, Graphics, RAM, Storage, Port, ScreenSize,  
+    PowerSupply, Controller, Size, KeyboardLight, ScreenResolution, FormFactor, KeyboardSet, TouchST,  
+    ScreenType, WebCam, Product, ProductImage, ProductDescription  
+)  
+from .serializers import (  
+    MotherboardSerializer, ProcBrandSerializer, ProcLineSerializer, ProcessorSerializer, OperatingSystemSerializer,  
+    GraphicsSerializer, RAMSerializer, StorageSerializer, PortSerializer, ScreenSizeSerializer, PowerSupplySerializer,  
+    ControllerSerializer, SizeSerializer, KeyboardLightSerializer, ScreenResolutionSerializer, FormFactorSerializer,  
+    KeyboardSetSerializer, TouchSTSerializer, ScreenTypeSerializer, WebCamSerializer, ProductSerializer,  
+    ProductImageSerializer, ProductDescriptionSerializer  
+)  
+  
+class MotherboardViewSet(viewsets.ModelViewSet):  
+    queryset = Motherboard.objects.all()  
+    serializer_class = MotherboardSerializer  
+  
+class ProcBrandViewSet(viewsets.ModelViewSet):  
+    queryset = ProcBrand.objects.all()  
+    serializer_class = ProcBrandSerializer  
+  
+class ProcLineViewSet(viewsets.ModelViewSet):  
+    queryset = ProcLine.objects.all()  
+    serializer_class = ProcLineSerializer  
+  
+class ProcessorViewSet(viewsets.ModelViewSet):  
+    queryset = Processor.objects.all()  
+    serializer_class = ProcessorSerializer  
+  
+class OperatingSystemViewSet(viewsets.ModelViewSet):  
+    queryset = OperatingSystem.objects.all()  
+    serializer_class = OperatingSystemSerializer  
+  
+class GraphicsViewSet(viewsets.ModelViewSet):  
+    queryset = Graphics.objects.all()  
+    serializer_class = GraphicsSerializer  
+  
+class RAMViewSet(viewsets.ModelViewSet):  
+    queryset = RAM.objects.all()  
+    serializer_class = RAMSerializer  
+  
+class StorageViewSet(viewsets.ModelViewSet):  
+    queryset = Storage.objects.all()  
+    serializer_class = StorageSerializer  
+  
+class PortViewSet(viewsets.ModelViewSet):  
+    queryset = Port.objects.all()  
+    serializer_class = PortSerializer  
+
+class ScreenSizeViewSet(viewsets.ModelViewSet):  
+    queryset = ScreenSize.objects.all()  
+    serializer_class = ScreenSizeSerializer  
+  
+class PowerSupplyViewSet(viewsets.ModelViewSet):  
+    queryset = PowerSupply.objects.all()  
+    serializer_class = PowerSupplySerializer  
+  
+class ControllerViewSet(viewsets.ModelViewSet):  
+    queryset = Controller.objects.all()  
+    serializer_class = ControllerSerializer  
+  
+class SizeViewSet(viewsets.ModelViewSet):  
+    queryset = Size.objects.all()  
+    serializer_class = SizeSerializer  
+  
+class KeyboardLightViewSet(viewsets.ModelViewSet):  
+    queryset = KeyboardLight.objects.all()  
+    serializer_class = KeyboardLightSerializer  
+  
+class ScreenResolutionViewSet(viewsets.ModelViewSet):  
+    queryset = ScreenResolution.objects.all()  
+    serializer_class = ScreenResolutionSerializer  
+  
+class FormFactorViewSet(viewsets.ModelViewSet):  
+    queryset = FormFactor.objects.all()  
+    serializer_class = FormFactorSerializer  
+  
+class KeyboardSetViewSet(viewsets.ModelViewSet):  
+    queryset = KeyboardSet.objects.all()  
+    serializer_class = KeyboardSetSerializer  
+  
+class TouchSTViewSet(viewsets.ModelViewSet):  
+    queryset = TouchST.objects.all()  
+    serializer_class = TouchSTSerializer  
+  
+class ScreenTypeViewSet(viewsets.ModelViewSet):  
+    queryset = ScreenType.objects.all()  
+    serializer_class = ScreenTypeSerializer  
+  
+class WebCamViewSet(viewsets.ModelViewSet):  
+    queryset = WebCam.objects.all()  
+    serializer_class = WebCamSerializer  
+  
+class ProductViewSet(viewsets.ModelViewSet):  
+    queryset = Product.objects.all()  
+    serializer_class = ProductSerializer  
+  
+class ProductImageViewSet(viewsets.ModelViewSet):  
+    queryset = ProductImage.objects.all()  
+    serializer_class = ProductImageSerializer  
+  
+class ProductDescriptionViewSet(viewsets.ModelViewSet):  
+    queryset = ProductDescription.objects.all()  
+    serializer_class = ProductDescriptionSerializer  
