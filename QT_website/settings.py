@@ -158,8 +158,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 LOGIN_URL = '/login/'
 
-SESSION_COOKIE_SECURE = True  # Только через HTTPS
-CSRF_COOKIE_SECURE = True     # Только через HTTPS
+# SESSION_COOKIE_SECURE = True  # Только через HTTPS
+# CSRF_COOKIE_SECURE = True     # Только через HTTPS
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Завершение сессии при закрытии браузера
 
 SECURE_CONTENT_TYPE_NOSNIFF = True

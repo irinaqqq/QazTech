@@ -137,10 +137,6 @@ function initFeedbackForm() {
             type: 'POST',
             url: $(this).attr('action'),
             data: $(this).serialize(),
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()  // Функция для получения CSRF-токена
-            },
             success: function(response){
                 if(response.success){
                     $('#successMessage').fadeIn().delay(10000).fadeOut();
