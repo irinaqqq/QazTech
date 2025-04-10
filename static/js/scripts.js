@@ -137,6 +137,9 @@ function initFeedbackForm() {
             type: 'POST',
             url: $(this).attr('action'),
             data: $(this).serialize(),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
+            },
             success: function(response){
                 if(response.success){
                     $('#successMessage').fadeIn().delay(10000).fadeOut();
