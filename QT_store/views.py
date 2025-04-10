@@ -698,107 +698,541 @@ def commercial_request_detail_user(request, commercial_request_id):
     return render(request, 'commercial_request_detail_user.html', context)
 
 from rest_framework import viewsets  
-from .models import (  
-    Motherboard, ProcBrand, ProcLine, Processor, OperatingSystem, Graphics, RAM, Storage, Port, ScreenSize,  
-    PowerSupply, Controller, Size, KeyboardLight, ScreenResolution, FormFactor, KeyboardSet, TouchST,  
-    ScreenType, WebCam, Product, ProductImage, ProductDescription  
-)  
-from .serializers import (  
-    MotherboardSerializer, ProcBrandSerializer, ProcLineSerializer, ProcessorSerializer, OperatingSystemSerializer,  
-    GraphicsSerializer, RAMSerializer, StorageSerializer, PortSerializer, ScreenSizeSerializer, PowerSupplySerializer,  
-    ControllerSerializer, SizeSerializer, KeyboardLightSerializer, ScreenResolutionSerializer, FormFactorSerializer,  
-    KeyboardSetSerializer, TouchSTSerializer, ScreenTypeSerializer, WebCamSerializer, ProductSerializer,  
-    ProductImageSerializer, ProductDescriptionSerializer  
-)  
+from .models import (Motherboard, ProcBrand, ProcLine, Processor, OperatingSystem, Graphics, RAM, Storage, Port,   
+                     ScreenSize, PowerSupply, Controller, Size, KeyboardLight, ScreenResolution, FormFactor,   
+                     KeyboardSet, TouchST, ScreenType, WebCam, Product, ProductImage, ProductDescription)  
+from .serializers import (MotherboardSerializer, ProcBrandSerializer, ProcLineSerializer, ProcessorSerializer,   
+                          OperatingSystemSerializer, GraphicsSerializer, RAMSerializer, StorageSerializer,   
+                          PortSerializer, ScreenSizeSerializer, PowerSupplySerializer, ControllerSerializer,   
+                          SizeSerializer, KeyboardLightSerializer, ScreenResolutionSerializer, FormFactorSerializer,   
+                          KeyboardSetSerializer, TouchSTSerializer, ScreenTypeSerializer, WebCamSerializer,   
+                          ProductSerializer, ProductImageSerializer, ProductDescriptionSerializer)  
   
 class MotherboardViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given motherboard.  
+  
+    list:  
+    Return a list of all the existing motherboards.  
+  
+    create:  
+    Create a new motherboard instance.  
+  
+    update:  
+    Update the given motherboard.  
+  
+    partial_update:  
+    Partially update the given motherboard.  
+  
+    delete:  
+    Delete the given motherboard.  
+    """  
     queryset = Motherboard.objects.all()  
     serializer_class = MotherboardSerializer  
   
 class ProcBrandViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given processor brand.  
+  
+    list:  
+    Return a list of all the existing processor brands.  
+  
+    create:  
+    Create a new processor brand instance.  
+  
+    update:  
+    Update the given processor brand.  
+  
+    partial_update:  
+    Partially update the given processor brand.  
+  
+    delete:  
+    Delete the given processor brand.  
+    """  
     queryset = ProcBrand.objects.all()  
     serializer_class = ProcBrandSerializer  
   
 class ProcLineViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given processor line.  
+  
+    list:  
+    Return a list of all the existing processor lines.  
+  
+    create:  
+    Create a new processor line instance.  
+  
+    update:  
+    Update the given processor line.  
+  
+    partial_update:  
+    Partially update the given processor line.  
+  
+    delete:  
+    Delete the given processor line.  
+    """  
     queryset = ProcLine.objects.all()  
     serializer_class = ProcLineSerializer  
   
 class ProcessorViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given processor.  
+  
+    list:  
+    Return a list of all the existing processors.  
+  
+    create:  
+    Create a new processor instance.  
+  
+    update:  
+    Update the given processor.  
+  
+    partial_update:  
+    Partially update the given processor.  
+  
+    delete:  
+    Delete the given processor.  
+    """  
     queryset = Processor.objects.all()  
     serializer_class = ProcessorSerializer  
   
 class OperatingSystemViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given operating system.  
+  
+    list:  
+    Return a list of all the existing operating systems.  
+  
+    create:  
+    Create a new operating system instance.  
+  
+    update:  
+    Update the given operating system.  
+  
+    partial_update:  
+    Partially update the given operating system.  
+  
+    delete:  
+    Delete the given operating system.  
+    """  
     queryset = OperatingSystem.objects.all()  
     serializer_class = OperatingSystemSerializer  
   
 class GraphicsViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given graphics card.  
+  
+    list:  
+    Return a list of all the existing graphics cards.  
+  
+    create:  
+    Create a new graphics card instance.  
+  
+    update:  
+    Update the given graphics card.  
+  
+    partial_update:  
+    Partially update the given graphics card.  
+  
+    delete:  
+    Delete the given graphics card.  
+    """  
     queryset = Graphics.objects.all()  
     serializer_class = GraphicsSerializer  
   
 class RAMViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given RAM.  
+  
+    list:  
+    Return a list of all the existing RAMs.  
+  
+    create:  
+    Create a new RAM instance.  
+  
+    update:  
+    Update the given RAM.  
+  
+    partial_update:  
+    Partially update the given RAM.  
+  
+    delete:  
+    Delete the given RAM.  
+    """  
     queryset = RAM.objects.all()  
     serializer_class = RAMSerializer  
   
 class StorageViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given storage.  
+  
+    list:  
+    Return a list of all the existing storages.  
+  
+    create:  
+    Create a new storage instance.  
+  
+    update:  
+    Update the given storage.  
+  
+    partial_update:  
+    Partially update the given storage.  
+  
+    delete:  
+    Delete the given storage.  
+    """  
     queryset = Storage.objects.all()  
     serializer_class = StorageSerializer  
   
 class PortViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given port.  
+  
+    list:  
+    Return a list of all the existing ports.  
+  
+    create:  
+    Create a new port instance.  
+  
+    update:  
+    Update the given port.  
+  
+    partial_update:  
+    Partially update the given port.  
+  
+    delete:  
+    Delete the given port.  
+    """  
     queryset = Port.objects.all()  
     serializer_class = PortSerializer  
-
+  
 class ScreenSizeViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given screen size.  
+  
+    list:  
+    Return a list of all the existing screen sizes.  
+  
+    create:  
+    Create a new screen size instance.  
+  
+    update:  
+    Update the given screen size.  
+  
+    partial_update:  
+    Partially update the given screen size.  
+  
+    delete:  
+    Delete the given screen size.  
+    """  
     queryset = ScreenSize.objects.all()  
     serializer_class = ScreenSizeSerializer  
   
 class PowerSupplyViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given power supply.  
+  
+    list:  
+    Return a list of all the existing power supplies.  
+  
+    create:  
+    Create a new power supply instance.  
+  
+    update:  
+    Update the given power supply.  
+  
+    partial_update:  
+    Partially update the given power supply.  
+  
+    delete:  
+    Delete the given power supply.  
+    """  
     queryset = PowerSupply.objects.all()  
     serializer_class = PowerSupplySerializer  
   
 class ControllerViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given controller.  
+  
+    list:  
+    Return a list of all the existing controllers.  
+  
+    create:  
+    Create a new controller instance.  
+  
+    update:  
+    Update the given controller.  
+  
+    partial_update:  
+    Partially update the given controller.  
+  
+    delete:  
+    Delete the given controller.  
+    """  
     queryset = Controller.objects.all()  
     serializer_class = ControllerSerializer  
   
 class SizeViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given size.  
+  
+    list:  
+    Return a list of all the existing sizes.  
+  
+    create:  
+    Create a new size instance.  
+  
+    update:  
+    Update the given size.  
+  
+    partial_update:  
+    Partially update the given size.  
+  
+    delete:  
+    Delete the given size.  
+    """  
     queryset = Size.objects.all()  
     serializer_class = SizeSerializer  
   
 class KeyboardLightViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given keyboard light.  
+  
+    list:  
+    Return a list of all the existing keyboard lights.  
+  
+    create:  
+    Create a new keyboard light instance.  
+  
+    update:  
+    Update the given keyboard light.  
+  
+    partial_update:  
+    Partially update the given keyboard light.  
+  
+    delete:  
+    Delete the given keyboard light.  
+    """  
     queryset = KeyboardLight.objects.all()  
     serializer_class = KeyboardLightSerializer  
   
 class ScreenResolutionViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given screen resolution.  
+  
+    list:  
+    Return a list of all the existing screen resolutions.  
+  
+    create:  
+    Create a new screen resolution instance.  
+  
+    update:  
+    Update the given screen resolution.  
+  
+    partial_update:  
+    Partially update the given screen resolution.  
+  
+    delete:  
+    Delete the given screen resolution.  
+    """  
     queryset = ScreenResolution.objects.all()  
     serializer_class = ScreenResolutionSerializer  
   
 class FormFactorViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given form factor.  
+  
+    list:  
+    Return a list of all the existing form factors.  
+  
+    create:  
+    Create a new form factor instance.  
+  
+    update:  
+    Update the given form factor.  
+  
+    partial_update:  
+    Partially update the given form factor.  
+  
+    delete:  
+    Delete the given form factor.  
+    """  
     queryset = FormFactor.objects.all()  
     serializer_class = FormFactorSerializer  
   
 class KeyboardSetViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given keyboard set.  
+  
+    list:  
+    Return a list of all the existing keyboard sets.  
+  
+    create:  
+    Create a new keyboard set instance.  
+  
+    update:  
+    Update the given keyboard set.  
+  
+    partial_update:  
+    Partially update the given keyboard set.  
+  
+    delete:  
+    Delete the given keyboard set.  
+    """  
     queryset = KeyboardSet.objects.all()  
     serializer_class = KeyboardSetSerializer  
   
 class TouchSTViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given touch screen technology.  
+  
+    list:  
+    Return a list of all the existing touch screen technologies.  
+  
+    create:  
+    Create a new touch screen technology instance.  
+  
+    update:  
+    Update the given touch screen technology.  
+  
+    partial_update:  
+    Partially update the given touch screen technology.  
+  
+    delete:  
+    Delete the given touch screen technology.  
+    """  
     queryset = TouchST.objects.all()  
     serializer_class = TouchSTSerializer  
   
 class ScreenTypeViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given screen type.  
+  
+    list:  
+    Return a list of all the existing screen types.  
+  
+    create:  
+    Create a new screen type instance.  
+  
+    update:  
+    Update the given screen type.  
+  
+    partial_update:  
+    Partially update the given screen type.  
+  
+    delete:  
+    Delete the given screen type.  
+    """  
     queryset = ScreenType.objects.all()  
     serializer_class = ScreenTypeSerializer  
   
 class WebCamViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given webcam.  
+  
+    list:  
+    Return a list of all the existing webcams.  
+  
+    create:  
+    Create a new webcam instance.  
+  
+    update:  
+    Update the given webcam.  
+  
+    partial_update:  
+    Partially update the given webcam.  
+  
+    delete:  
+    Delete the given webcam.  
+    """  
     queryset = WebCam.objects.all()  
     serializer_class = WebCamSerializer  
   
 class ProductViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given product.  
+  
+    list:  
+    Return a list of all the existing products.  
+  
+    create:  
+    Create a new product instance.  
+  
+    update:  
+    Update the given product.  
+  
+    partial_update:  
+    Partially update the given product.  
+  
+    delete:  
+    Delete the given product.  
+    """  
     queryset = Product.objects.all()  
     serializer_class = ProductSerializer  
   
 class ProductImageViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given product image.  
+  
+    list:  
+    Return a list of all the existing product images.  
+  
+    create:  
+    Create a new product image instance.  
+  
+    update:  
+    Update the given product image.  
+  
+    partial_update:  
+    Partially update the given product image.  
+  
+    delete:  
+    Delete the given product image.  
+    """  
     queryset = ProductImage.objects.all()  
     serializer_class = ProductImageSerializer  
   
 class ProductDescriptionViewSet(viewsets.ModelViewSet):  
+    """  
+    retrieve:  
+    Return the given product description.  
+  
+    list:  
+    Return a list of all the existing product descriptions.  
+  
+    create:  
+    Create a new product description instance.  
+  
+    update:  
+    Update the given product description.  
+  
+    partial_update:  
+    Partially update the given product description.  
+  
+    delete:  
+    Delete the given product description.  
+    """  
     queryset = ProductDescription.objects.all()  
-    serializer_class = ProductDescriptionSerializer  
+    serializer_class = ProductDescriptionSerializer
