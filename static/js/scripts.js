@@ -137,8 +137,9 @@ function initFeedbackForm() {
             type: 'POST',
             url: $(this).attr('action'),
             data: $(this).serialize(),
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()  // Функция для получения CSRF-токена
             },
             success: function(response){
                 if(response.success){
