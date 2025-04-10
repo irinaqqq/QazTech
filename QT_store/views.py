@@ -17,6 +17,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
+from django.views.decorators.csrf import csrf_protect 
 import os
 
 def is_staff(user):
@@ -128,6 +129,7 @@ def whowe(request):
 def partners_view(request):
     return render(request, 'partners.html')
 
+@csrf_protect
 def contactus(request):
     if request.method == 'POST':
         # Проверка honey pot поля
