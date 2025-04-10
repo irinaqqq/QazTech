@@ -144,12 +144,16 @@
                 <textarea name="product_items-0-operating_system_notes" class="form-control mt-2" placeholder="Примечание об операционной системе" rows="2"></textarea>         
             </div>
             
-            <!-- Screen Sizes -->
-            <div class="col-sm-6 flex-column specific-field" id="screen-size-field" data-screen-sizes='[
-            {% for screen_size in form.screen_sizes.field.queryset %}
-            { "id": "{{ screen_size.id }}", "name": "{{ screen_size }}" }{% if not forloop.last %},{% endif %}
-            {% endfor %}
-        ]'>
+        <!-- Screen Sizes -->
+        <div class="col-sm-6 flex-column specific-field" id="screen-size-field" 
+            data-screen-sizes='[
+                {% for screen_size in form.screen_sizes.field.queryset %}
+                    {
+                        "id": "{{ screen_size.id }}", 
+                        "name": "{{ screen_size }}"
+                    }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ]'>
             <label for="id_product_items-0-screen_sizes" class="form-label">Размер экрана</label>
             <select name="product_items-0-screen_sizes" id="id_product_items-0-screen_sizes" class="ui fluid search dropdown">
                 <option value="" disabled selected>Выберите размер экрана</option>
@@ -158,6 +162,7 @@
                 {% endfor %}
             </select>
         </div>
+
         
             <div class="col-sm-6 flex-column justify-content-end specific-field" id="screen-size-notes-field">
                 <textarea name="product_items-0-screen_size_notes" class="form-control mt-2" placeholder="Примечание о размере экрана" rows="2"></textarea>        
