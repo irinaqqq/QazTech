@@ -20,26 +20,12 @@ services:
         delay: 5s
         order: start-first
       placement:
-        preferences:
-          - spread: node.role  # позволяет Swarm выбирать узел по ролям
         constraints:
-          - node.labels.backend == true 
+          - node.labels.backend == true
     networks:
       - app-net
 
-  nginx:
-    image: nginx:latest
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - backend
-    deploy:
-      placement:
-        constraints: [node.role == manager]
-    networks:
-      - app-net
+
 secrets:
   db_user:
     external: true
