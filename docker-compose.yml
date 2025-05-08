@@ -18,9 +18,9 @@ services:
       restart_policy:
         condition: on-failure
       placement:
-      preferences:
-        - spread: node.labels.backend        # сначала воркеры
-        - spread: node.labels.backend-fallback # потом менеджеры
+        preferences:
+          - spread: node.labels.backend        # сначала воркеры
+          - spread: node.labels.backend-fallback # потом менеджеры
       update_config:
         parallelism: 1
         delay: 5s
