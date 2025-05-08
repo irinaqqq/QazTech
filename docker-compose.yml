@@ -19,8 +19,8 @@ services:
         parallelism: 1
         delay: 5s
         order: start-first
-      placement:
-        constraints: [node.role == worker]
+      # placement:
+      #   constraints: [node.role == worker]
     networks:
       - app-net
 
