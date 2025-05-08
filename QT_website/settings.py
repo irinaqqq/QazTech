@@ -88,11 +88,11 @@ WSGI_APPLICATION = 'QT_website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DATABASE_NAME', default='my_test_db'),
-        'USER': env('DATABASE_USER', default='admin'),
-        'PASSWORD': env('DATABASE_PASSWORD', default='admin'),
-        'HOST': env('DATABASE_HOST', default='localhost'),
-        'PORT': env('DATABASE_PORT', default='5432'),
+        'NAME': os.getenv('DATABASE_NAME', 'your_db_name'),
+        'USER': open('/run/secrets/db_user').read().strip(),
+        'PASSWORD': open('/run/secrets/db_password').read().strip(),
+        'HOST': open('/run/secrets/db_host').read().strip(),
+        'PORT': '5432',
     }
 }
 

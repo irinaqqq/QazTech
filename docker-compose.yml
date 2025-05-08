@@ -5,16 +5,24 @@ services:
     image: irinaqqq/qttech-backend:latest
     build:
       context: .
-    env_file:
-      - .env
     ports:
       - "8000:8000"
+    environment:
+      DATABASE_USER_FILE: /run/secrets/db_user
+      DATABASE_PASSWORD_FILE: /run/secrets/db_password
+      DATABASE_HOST_FILE: /run/secrets/db_host
+    secrets:
+      - db_user
+      - db_password
+      - db_host
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
       placement:
         constraints: [node.role == worker]
+    networks:
+      - app-net
 
   nginx:
     image: nginx:latest
@@ -27,3 +35,17 @@ services:
     deploy:
       placement:
         constraints: [node.role == manager]
+    networks:
+      - app-net
+
+secrets:
+  db_user:
+    external: true
+  db_password:
+    external: true
+  db_host:
+    external: true
+
+networks:
+  app-net:
+    driver: overlay
