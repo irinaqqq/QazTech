@@ -2,8 +2,6 @@ version: '3.8'
 services:
   backend:
     image: irinaqqq/qttech-backend:latest
-    build:
-      context: .
     ports:
       - "8080:8000"
     environment:
