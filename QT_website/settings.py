@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'QT_website.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('DATABASE_NAME', 'your_db_name'),
+        'NAME': os.getenv('DATABASE_NAME', 'my_test_db'),
         'USER': open('/run/secrets/db_user').read().strip(),
         'PASSWORD': open('/run/secrets/db_password').read().strip(),
         'HOST': open('/run/secrets/db_host').read().strip(),
