@@ -1,16 +1,10 @@
-version: '3.8'
-
 services:
   backend:
     image: irinaqqq/qttech-backend:latest
     build:
       context: .
     ports:
-      - "8080:8000"  # Изменили внешний порт на 8080
-    environment:
-      DATABASE_USER_FILE: /run/secrets/db_user
-      DATABASE_PASSWORD_FILE: /run/secrets/db_password
-      DATABASE_HOST_FILE: /run/secrets/db_host
+      - "8080:8000"
     secrets:
       - db_user
       - db_password
