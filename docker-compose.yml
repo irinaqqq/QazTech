@@ -19,8 +19,11 @@ services:
         parallelism: 1
         delay: 5s
         order: start-first
-      # placement:
-      #   constraints: [node.role == worker]
+      placement:
+        preferences:
+          - spread: node.role  # позволяет Swarm выбирать узел по ролям
+        constraints:
+          - node.labels.backend == true 
     networks:
       - app-net
 
