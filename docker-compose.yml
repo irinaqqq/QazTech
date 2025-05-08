@@ -23,10 +23,10 @@ services:
         preferences:
           - spread: node.role
         constraints:
-          # Сначала пытаться запустить на worker
-          - node.role == worker
-          # Если нет свободных воркеров, запускать на manager
-          - node.role == manager
+          # Сначала пытаться запустить на воркере
+          - node.labels.backend == true
+          # Если нет свободных воркеров, запускать на менеджере
+          - node.labels.backend-fallback == true
     networks:
       - app-net
 
