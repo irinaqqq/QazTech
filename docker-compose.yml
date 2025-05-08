@@ -18,10 +18,10 @@ services:
       restart_policy:
         condition: on-failure
       placement:
-        preferences:
-          - spread: node.labels.backend-fallback  # fallback, если есть такая метка
         constraints:
-          - node.role == worker  # сначала на worker
+          - node.labels.backend == true  # Только на нодах с меткой "backend"
+        preferences:
+          - spread: node.labels.backend-fallback  # Падение на ноды с меткой "backend-fallback" в случае отказа
       update_config:
         parallelism: 1
         delay: 5s
