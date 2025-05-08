@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   backend:
     image: irinaqqq/qttech-backend:latest
@@ -5,6 +6,10 @@ services:
       context: .
     ports:
       - "8080:8000"
+    environment:
+      DATABASE_USER_FILE: /run/secrets/db_user
+      DATABASE_PASSWORD_FILE: /run/secrets/db_password
+      DATABASE_HOST_FILE: /run/secrets/db_host
     secrets:
       - db_user
       - db_password
@@ -17,7 +22,6 @@ services:
         constraints: [node.role == worker]
     networks:
       - app-net
-
   nginx:
     image: nginx:latest
     ports:
@@ -31,7 +35,6 @@ services:
         constraints: [node.role == manager]
     networks:
       - app-net
-
 secrets:
   db_user:
     external: true
@@ -39,7 +42,6 @@ secrets:
     external: true
   db_host:
     external: true
-
 networks:
   app-net:
     driver: overlay
