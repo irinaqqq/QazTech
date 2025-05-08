@@ -21,12 +21,9 @@ services:
         order: start-first
       placement:
         preferences:
-          - spread: node.role
+          - spread: node.role  # позволяет Swarm выбирать узел по ролям
         constraints:
-          # Сначала пытаться запустить на воркере
-          - node.labels.backend == true
-          # Если нет свободных воркеров, запускать на менеджере
-          - node.labels.backend-fallback == true
+          - node.labels.backend == true 
     networks:
       - app-net
 
