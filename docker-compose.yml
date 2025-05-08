@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   backend:
     image: irinaqqq/qttech-backend:latest
@@ -16,10 +15,15 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
       placement:
         constraints: [node.role == worker]
     networks:
       - app-net
+
   nginx:
     image: nginx:latest
     ports:
