@@ -1,17 +1,17 @@
-# Используем официальный образ Python в качестве базового  
-FROM python:3.13-slim  
-  
-# Устанавливаем рабочую директорию  
-WORKDIR /app  
-  
-# Копируем файлы проекта  
-COPY . /app  
-  
-# Устанавливаем зависимости проекта  
-RUN pip install --no-cache-dir -r requirements.txt  
-  
-# Открываем порт, который будет использоваться вашим приложением  
-EXPOSE 8000  
-  
-# Команда для выполнения миграций и запуска приложения  
-CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]  
+FROM python:3.13-slim
+
+# Создание рабочей директории
+WORKDIR /app
+
+# Копирование зависимостей и установка
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Копируем весь проект
+COPY . .
+
+# Открываем порт для gunicorn
+EXPOSE 8000
+
+# Запуск через gunicorn — лучше для продакшена
+CMD ["gunicorn", "QT_website.wsgi:application", "--bind", "0.0.0.0:8000"]
