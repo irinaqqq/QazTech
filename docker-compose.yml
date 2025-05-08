@@ -20,8 +20,13 @@ services:
         delay: 5s
         order: start-first
       placement:
+        preferences:
+          - spread: node.role
         constraints:
-          - node.labels.backend == true
+          # Сначала пытаться запустить на worker
+          - node.role == worker
+          # Если нет свободных воркеров, запускать на manager
+          - node.role == manager
     networks:
       - app-net
 
