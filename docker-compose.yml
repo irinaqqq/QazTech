@@ -23,7 +23,7 @@ services:
         preferences:
           - spread: node.role 
         constraints:
-          - "node.labels.backend == true or node.role == manager"
+          - node.labels.backend == true or node.role == manager
     networks:
       - app-net
 
