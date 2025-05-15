@@ -21,9 +21,7 @@ services:
         order: start-first
       placement:
         preferences:
-          - spread: node.role 
-        constraints:
-          - node.labels.backend == true or node.role == manager
+          - spread: node.labels.backend 
     networks:
       - app-net
 
