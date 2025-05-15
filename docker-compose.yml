@@ -20,8 +20,8 @@ services:
         delay: 5s
         order: start-first
       placement:
-        preferences:
-          - spread: node.labels.backend 
+        constraints:
+          - node.role == worker
     networks:
       - app-net
 
