@@ -93,6 +93,9 @@ DATABASES = {
         'PASSWORD': open('/run/secrets/db_password').read().strip(),
         'HOST': open('/run/secrets/db_host').read().strip(),
         'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',  # 👈 обязательно для Azure
+        }
     }
 }
 
